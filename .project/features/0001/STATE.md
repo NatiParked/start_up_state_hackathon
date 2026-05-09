@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Phase** | Phase 3: Seed Import Script |
+| **Phase** | Phase 4: Pinia Stores, Router & Deploy Config |
 | **Status** | Pending |
 | **Blocker** | None |
 
@@ -15,8 +15,8 @@
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | Phase 1: Dependencies & Configuration | ✅ Verified | 2026-05-08 | 2026-05-08 |
-| Phase 2: Database Schema & Migration | ✅ Complete | 2026-05-09 | 2026-05-09 |
-| Phase 3: Seed Import Script | ⏳ Pending | — | — |
+| Phase 2: Database Schema & Migration | ✅ Verified | 2026-05-09 | 2026-05-09 |
+| Phase 3: Seed Import Script | ✅ Complete | 2026-05-09 | 2026-05-09 |
 | Phase 4: Pinia Stores, Router & Deploy Config | ⏳ Pending | — | — |
 
 ## Task Progress
@@ -27,6 +27,9 @@
 | 1.2: Create config files, brand CSS, Supabase client, .env.example | ✅ Done | 2 | ~48s |
 | 1.3: Wire main.js + App.vue | ✅ Done | 3 | ~88s |
 | 2.1: Author the initial migration SQL file | ✅ Done | 1 | ~61s |
+| 3.1: Script skeleton — env loading, CSV fetch, CSV parse | ✅ Done | 1 | ~247s |
+| 3.2: Geocoding + region derivation + logo URL | ✅ Done | 2 | ~247s |
+| 3.3: Supabase truncate + batch insert + summary | ✅ Done | 3 | ~247s |
 
 ## Decisions Log
 
