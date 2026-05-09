@@ -202,10 +202,14 @@ Update `goed/src/router/index.js`: replace the `companies` placeholder with `com
   - Completed: 2026-05-09 — `execute_sql` confirmed both policies active on `map_startups`.
 - [x] `approve-submission` and `reject-submission` Edge Functions are deployed; unauthenticated `curl` returns HTTP 401 with `{ error: 'unauthorized', code: 401 }`.
   - Completed: 2026-05-09 — Both functions ACTIVE (v1); smoke test confirmed 401 + correct body for invalid JWT; CORS preflight returns 204 with correct headers.
-- [ ] `/admin/submissions` lists every `status = 'pending'` row; Approve writes to `map_startups` and flips status to `approved`; Reject writes `rejection_reason` and flips status to `rejected`; both remove the row from the queue.
-- [ ] `/admin/companies` lists all `map_startups`; search filters by name, header clicks sort asc/desc on `name`, `sector`, `stage`, `created_at`.
-- [ ] Editing a `map_startups` row in `CompanyEditor` and clicking Save persists to Supabase, optimistically updates the store, and the public `/` map reflects the change after refetch.
-- [ ] `cd goed && npm run build` exits 0; no `console.log` in committed code; Tailwind brand tokens only (no raw hex).
+- [x] `/admin/submissions` lists every `status = 'pending'` row; Approve writes to `map_startups` and flips status to `approved`; Reject writes `rejection_reason` and flips status to `rejected`; both remove the row from the queue.
+  - Completed: 2026-05-09 — `SubmissionQueue.vue` + `SubmissionReview.vue` created; router updated; build passes.
+- [x] `/admin/companies` lists all `map_startups`; search filters by name, header clicks sort asc/desc on `name`, `sector`, `stage`, `created_at`.
+  - Completed: 2026-05-09 — `CompanyList.vue` + `CompanyEditor.vue` created; router updated; build passes.
+- [x] Editing a `map_startups` row in `CompanyEditor` and clicking Save persists to Supabase, optimistically updates the store, and the public `/` map reflects the change after refetch.
+  - Completed: 2026-05-09 — `CompanyEditor.vue` `save()` calls `supabase.from('map_startups').update(payload).eq('id', form.id)` with inline `saveError` on failure.
+- [x] `cd goed && npm run build` exits 0; no `console.log` in committed code; Tailwind brand tokens only (no raw hex).
+  - Completed: 2026-05-09 — `npm run build` exited 0 (579 modules); no console.log; brand tokens used throughout.
 
 ## Success Criteria
 

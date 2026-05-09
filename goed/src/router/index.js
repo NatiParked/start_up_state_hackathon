@@ -39,14 +39,12 @@ const router = createRouter({
         {
           path: 'submissions',
           name: 'AdminSubmissions',
-          component: () => import('@/views/PlaceholderView.vue'),
-          props: { title: 'Submissions' },
+          component: () => import('@/views/admin/SubmissionQueue.vue'),
         },
         {
           path: 'companies',
           name: 'AdminCompanies',
-          component: () => import('@/views/PlaceholderView.vue'),
-          props: { title: 'Companies' },
+          component: () => import('@/views/admin/CompanyList.vue'),
         },
         {
           path: 'refresh',
