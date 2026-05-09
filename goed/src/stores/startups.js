@@ -9,11 +9,20 @@ export const useStartupsStore = defineStore('startups', () => {
   const companies = ref([])
   const isLoading = ref(false)
   const error = ref(null)
+  const selectedCompany = ref(null)
 
   // getters
   const filteredCompanies = computed(() => companies.value)
 
   // actions
+  function selectCompany(id) {
+    selectedCompany.value = companies.value.find(c => c.id === id) ?? null
+  }
+
+  function clearSelection() {
+    selectedCompany.value = null
+  }
+
   async function fetchAll() {
     isLoading.value = true
     error.value = null
@@ -33,5 +42,5 @@ export const useStartupsStore = defineStore('startups', () => {
     }
   }
 
-  return { companies, isLoading, error, filteredCompanies, fetchAll }
+  return { companies, isLoading, error, filteredCompanies, fetchAll, selectedCompany, selectCompany, clearSelection }
 })
