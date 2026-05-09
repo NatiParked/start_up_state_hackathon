@@ -61,8 +61,7 @@ const router = createRouter({
     {
       path: '/roadmap',
       name: 'Roadmap',
-      component: () => import('@/views/PlaceholderView.vue'),
-      props: { title: 'Roadmap' },
+      component: () => import('@/views/RoadmapView.vue'),
     },
     {
       path: '/subscribe',
