@@ -70,6 +70,17 @@ function handleSelect(event) {
   if (id != null) selectCompany(id)
 }
 
+function handleClusterClick() {
+  if (!hoveredClusterPosition.value) return
+  const view = viewRef.value?.view ?? mapRef.value?.map?.getView()
+  if (!view) return
+  view.animate({
+    zoom: (view.getZoom() ?? UTAH_ZOOM) + 2,
+    center: hoveredClusterPosition.value,
+    duration: 350,
+  })
+}
+
 function onPointerMove(event) {
   const map = event.map ?? mapRef.value?.map
   if (!map) return
@@ -128,9 +139,12 @@ function onPointerMove(event) {
         v-if="showClusterPreview"
         :position="hoveredClusterPosition"
         positioning="center-center"
-        class="pointer-events-none z-20"
       >
-        <PinCluster :companies="hoveredClusterCompanies" :count="hoveredClusterCompanies.length" />
+        <PinCluster
+          :companies="hoveredClusterCompanies"
+          :count="hoveredClusterCompanies.length"
+          @click.stop="handleClusterClick"
+        />
       </ol-overlay>
       <ol-interaction-select @select="handleSelect" />
     </ol-map>
