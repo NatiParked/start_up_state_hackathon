@@ -7,7 +7,7 @@
 | Field | Value |
 |-------|-------|
 | **Phase** | Phase 4: Pinia Stores, Router & Deploy Config |
-| **Status** | Pending |
+| **Status** | ✅ Complete |
 | **Blocker** | None |
 
 ## Phase Progress
@@ -17,7 +17,7 @@
 | Phase 1: Dependencies & Configuration | ✅ Verified | 2026-05-08 | 2026-05-08 |
 | Phase 2: Database Schema & Migration | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 3: Seed Import Script | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 4: Pinia Stores, Router & Deploy Config | ⏳ Pending | — | — |
+| Phase 4: Pinia Stores, Router & Deploy Config | ✅ Verified | 2026-05-09 | 2026-05-09 |
 
 ## Task Progress
 
@@ -30,6 +30,13 @@
 | 3.1: Script skeleton — env loading, CSV fetch, CSV parse | ✅ Done | 1 | ~247s |
 | 3.2: Geocoding + region derivation + logo URL | ✅ Done | 2 | ~247s |
 | 3.3: Supabase truncate + batch insert + summary | ✅ Done | 3 | ~247s |
+| 4.1: Create useStartupsStore Pinia setup store | ✅ Done | 1 | ~30s |
+| 4.2: Create useFiltersStore Pinia setup store | ✅ Done | 1 | ~30s |
+| 4.3: Create PlaceholderView.vue | ✅ Done | 1 | ~30s |
+| 4.4: Create MapView.vue page shell | ✅ Done | 1 | ~30s |
+| 4.5: Create NavigatorView.vue placeholder | ✅ Done | 1 | ~30s |
+| 4.6: Create netlify.toml at repo root | ✅ Done | 1 | ~30s |
+| 4.7: Register all 6 routes in router/index.js | ✅ Done | 2 | ~30s |
 
 ## Decisions Log
 
