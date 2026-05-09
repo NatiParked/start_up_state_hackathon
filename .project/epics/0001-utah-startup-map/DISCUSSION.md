@@ -1,4 +1,4 @@
-# Discussion Log — Epic 0001: Utah Startup Map & Founder's Navigator
+# Discussion Log — Epic 0001: Utah Startup Map
 
 ## Revision 1 — 2026-05-08
 

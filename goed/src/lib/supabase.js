@@ -1,3 +1,5 @@
+// Browser-shipped Supabase client (anon key only).
+// Service-role usage lives in Edge Functions via Deno.env.get('SUPABASE_SERVICE_ROLE_KEY').
 import { createClient } from '@supabase/supabase-js'
 
 const url = import.meta.env.VITE_SUPABASE_URL

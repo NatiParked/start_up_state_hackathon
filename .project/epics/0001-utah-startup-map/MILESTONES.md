@@ -1,8 +1,8 @@
-# Milestones — Epic 0001: Utah Startup Map & Founder's Navigator
+# Milestones — Epic 0001: Utah Startup Map
 
 ## Overview
 
-Ten milestones, each ending in a workable application state. No milestone leaves the app broken for the next. The original six milestones have been split at natural seams so that each phase of the `/spec:new-feature` workflow is digestible and independently shippable.
+Eight milestones, each ending in a workable application state. No milestone leaves the app broken for the next. The original milestones have been split at natural seams so that each phase of the `/spec:new-feature` workflow is digestible and independently shippable.
 
 Complexity scale: S (hours), M (1 day), L (2-3 days), XL (4+ days).
 
@@ -15,8 +15,7 @@ This epic shares a Supabase project with other services. **Only interact with ta
 Work is sequenced across three tiers. Complete each tier before starting the next. Do not skip ahead.
 
 **Tier 1 — Must Ship (demo day core):** M1 → M2 → M3 → M5 → M6
-**Tier 2 — Ship if Tier 1 is polished:** M7 → M8
-**Tier 3 — If time remains (in this order):** M9 → M10 → M4
+**Tier 2 — If time remains (in this order):** M9 → M10 → M4
 
 | # | Milestone | Complexity | Tier | Workable State After |
 |---|-----------|-----------|------|----------------------|
@@ -25,11 +24,9 @@ Work is sequenced across three tiers. Complete each tier before starting the nex
 | 3 | AI Onboarding: Submission Pipeline | L | **T1** | URL paste → enriched company on map in <90s |
 | 5 | Recurring Data Refresh | S | **T1** | Jobs refresh weekly via ATS APIs (no AI); investor/profile event-driven |
 | 6 | Admin Management UI | M | **T1** | GOED staff can approve, edit, refresh, monitor |
-| 7 | Founder's Navigator: Intake & Filtering | M | **T2** | Founders get deterministic resource matches |
-| 8 | Founder's Navigator: AI Search & Guide | M | **T2** | Full AI-ranked results + personalized next-steps |
-| 9 | Engagement: Subscriptions & AI Digest | M | **T3** | Subscribers receive weekly Claude-written email |
-| 10 | Engagement: Analytics & Share Cards | M | **T3** | Founders see view stats; shareable OG cards live |
-| 4 | AI Onboarding: Claim & Self-Service Edit | M | **T3** | Founders can claim and manage their listing |
+| 9 | Engagement: Subscriptions & AI Digest | M | **T2** | Subscribers receive weekly Claude-written email |
+| 10 | Engagement: Analytics & Share Cards | M | **T2** | Founders see view stats; shareable OG cards live |
+| 4 | AI Onboarding: Claim & Self-Service Edit | M | **T2** | Founders can claim and manage their listing |
 
 ### M3 Enricher Scoping
 
@@ -185,6 +182,7 @@ All enrichers are best-effort: if a source returns no confident match, it is sil
 ## Milestone 4: AI Onboarding — Claim & Self-Service Edit
 **Complexity: M**
 **Tier: 3** — Build after M9 and M10. Demo-critical for founders but judges prioritize the AI pipeline and Navigator over the claim flow.
+**Linked Feature: 0006**
 
 Gives founders ownership of their listing. Domain-verified magic link → self-service edit UI → profile always current without GOED involvement.
 
@@ -238,6 +236,8 @@ Schedule a weekly pg_cron job that polls ATS job endpoints (Greenhouse, Lever, A
 ## Milestone 6: Admin Management UI
 **Complexity: M**
 **Tier: 1**
+**Linked Feature: 0005**
+**Linked Feature: 0005**
 
 GOED operational control. Staff approve submissions, edit records, trigger refreshes, and monitor subscriber counts.
 
@@ -269,61 +269,11 @@ Protected `/admin` route with Supabase auth (GOED staff allow-list), submission 
 
 ---
 
-## Milestone 7: Founder's Navigator — Intake & Deterministic Filtering
-**Complexity: M**
-**Tier: 2**
-
-The second product's foundation. Founders describe their situation; the system returns a deterministically filtered list of matching GOED resources. No AI yet — just clean, fast matching.
-
-**Description:**
-Import the 100-resource corpus from Google Sheet, build the multi-step intake wizard, run deterministic SQL filters against the resources table, and render a results page with matching resource cards. End state: all 6 personas (Jordan, Maria, Marcus, Priya, David, Dr. Amir) receive a filtered resource list that makes obvious sense for their situation — before any AI is applied.
-
-**Key Deliverables:**
-- [ ] `supabase/migrations/0007_resources.sql` — `resources` table (id, title, description, url, communities text[], industries text[], locations text[], topics text[], link, email, embedding vector(768) nullable — populated in M8 via Gemini `text-embedding-004`)
-- [ ] `goed/scripts/import-resources.js` — one-time import of 100 resources from Google Sheet CSV
-- [ ] `supabase/migrations/0008_navigator_queries.sql` — `navigator_queries` table logging intake + results for analytics
-- [ ] `supabase/functions/navigator-search/filters.js` — deterministic pre-filter: SQL `WHERE communities && $communities AND industries && $industries AND topics && $topics AND locations && $locations`; returns up to 20 candidates
-- [ ] `supabase/functions/navigator-search/index.js` — Edge Function shell: accepts intake form payload, runs deterministic filter, returns candidates as JSON; semantic search and reranking stubs return raw filter results until M8
-- [ ] `goed/src/views/NavigatorView.vue` — page shell composing IntakeForm and ResultsView
-- [ ] `goed/src/components/navigator/IntakeForm.vue` — multi-step form (stage, industry, community, location, topics, optional free-text description); GSAP transitions between steps; progress indicator
-- [ ] `goed/src/components/navigator/ResultsView.vue` — results page: resource cards, placeholder for GOED contact card, placeholder for next-steps guide
-- [ ] `goed/src/components/navigator/ResourceCard.vue` — single resource card: title, description excerpt, topics tags, link CTA
-- [ ] `goed/src/components/navigator/GoedContactCard.vue` — recommended GOED contact stub (shows resource email until M8 adds contact matching)
-- [ ] `goed/src/components/navigator/NextStepsGuide.vue` — rendered Markdown section; shows a generic placeholder until M8 generates a personalized guide
-- [ ] `goed/src/stores/navigator.js` — Pinia store for intake state + results
-- [ ] All 6 personas produce a filtered resource list that is visibly relevant to their situation
-
-**Dependencies:** M1 (project scaffolding, Supabase, brand styles, router). Independent of M2–M6.
-
----
-
-## Milestone 8: Founder's Navigator — AI Search & Recommendations
-**Complexity: M**
-**Tier: 2**
-
-Upgrades the Navigator from filtered list to personalized AI recommendations. Claude reranks, explains, and synthesizes a personalized next-steps guide.
-
-**Description:**
-Add pgvector semantic search over the resource corpus, Claude reranking of the top candidates, and a Claude-synthesized personalized next-steps guide + GOED contact recommendation. The Navigator becomes a genuinely personalized advisor, not just a filter.
-
-**Key Deliverables:**
-- [ ] `goed/scripts/embed-resources.js` — batch-embeds all resource descriptions via Google `text-embedding-004` (768 dims), writes to `resources.embedding vector(768)`; uses `GOOGLE_AI_API_KEY` env var
-- [ ] `supabase/functions/navigator-search/embed-query.js` — embeds the founder's free-text description via Gemini `text-embedding-004` for pgvector cosine similarity search
-- [ ] `supabase/functions/navigator-search/rerank.js` — Gemini 1.5 Flash call: re-orders top-N candidates given full intake context; returns each resource with a "why this matched you" explanation
-- [ ] `supabase/functions/navigator-search/synthesize.js` — Gemini 1.5 Flash call: writes the personalized 3-5 step next-steps guide + picks recommended GOED contact based on matched topics/communities
-- [ ] `supabase/functions/navigator-search/index.js` update — full pipeline: deterministic filter → pgvector kNN → Claude rerank → Claude synthesize; replaces the M7 stub
-- [ ] `goed/src/components/navigator/ResourceCard.vue` update — adds expandable "Why this matched you" tooltip/section (from Claude reranking output)
-- [ ] `goed/src/components/navigator/NextStepsGuide.vue` update — renders Claude-synthesized personalized markdown guide (replaces generic placeholder)
-- [ ] `goed/src/components/navigator/GoedContactCard.vue` update — shows Claude-recommended GOED contact with email/phone/calendar link (replaces stub)
-- [ ] All 6 personas produce visibly distinct, sensible, AI-personalized results with "why this matched" explanations and a unique next-steps guide
-
-**Dependencies:** M7 (Navigator intake, filter Edge Function shell, results components, `resources` table).
-
----
-
 ## Milestone 9: Engagement — Subscriptions & AI Digest
 **Complexity: M**
 **Tier: 3**
+**Linked Feature: 0007**
+**Linked Feature: 0007**
 
 The primary retention mechanic. Visitors subscribe to weekly Utah startup updates; Claude writes a personalized digest (or ecosystem highlights when their filter has no new activity).
 
@@ -355,6 +305,7 @@ Both modes share one system prompt and the same Resend send path. The user promp
 ## Milestone 10: Engagement — Analytics & Share Cards
 **Complexity: M**
 **Tier: 3** — OG image generation via Satori is the highest-risk deliverable in this milestone. If time is tight, ship view tracking + basic meta tags first; defer full Satori OG rendering to roadmap.
+**Linked Feature: 0008**
 
 Closes the retention loop for founders. View tracking gives them a reason to check back; OG social cards give them a reason to share.
 

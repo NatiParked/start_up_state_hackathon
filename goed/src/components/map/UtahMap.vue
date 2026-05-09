@@ -6,8 +6,8 @@ import CompanyPin from '@/components/map/CompanyPin.vue'
 import PinCluster from '@/components/map/PinCluster.vue'
 import { createClusterStyle } from '@/lib/clusterStyle'
 
-const UTAH_CENTER = [-111.525, 40.65]
-const UTAH_ZOOM = 7
+const UTAH_CENTER = [-111.89, 40.6]
+const UTAH_ZOOM = 10
 const CLUSTER_THRESHOLD = 7
 
 const store = useStartupsStore()
@@ -109,7 +109,7 @@ function onPointerMove(event) {
     <ol-map ref="mapRef" class="w-full h-full" @moveend="onMoveEnd" @pointermove="onPointerMove">
       <ol-view ref="viewRef" :center="initialCenter" :zoom="initialZoom" projection="EPSG:4326" />
       <ol-tile-layer>
-        <ol-source-osm />
+        <ol-source-xyz url="https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png" />
       </ol-tile-layer>
       <ol-vector-layer :style-function="createClusterStyle" :visible="!showIndividualPins">
         <ol-source-cluster :distance="40">

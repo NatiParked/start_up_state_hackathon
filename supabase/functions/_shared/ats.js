@@ -79,125 +79,50 @@ export async function pollAts(careersUrl) {
   }
 }
 
-/**
- * Poll the Greenhouse Jobs API for open postings.
- *
- * @param {string} slug - board slug extracted from the careers URL
- * @param {string} careersUrl - original careers URL (included in return value)
- * @returns {Promise<{job_titles: string[], is_hiring: boolean, careers_url: string}|null>}
- */
 async function _pollGreenhouse(slug, careersUrl) {
   const apiUrl = `https://boards-api.greenhouse.io/v1/boards/${slug}/jobs`;
-
   let response;
   try {
-    response = await fetch(apiUrl, {
-      headers: { 'User-Agent': 'goed-hackathon' },
-    });
+    response = await fetch(apiUrl, { headers: { 'User-Agent': 'goed-hackathon' } });
   } catch (_) {
     return null;
   }
-
   if (!response.ok) return null;
-
   let json;
-  try {
-    json = await response.json();
-  } catch (_) {
-    return null;
-  }
-
+  try { json = await response.json(); } catch (_) { return null; }
   const jobs = Array.isArray(json.jobs) ? json.jobs : [];
   const job_titles = jobs.map((j) => j.title).filter(Boolean);
-
-  return {
-    job_titles,
-    is_hiring: job_titles.length > 0,
-    careers_url: careersUrl,
-  };
+  return { job_titles, is_hiring: job_titles.length > 0, careers_url: careersUrl };
 }
 
-/**
- * Poll the Lever Postings API for open postings.
- *
- * @param {string} slug - posting team slug extracted from the careers URL
- * @param {string} careersUrl - original careers URL (included in return value)
- * @returns {Promise<{job_titles: string[], is_hiring: boolean, careers_url: string}|null>}
- */
 async function _pollLever(slug, careersUrl) {
   const apiUrl = `https://api.lever.co/v0/postings/${slug}?mode=json`;
-
   let response;
   try {
-    response = await fetch(apiUrl, {
-      headers: { 'User-Agent': 'goed-hackathon' },
-    });
+    response = await fetch(apiUrl, { headers: { 'User-Agent': 'goed-hackathon' } });
   } catch (_) {
     return null;
   }
-
   if (!response.ok) return null;
-
   let json;
-  try {
-    json = await response.json();
-  } catch (_) {
-    return null;
-  }
-
+  try { json = await response.json(); } catch (_) { return null; }
   const postings = Array.isArray(json) ? json : [];
   const job_titles = postings.map((p) => p.text).filter(Boolean);
-
-  return {
-    job_titles,
-    is_hiring: job_titles.length > 0,
-    careers_url: careersUrl,
-  };
+  return { job_titles, is_hiring: job_titles.length > 0, careers_url: careersUrl };
 }
 
-/**
- * Poll the Ashby Job Board API for open postings.
- *
- * @param {string} slug - board slug extracted from the careers URL
- * @param {string} careersUrl - original careers URL (included in return value)
- * @returns {Promise<{job_titles: string[], is_hiring: boolean, careers_url: string}|null>}
- */
 async function _pollAshby(slug, careersUrl) {
   const apiUrl = `https://api.ashbyhq.com/posting-api/job-board/${slug}`;
-
   let response;
   try {
-    response = await fetch(apiUrl, {
-      headers: {
-        'User-Agent': 'goed-hackathon',
-        'Accept': 'application/json',
-      },
-    });
+    response = await fetch(apiUrl, { headers: { 'User-Agent': 'goed-hackathon', 'Accept': 'application/json' } });
   } catch (_) {
     return null;
   }
-
   if (!response.ok) return null;
-
   let json;
-  try {
-    json = await response.json();
-  } catch (_) {
-    return null;
-  }
-
-  // Ashby response shape: { jobPostings: [...] } or { jobs: [...] }
-  const postings = Array.isArray(json.jobPostings)
-    ? json.jobPostings
-    : Array.isArray(json.jobs)
-    ? json.jobs
-    : [];
-
+  try { json = await response.json(); } catch (_) { return null; }
+  const postings = Array.isArray(json.jobPostings) ? json.jobPostings : Array.isArray(json.jobs) ? json.jobs : [];
   const job_titles = postings.map((p) => p.title).filter(Boolean);
-
-  return {
-    job_titles,
-    is_hiring: job_titles.length > 0,
-    careers_url: careersUrl,
-  };
+  return { job_titles, is_hiring: job_titles.length > 0, careers_url: careersUrl };
 }

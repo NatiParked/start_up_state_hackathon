@@ -59,6 +59,9 @@ onMounted(() => {
           Copy share link
         </button>
       </div>
+      <router-link :to="{ name: 'ClaimLogin', params: { id: result.startup_id } }" class="btn btn-ghost">
+        Claim your listing
+      </router-link>
     </section>
 
     <section v-if="view === 'pending'" class="space-y-4">
@@ -69,7 +72,7 @@ onMounted(() => {
       <p v-if="rejectionReason" class="text-sm text-[var(--fg-2)] rounded p-3" style="background: var(--surface); border: 1px solid var(--hair);">
         {{ rejectionReason }}
       </p>
-      <router-link to="/admin" class="btn btn-ghost">
+      <router-link :to="{ name: 'ClaimLogin', params: { id: result.startup_id } }" class="btn btn-ghost">
         Claim your listing
       </router-link>
     </section>
