@@ -54,8 +54,7 @@ const router = createRouter({
         {
           path: 'subscribers',
           name: 'AdminSubscribers',
-          component: () => import('@/views/PlaceholderView.vue'),
-          props: { title: 'Subscribers' },
+          component: () => import('@/views/admin/SubscriberPanel.vue'),
         },
       ],
     },
