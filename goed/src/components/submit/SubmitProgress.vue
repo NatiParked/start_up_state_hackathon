@@ -59,10 +59,11 @@ watch(() => props.stage, animateProgress)
 
 <template>
   <div class="py-4">
-    <h2 class="text-lg font-semibold text-utah-blue mb-4">Analyzing your startup…</h2>
+    <div class="kicker">— In progress</div>
+    <h2 class="display-sm mt-2 mb-4 text-[var(--fg)]">Analyzing your startup…</h2>
 
-    <div class="w-full h-2 bg-gray-200 rounded-full mb-6 overflow-hidden">
-      <div class="submit-progress-bar h-full bg-utah-blue rounded-full" style="width: 0%"></div>
+    <div class="w-full h-2 mb-6 overflow-hidden rounded-full" style="background: var(--hair);">
+      <div class="submit-progress-bar h-full rounded-full" style="width: 0%; background: var(--accent); box-shadow: 0 0 12px var(--accent);"></div>
     </div>
 
     <ul class="space-y-3">
@@ -71,7 +72,7 @@ watch(() => props.stage, animateProgress)
         :key="item.key"
         class="submit-stage-item flex items-center gap-3"
       >
-        <span v-if="item.status === 'complete'" class="flex-shrink-0 w-5 h-5 text-utah-blue">
+        <span v-if="item.status === 'complete'" class="flex-shrink-0 w-5 h-5 text-[var(--accent)]">
           <svg viewBox="0 0 20 20" fill="currentColor">
             <path
               fill-rule="evenodd"
@@ -82,24 +83,24 @@ watch(() => props.stage, animateProgress)
         </span>
         <span
           v-if="item.status === 'active'"
-          class="flex-shrink-0 w-5 h-5 border-2 border-utah-blue border-t-transparent rounded-full animate-spin"
+          class="flex-shrink-0 w-5 h-5 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin"
         ></span>
         <span
           v-if="item.status === 'upcoming'"
-          class="flex-shrink-0 w-5 h-5 rounded-full border-2 border-gray-300"
+          class="flex-shrink-0 w-5 h-5 rounded-full border-2 border-[var(--hair-2)]"
         ></span>
 
         <span
           v-if="item.status === 'complete'"
-          class="text-sm font-medium text-gray-800"
+          class="text-sm font-medium text-[var(--fg)]"
         >{{ item.label }}</span>
         <span
           v-if="item.status === 'active'"
-          class="text-sm font-semibold text-utah-blue"
+          class="text-sm font-semibold text-[var(--accent)]"
         >{{ item.label }}</span>
         <span
           v-if="item.status === 'upcoming'"
-          class="text-sm text-gray-400"
+          class="text-sm text-[var(--fg-3)]"
         >{{ item.label }}</span>
       </li>
     </ul>

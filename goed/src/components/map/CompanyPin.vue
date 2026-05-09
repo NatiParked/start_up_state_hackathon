@@ -23,12 +23,12 @@ const isActive = computed(() => selectedCompany.value?.id === props.company.id)
 const pinClasses = computed(() => {
   const base = 'w-10 h-10 rounded-full overflow-hidden cursor-pointer transition-all duration-150 ease-out flex items-center justify-center'
   const shadow = isActive.value ? 'shadow-xl' : 'shadow-md hover:shadow-lg'
-  const ring = isActive.value ? 'ring-4 ring-utah-blue' : 'ring-2 ring-white hover:scale-110 active:scale-95'
+  const ring = isActive.value ? 'ring-4 ring-[var(--accent)]' : 'ring-2 ring-white hover:scale-110 active:scale-95'
   const scale = isActive.value ? 'scale-110' : ''
   return `${base} ${shadow} ${ring} ${scale}`
 })
 
-const monogramClasses = computed(() => 'w-full h-full flex items-center justify-center bg-utah-blue text-white text-sm font-bold')
+const monogramClasses = computed(() => 'w-full h-full flex items-center justify-center bg-[var(--accent)] text-[#07140A] text-sm font-bold')
 </script>
 
 <template>

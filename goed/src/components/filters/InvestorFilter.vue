@@ -18,7 +18,7 @@ const isLongList = computed(() => investorOptions.value.length > 15)
 
 <template>
   <div>
-    <p class="text-sm font-semibold text-gray-700 mb-2">Investors</p>
+    <p class="text-sm font-semibold text-[var(--fg)] mb-2">Investors</p>
     <div
       :class="isLongList ? 'max-h-64 overflow-y-auto space-y-1' : 'space-y-1'"
     >
@@ -31,9 +31,9 @@ const isLongList = computed(() => investorOptions.value.length > 15)
           v-model="investors"
           type="checkbox"
           :value="option"
-          class="mr-2 rounded border-gray-300 text-utah-blue focus:ring-utah-blue"
+          class="mr-2 rounded accent-[var(--accent)]"
         />
-        <span class="text-sm text-gray-700">{{ option }}</span>
+        <span class="text-sm text-[var(--fg-2)]">{{ option }}</span>
       </label>
     </div>
   </div>

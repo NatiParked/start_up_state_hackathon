@@ -14,15 +14,15 @@ const hiringChecked = computed({
 
 <template>
   <div>
-    <p class="text-sm font-semibold text-gray-700 mb-2">Hiring</p>
+    <p class="text-sm font-semibold text-[var(--fg)] mb-2">Hiring</p>
     <div class="space-y-1">
       <label class="flex items-center">
         <input
           v-model="hiringChecked"
           type="checkbox"
-          class="mr-2 rounded border-gray-300 text-utah-blue focus:ring-utah-blue"
+          class="mr-2 rounded accent-[var(--accent)]"
         />
-        <span class="text-sm text-gray-700">Hiring now only</span>
+        <span class="text-sm text-[var(--fg-2)]">Hiring now only</span>
       </label>
     </div>
   </div>

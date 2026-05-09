@@ -67,11 +67,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 flex items-start justify-center pt-16 px-4">
-    <div class="submit-card w-full max-w-lg bg-white rounded-2xl shadow-lg p-8">
+  <div class="min-h-screen flex items-start justify-center pt-16 px-4">
+    <div class="submit-card form-section w-full max-w-lg">
       <div class="mb-6">
-        <h1 class="text-2xl font-bold text-utah-blue">Add Your Startup</h1>
-        <p class="text-sm text-gray-500 mt-1">
+        <div class="kicker">— Submit</div>
+        <h1 class="display-sm mt-2 text-[var(--fg)]">Add Your Startup</h1>
+        <p class="text-sm text-[var(--fg-2)] mt-2">
           Submit a Utah startup URL and we'll add it to the map automatically.
         </p>
       </div>

@@ -11,7 +11,7 @@ const store = useStartupsStore()
 const { companies } = storeToRefs(store)
 const { clearSelection } = store
 
-const layoutClasses = computed(() => 'flex flex-col h-screen w-screen overflow-hidden bg-gray-50')
+const layoutClasses = computed(() => 'flex flex-col h-screen w-screen overflow-hidden')
 const mapZoneClasses = computed(() => 'flex flex-col flex-1 min-w-0 min-h-0 relative')
 
 function handleMapBackgroundClick() {
@@ -27,8 +27,9 @@ onMounted(() => {
 
 <template>
   <div :class="layoutClasses">
-    <header class="bg-white border-b border-gray-200 px-6 py-3 flex items-center gap-3 shrink-0">
-      <span class="text-utah-blue-dark font-bold text-lg">Utah Startup Map</span>
+    <header class="border-b border-[var(--hair)] px-6 py-3 flex items-center gap-3 shrink-0" style="background: rgba(13,25,45,0.5); backdrop-filter: blur(8px);">
+      <span class="kicker">— Map</span>
+      <span class="display-sm text-[var(--fg)]">Utah Startup Map</span>
     </header>
     <main class="flex flex-1 min-h-0 overflow-hidden">
       <FilterSidebar />

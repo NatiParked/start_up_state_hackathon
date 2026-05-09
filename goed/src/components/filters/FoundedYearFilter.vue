@@ -42,31 +42,31 @@ onMounted(() => {
 
 <template>
   <div>
-    <p class="text-sm font-semibold text-gray-700 mb-2">Founded Year</p>
+    <p class="text-sm font-semibold text-[var(--fg)] mb-2">Founded Year</p>
     <div class="space-y-2">
       <div>
-        <label class="text-sm text-gray-600 block mb-1">From</label>
+        <label class="text-sm text-[var(--fg-3)] block mb-1">From</label>
         <input
           v-model="lowValue"
           type="range"
           :min="yearBounds.min"
           :max="yearBounds.max"
           step="1"
-          class="w-full accent-utah-blue"
+          class="w-full accent-[var(--accent)]"
         />
       </div>
       <div>
-        <label class="text-sm text-gray-600 block mb-1">To</label>
+        <label class="text-sm text-[var(--fg-3)] block mb-1">To</label>
         <input
           v-model="highValue"
           type="range"
           :min="yearBounds.min"
           :max="yearBounds.max"
           step="1"
-          class="w-full accent-utah-blue"
+          class="w-full accent-[var(--accent)]"
         />
       </div>
-      <p class="text-sm text-gray-700 font-medium">{{ rangeLabel }}</p>
+      <p class="text-sm text-[var(--fg)] font-medium">{{ rangeLabel }}</p>
     </div>
   </div>
 </template>
