@@ -5276,5 +5276,414 @@
       ]
     },
     "needs_review": false
+  },
+  {
+    "id": "utah-department-of-workforce-services",
+    "name": "Utah Department of Workforce Services",
+    "summary": "Statewide workforce agency offering job training, hiring resources, employer support, and a 35,000+ job board across all industries.",
+    "eligibility": "Open to all Utah employers and job seekers.",
+    "url": "https://jobs.utah.gov/",
+    "email": null,
+    "tags": {
+      "stage": [
+        "any"
+      ],
+      "industry": [
+        "general"
+      ],
+      "goal": [
+        "hire_workforce"
+      ],
+      "resource_type": [
+        "government_program"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "weber-basin-job-corps",
+    "name": "Weber Basin Job Corps",
+    "summary": "Free vocational training in trades, culinary arts, and technical fields for young adults; a talent pipeline for northern Utah employers.",
+    "eligibility": "Young adults ages 16-24; employers may connect for entry-level hiring pipelines.",
+    "url": "https://weberbasin.jobcorps.gov/",
+    "email": null,
+    "tags": {
+      "stage": [
+        "idea",
+        "early_stage"
+      ],
+      "industry": [
+        "general",
+        "manufacturing"
+      ],
+      "goal": [
+        "hire_workforce"
+      ],
+      "resource_type": [
+        "training_education"
+      ],
+      "region": [
+        "northern_utah"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "clearfield-job-corps",
+    "name": "Clearfield Job Corps",
+    "summary": "Free education and vocational training in Davis County for young adults; connects graduates to local employers seeking entry-level talent.",
+    "eligibility": "Young adults ages 16-24; employers may engage for hiring pipelines.",
+    "url": "https://clearfield.jobcorps.gov/",
+    "email": null,
+    "tags": {
+      "stage": [
+        "idea",
+        "early_stage"
+      ],
+      "industry": [
+        "general"
+      ],
+      "goal": [
+        "hire_workforce"
+      ],
+      "resource_type": [
+        "training_education"
+      ],
+      "region": [
+        "northern_utah"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "talent-ready-utah",
+    "name": "Talent Ready Utah",
+    "summary": "Utah workforce development initiative bridging education and employers through apprenticeships, career pathways, and talent pipelines statewide.",
+    "eligibility": "Open to Utah employers and students seeking career-aligned training.",
+    "url": "https://talentready.ushe.edu/",
+    "email": null,
+    "tags": {
+      "stage": [
+        "any"
+      ],
+      "industry": [
+        "general"
+      ],
+      "goal": [
+        "hire_workforce"
+      ],
+      "resource_type": [
+        "government_program",
+        "training_education"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "usu-remote-online-initiative",
+    "name": "USU Remote Online Initiative",
+    "summary": "Utah State University program offering remote work training and e-commerce support to rural entrepreneurs and small businesses across Utah.",
+    "eligibility": "Rural and agriculture-based businesses and individuals statewide.",
+    "url": "https://extension.usu.edu/remoteworkcertificate/",
+    "email": null,
+    "tags": {
+      "stage": [
+        "idea",
+        "early_stage"
+      ],
+      "industry": [
+        "general",
+        "agriculture_food"
+      ],
+      "goal": [
+        "grow_sales_marketing",
+        "start_business"
+      ],
+      "resource_type": [
+        "training_education",
+        "university_center"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "apprenticeship-utah",
+    "name": "Apprenticeship Utah",
+    "summary": "State program connecting Utah employers to earn-while-you-learn apprenticeship pipelines across healthcare, construction, manufacturing, and IT.",
+    "eligibility": "Open to Utah employers and individuals seeking apprenticeship opportunities.",
+    "url": "https://apprenticeship.utah.gov/",
+    "email": null,
+    "tags": {
+      "stage": [
+        "any"
+      ],
+      "industry": [
+        "general",
+        "manufacturing",
+        "life_sciences"
+      ],
+      "goal": [
+        "hire_workforce"
+      ],
+      "resource_type": [
+        "government_program",
+        "training_education"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "utah-division-of-outdoor-recreation",
+    "name": "Utah Division of Outdoor Recreation",
+    "summary": "State agency administering outdoor recreation grants (UORG) and supporting businesses in the outdoor economy including trails and infrastructure.",
+    "eligibility": "Outdoor recreation businesses and organizations eligible for UORG grants.",
+    "url": "https://recreation.utah.gov/",
+    "email": "jasoncurry@utah.gov",
+    "tags": {
+      "stage": [
+        "early_stage",
+        "growth"
+      ],
+      "industry": [
+        "hospitality_tourism"
+      ],
+      "goal": [
+        "raise_capital",
+        "start_business"
+      ],
+      "resource_type": [
+        "government_program"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "utah-tourism-association",
+    "name": "Utah Tourism Association",
+    "summary": "Utah's tourism industry association offering advocacy, legislative updates, research tools, and networking for the state's visitor economy.",
+    "eligibility": "Tourism and hospitality businesses and organizations across Utah.",
+    "url": "https://utahtourism.org/",
+    "email": null,
+    "tags": {
+      "stage": [
+        "any"
+      ],
+      "industry": [
+        "hospitality_tourism"
+      ],
+      "goal": [
+        "network_community",
+        "grow_sales_marketing"
+      ],
+      "resource_type": [
+        "industry_association"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "utah-film-commission",
+    "name": "Utah Film Commission",
+    "summary": "State commission promoting Utah as a film and TV production hub, offering location scouting, crew resources, and production incentive programs.",
+    "eligibility": "Film, TV, and commercial production companies working in Utah.",
+    "url": "https://film.utah.gov/",
+    "email": "film@utah.gov",
+    "tags": {
+      "stage": [
+        "any"
+      ],
+      "industry": [
+        "arts_media"
+      ],
+      "goal": [
+        "start_business",
+        "grow_sales_marketing"
+      ],
+      "resource_type": [
+        "government_program"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "utah-office-of-tourism",
+    "name": "Utah Office of Tourism",
+    "summary": "State office driving visitor traffic to Utah through strategic marketing partnerships that create exposure for local tourism and hospitality businesses.",
+    "eligibility": "Tourism and hospitality businesses partnering with the state for marketing.",
+    "url": "https://travel.utah.gov/",
+    "email": "info@visitutah.com",
+    "tags": {
+      "stage": [
+        "any"
+      ],
+      "industry": [
+        "hospitality_tourism"
+      ],
+      "goal": [
+        "grow_sales_marketing"
+      ],
+      "resource_type": [
+        "government_program"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "visit-utah",
+    "name": "Visit Utah",
+    "summary": "Utah's official travel portal; a state-backed marketing channel for established tourism and hospitality businesses seeking visitor exposure.",
+    "eligibility": "Tourism businesses and destinations seeking state-level marketing exposure.",
+    "url": "https://www.visitutah.com/",
+    "email": "info@visitutah.com",
+    "tags": {
+      "stage": [
+        "growth"
+      ],
+      "industry": [
+        "hospitality_tourism"
+      ],
+      "goal": [
+        "grow_sales_marketing"
+      ],
+      "resource_type": [
+        "government_program"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": true
+  },
+  {
+    "id": "1mc-salt-lake",
+    "name": "1MC Salt Lake",
+    "summary": "Weekly Salt Lake City gathering for founders and entrepreneurs featuring pitches, education, and community building for all stages and industries.",
+    "eligibility": "Open to all founders, entrepreneurs, and small business owners.",
+    "url": "http://www.1mcslc.com",
+    "email": "Robert@1mcslc.com",
+    "tags": {
+      "stage": [
+        "any"
+      ],
+      "industry": [
+        "general"
+      ],
+      "goal": [
+        "network_community",
+        "start_business",
+        "raise_capital"
+      ],
+      "resource_type": [
+        "event"
+      ],
+      "region": [
+        "salt_lake_metro"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "offices-net-salt-lake-coworking",
+    "name": "Offices.net Salt Lake City Coworking",
+    "summary": "Flexible coworking memberships in Salt Lake City with hot desks, dedicated desks, shared offices, and business lounges throughout Utah.",
+    "eligibility": "Open to all businesses and entrepreneurs.",
+    "url": "https://offices.net/ut/salt-lake-city/coworking/",
+    "email": "info@offices.net",
+    "tags": {
+      "stage": [
+        "any"
+      ],
+      "industry": [
+        "general"
+      ],
+      "goal": [
+        "find_workspace"
+      ],
+      "resource_type": [
+        "coworking_space"
+      ],
+      "region": [
+        "salt_lake_metro"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "offices-co-salt-lake-office-space",
+    "name": "Offices.co Salt Lake City Office Space",
+    "summary": "Furnished executive suites and shared workspaces for rent in Salt Lake City through a national network spanning 143 US cities.",
+    "eligibility": "Any business or entrepreneur needing office space in Utah.",
+    "url": "https://offices.co/usa/salt-lake-city/",
+    "email": "info@offices.co",
+    "tags": {
+      "stage": [
+        "growth"
+      ],
+      "industry": [
+        "general"
+      ],
+      "goal": [
+        "find_workspace"
+      ],
+      "resource_type": [
+        "coworking_space"
+      ],
+      "region": [
+        "salt_lake_metro"
+      ]
+    },
+    "needs_review": true
+  },
+  {
+    "id": "ai-seminar-small-businesses-nonprofits",
+    "name": "AI Seminar for Small Businesses & Non-Profits",
+    "summary": "Free seminar helping small businesses and non-profits develop an AI strategy applicable across departments, held in downtown Salt Lake City.",
+    "eligibility": "Small businesses and non-profits in Utah.",
+    "url": "https://comtel.zohobackstage.com/aistratagy#/?lang=en",
+    "email": "njohnson@comtelut.com",
+    "tags": {
+      "stage": [
+        "idea",
+        "early_stage"
+      ],
+      "industry": [
+        "general"
+      ],
+      "goal": [
+        "start_business",
+        "grow_sales_marketing"
+      ],
+      "resource_type": [
+        "event"
+      ],
+      "region": [
+        "salt_lake_metro"
+      ]
+    },
+    "needs_review": true
   }
 ]

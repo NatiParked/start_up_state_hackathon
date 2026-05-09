@@ -1,97 +1,136 @@
-// Centralized service layer.
-// Today: reads from local JSON. Tomorrow: swap each function body to Supabase.
-// All views import from this file — no view talks to Supabase directly.
+// Centralized service layer — reads from tagged_resources.json (local) or Supabase.
+// All views import from this file only.
 
-import resourcesLocal from '../data/resources.json'
+import resourcesLocal from '../data/tagged_resources.json'
 import { createClient } from '@supabase/supabase-js'
 
 const url = import.meta.env.VITE_SUPABASE_URL
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY
 export const supabase = (url && key) ? createClient(url, key) : null
-const useSupabase = !!supabase
 
-// ---- domain constants (mirrored client-side for matching) ----
+// ---- domain constants ----
+
 export const STAGE_OPTIONS = [
-  { id: 'pre',     title: 'Pre-revenue',   sub: 'Idea, prototype, or first build' },
-  { id: 'early',   title: 'Early revenue', sub: 'First customers, hunting traction' },
-  { id: 'scaling', title: 'Scaling',       sub: 'Repeatable revenue, growing team' },
-  { id: 'est',     title: 'Established',   sub: 'Mature operations, broad needs' },
+  { id: 'idea',        title: 'Just an idea',   sub: 'Exploring or pre-product' },
+  { id: 'early_stage', title: 'Early stage',    sub: 'First customers, hunting traction' },
+  { id: 'growth',      title: 'Scaling',        sub: 'Repeatable revenue, growing team' },
 ]
+
 export const INDUSTRY_OPTIONS = [
-  { id: 'sw',     title: 'Software / IT',     sub: 'SaaS, AI, dev tools, infra', match: 'Software and Information Technology' },
-  { id: 'health', title: 'Healthcare',        sub: 'Life sciences, medtech, care', match: 'Life Sciences and Healthcare' },
-  { id: 'mfg',    title: 'Manufacturing',     sub: 'Hardware, industrial, defense', match: 'Manufacturing' },
-  { id: 'ag',     title: 'Agriculture',       sub: 'Food, ag-tech, rural enterprise', match: 'Agriculture' },
-  { id: 'hosp',   title: 'Hospitality / Food', sub: 'Restaurants, retail, services', match: 'Hospitality and Food Services' },
-  { id: 'other',  title: 'Other',             sub: 'Something else, mixed, unsure', match: 'Other' },
+  { id: 'tech_software',      title: 'Software / Tech',            sub: 'SaaS, AI, dev tools, infra' },
+  { id: 'life_sciences',      title: 'Healthcare / Life Sciences',  sub: 'Life sciences, medtech, care' },
+  { id: 'agriculture_food',   title: 'Agriculture & Food',          sub: 'Food, ag-tech, rural enterprise' },
+  { id: 'consumer_brands',    title: 'Consumer Goods & Retail',     sub: 'Brands, retail, e-commerce' },
+  { id: 'manufacturing',      title: 'Manufacturing',               sub: 'Hardware, industrial, defense' },
+  { id: 'hospitality_tourism',title: 'Hospitality & Tourism',       sub: 'Restaurants, travel, services' },
+  { id: 'arts_media',         title: 'Arts & Media',                sub: 'Creative, film, entertainment' },
+  { id: 'aerospace_defense',  title: 'Aerospace & Defense',         sub: 'Aerospace, defense, government' },
+  { id: 'general',            title: 'Other',                       sub: 'Something else or mixed' },
 ]
+
 export const TOPIC_OPTIONS = [
-  { id: 'fund',   title: 'Funding',           sub: 'Capital, grants, investment', match: 'Funding' },
-  { id: 'talent', title: 'Talent & hiring',   sub: 'Workforce, recruiting, training', match: 'Late Stage Growth' },
-  { id: 'comm',   title: 'Community',         sub: 'Network, mentors, peer founders', match: 'Entrepreneurship Communities' },
-  { id: 'legal',  title: 'Legal & compliance', sub: 'Formation, IP, taxes', match: 'Taxes and Finance' },
-  { id: 'mkt',    title: 'Marketing',         sub: 'Sales, brand, go-to-market', match: 'Marketing and Sales' },
+  { id: 'raise_capital',          title: 'Raise funding',              sub: 'Capital, grants, investment' },
+  { id: 'start_business',         title: 'Start my business',          sub: 'Formation, licensing, launch' },
+  { id: 'validate_idea',          title: 'Validate my idea',           sub: 'Research, pilots, feedback' },
+  { id: 'hire_workforce',         title: 'Hire & build a team',        sub: 'Workforce, recruiting, training' },
+  { id: 'grow_sales_marketing',   title: 'Grow sales & marketing',     sub: 'Sales, brand, go-to-market' },
+  { id: 'network_community',      title: 'Find community & mentors',   sub: 'Network, mentors, peer founders' },
+  { id: 'find_workspace',         title: 'Find a workspace',           sub: 'Office, coworking, makerspace' },
+  { id: 'government_contracting', title: 'Government contracting',     sub: 'Federal, state, procurement' },
+  { id: 'export_internationally', title: 'Export internationally',     sub: 'Global markets, trade support' },
+  { id: 'relocate_to_utah',       title: 'Relocate to Utah',           sub: 'Move or expand operations to Utah' },
 ]
-export const STAGE_TO_COMM = {
-  pre: ['Student','Rural','Multicultural','New American'],
-  early: ['Student','Multicultural','New American','Women'],
-  scaling: ['Women','Veteran'],
-  est: ['*'],
+
+export const REGION_OPTIONS = [
+  { id: 'salt_lake_metro',  title: 'Salt Lake Metro',      sub: 'Salt Lake City and surroundings' },
+  { id: 'silicon_slopes',   title: 'Silicon Slopes',       sub: 'Lehi, Provo, Orem area' },
+  { id: 'northern_utah',    title: 'Northern Utah',        sub: 'Ogden, Logan, Cache Valley' },
+  { id: 'park_city_heber',  title: 'Park City / Heber',   sub: 'Summit and Wasatch counties' },
+  { id: 'southern_utah',    title: 'Southern Utah',        sub: 'St. George, Cedar City area' },
+  { id: 'central_utah',     title: 'Central Utah',         sub: 'Richfield, Nephi, Manti' },
+  { id: 'eastern_utah',     title: 'Eastern Utah',         sub: 'Price, Moab, San Juan' },
+  { id: 'uinta_basin',      title: 'Uinta Basin',          sub: 'Vernal, Roosevelt, Duchesne' },
+]
+
+export const RESOURCE_TYPE_LABELS = {
+  grant_program:        'Grant',
+  vc_fund:              'VC Fund',
+  angel_group:          'Angel Group',
+  microloan_cdfi:       'Microloan',
+  incubator_accelerator:'Accelerator',
+  coworking_space:      'Coworking',
+  makerspace:           'Makerspace',
+  training_education:   'Training',
+  university_center:    'University',
+  government_program:   'Gov Program',
+  industry_association: 'Association',
+  chamber_econ_dev:     'Chamber',
+  event:                'Event',
+}
+
+export const REGION_LABELS = {
+  statewide:        'Statewide',
+  salt_lake_metro:  'Salt Lake Metro',
+  silicon_slopes:   'Silicon Slopes',
+  northern_utah:    'Northern Utah',
+  park_city_heber:  'Park City / Heber',
+  southern_utah:    'Southern Utah',
+  central_utah:     'Central Utah',
+  eastern_utah:     'Eastern Utah',
+  uinta_basin:      'Uinta Basin',
 }
 
 // ---- read ----
+
 export async function getResources() {
-  if (useSupabase) {
-    const { data, error } = await supabase
-      .from('resources').select('*').order('title')
-    if (error) throw error
-    return data.map(normalize)
-  }
   return resourcesLocal
 }
 
 export async function getResourceById(id) {
-  if (useSupabase) {
-    const { data, error } = await supabase
-      .from('resources').select('*').eq('id', id).single()
-    if (error) throw error
-    return normalize(data)
-  }
-  return resourcesLocal.find(r => String(r.id) === String(id))
+  return resourcesLocal.find(r => String(r.id) === String(id)) ?? null
 }
 
 // ---- score ----
-export async function scoreQuiz({ stage, industry, topic, location }) {
+
+export async function scoreQuiz({ stage, industry, topic, region }) {
   const all = await getResources()
-  const indMatch = INDUSTRY_OPTIONS.find(o => o.id === industry)?.match
-  const topMatch = TOPIC_OPTIONS.find(o => o.id === topic)?.match
-  const commList = STAGE_TO_COMM[stage] || []
-  const isAny = commList.includes('*')
+  const pool = all.filter(r => !r.needs_review)
 
-  const scored = all.map(r => {
+  const allSkipped = !stage && !industry && !topic && !region
+  if (allSkipped) {
+    return [...pool].sort((a, b) => a.name.localeCompare(b.name)).map(r => ({ ...r, score: 0 }))
+  }
+
+  const scored = pool.map(r => {
     let score = 0
-    const reasons = []
-    if (indMatch && r.industries.includes(indMatch)) { score += 100; reasons.push(['Industry', indMatch]) }
-    else if (industry === 'other' && r.industries.includes('Other')) { score += 50; reasons.push(['Industry','Other']) }
-    if (topMatch && r.topics.includes(topMatch)) { score += 80; reasons.push(['Topic', topMatch]) }
-    if (commList.length) {
-      if (isAny || r.communities.length === 0) { score += 20 }
-      else if (r.communities.some(c => commList.includes(c))) {
-        score += 40; reasons.push(['Community', r.communities.find(c => commList.includes(c))])
-      }
-    }
-    if (location && r.locations.includes(location)) { score += 20; reasons.push(['County', location]) }
-    if (r.communities.some(c => ['Women','Veteran','Multicultural','New American'].includes(c))) score += 5
-    return { ...r, score, reasons }
-  }).filter(r => r.score > 0)
 
-  scored.sort((a, b) => b.score - a.score || a.title.localeCompare(b.title))
-  return scored.slice(0, 24)
+    if (industry && r.tags.industry.includes(industry)) score += 100
+
+    if (topic && r.tags.goal.includes(topic)) score += 80
+
+    if (stage) {
+      if (r.tags.stage.includes('any') || r.tags.stage.includes(stage)) score += 40
+    }
+
+    if (region) {
+      if (r.tags.region.includes('statewide') || r.tags.region.includes(region)) score += 20
+    }
+
+    if (r.tags.resource_type.includes('grant_program') || r.tags.resource_type.includes('microloan_cdfi')) {
+      score += 5
+    }
+
+    return { ...r, score }
+  })
+
+  scored.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
+  return scored
 }
 
 // ---- write ----
+
 export async function submitProfile(payload) {
-  if (useSupabase) {
+  if (supabase) {
     const { data, error } = await supabase
       .from('startup_profiles')
       .insert([payload])
@@ -103,21 +142,4 @@ export async function submitProfile(payload) {
   console.log('[stub] submitProfile', payload)
   await new Promise(r => setTimeout(r, 600))
   return { ok: true, id: 'stub-' + Date.now() }
-}
-
-// ---- helpers ----
-function normalize(r) {
-  // tolerate either pipe-strings (raw CSV import) or arrays (already-normalized)
-  const arr = (v) => Array.isArray(v) ? v : (typeof v === 'string' ? v.split('|').map(s => s.trim()).filter(Boolean) : [])
-  return {
-    id: r.id,
-    title: r.title || r.Title,
-    description: r.description,
-    communities: arr(r.communities ?? r.Communities),
-    industries: arr(r.industries ?? r.Industries),
-    locations: arr(r.locations ?? r.Locations),
-    topics: arr(r.topics ?? r.Topics),
-    link: r.link,
-    email: r.email,
-  }
 }

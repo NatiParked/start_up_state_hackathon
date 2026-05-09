@@ -2,15 +2,16 @@
 import { ref, reactive, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import gsap from 'gsap'
-import { STAGE_OPTIONS, INDUSTRY_OPTIONS, TOPIC_OPTIONS } from '../api'
+import { STAGE_OPTIONS, INDUSTRY_OPTIONS, TOPIC_OPTIONS, REGION_OPTIONS } from '../api'
 import { quizState } from '../state/quiz'
 
 const router = useRouter()
 const step = ref(0)
 const steps = [
-  { key: 'stage', title: 'What stage is your company?', sub: 'This helps us personalize. There are no wrong answers.', options: STAGE_OPTIONS },
-  { key: 'industry', title: 'What industry are you building in?', sub: 'Pick the closest fit — we lean towards specificity.', options: INDUSTRY_OPTIONS },
-  { key: 'topic', title: 'What do you need most right now?', sub: 'One thing. We rank everything else around it.', options: TOPIC_OPTIONS },
+  { key: 'stage',    title: 'What stage is your company?',       sub: 'This helps us personalize. There are no wrong answers.', options: STAGE_OPTIONS },
+  { key: 'industry', title: 'What industry are you building in?', sub: 'Pick the closest fit — we lean towards specificity.',     options: INDUSTRY_OPTIONS },
+  { key: 'topic',    title: 'What do you need most right now?',   sub: 'One thing. We rank everything else around it.',           options: TOPIC_OPTIONS },
+  { key: 'region',   title: 'Where are you based in Utah?',       sub: 'We surface local resources alongside statewide ones.',    options: REGION_OPTIONS },
 ]
 
 function advance(then, dir = 1) {
@@ -35,7 +36,13 @@ function pick(val) {
   })
 }
 
-function skip() { advance(() => step.value < steps.length - 1 ? step.value++ : router.push('/results')) }
+function skip() {
+  advance(() => {
+    if (step.value < steps.length - 1) step.value++
+    else router.push('/results')
+  })
+}
+
 function back() {
   if (step.value > 0) advance(() => step.value--, -1)
   else router.push('/')
