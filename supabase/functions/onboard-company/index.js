@@ -15,7 +15,6 @@
 
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { runEnrichmentPipeline } from '../_shared/pipeline.js';
-import { normalizeDomain } from '../_shared/logo-dev.js';
 import { runQualityGate } from './quality-gate.js';
 
 /** CORS headers required so the Vue frontend can call this function from the browser. */

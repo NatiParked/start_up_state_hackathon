@@ -6,8 +6,8 @@
 
 | Field | Value |
 |-------|-------|
-| **Phase** | Phase 2: Core Enrichers & Pipeline Orchestrator |
-| **Status** | In Progress |
+| **Phase** | Phase 4: Frontend Submission UI |
+| **Status** | Pending |
 | **Blocker** | None |
 
 ## Phase Progress
@@ -15,8 +15,8 @@
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | Phase 1: Submissions Schema & Shared Helpers | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 2: Core Enrichers & Pipeline Orchestrator | ✅ Complete | 2026-05-09 | 2026-05-09 |
-| Phase 3: onboard-company Edge Function | Pending | — | — |
+| Phase 2: Core Enrichers & Pipeline Orchestrator | ✅ Verified | 2026-05-09 | 2026-05-09 |
+| Phase 3: onboard-company Edge Function | ✅ Complete | 2026-05-09 | 2026-05-09 |
 | Phase 4: Frontend Submission UI | Pending | — | — |
 
 ## Task Progress
@@ -36,10 +36,10 @@
 | 2.6: Create `_shared/enrichers/producthunt.js` | ✅ Done | 1 | ~2 min |
 | 2.7: Create `_shared/enrichers/news.js` | ✅ Done | 1 | ~1 min |
 | 2.8: Create `_shared/pipeline.js` | ✅ Done | 2 | ~2 min |
-| 3.1: Create `onboard-company/utah-bounds.js` | Pending | 1 | — |
-| 3.2: Create `onboard-company/quality-gate.js` | Pending | 1 | — |
-| 3.3: Create `onboard-company/prompts.js` | Pending | 1 | — |
-| 3.4: Create `onboard-company/index.js` | Pending | 2 | — |
+| 3.1: Create `onboard-company/utah-bounds.js` | ✅ Done | 1 | ~2 min |
+| 3.2: Create `onboard-company/quality-gate.js` | ✅ Done | 1 | ~2 min |
+| 3.3: Create `onboard-company/prompts.js` | ✅ Done | 1 | ~2 min |
+| 3.4: Create `onboard-company/index.js` | ✅ Done | 2 | ~3 min |
 | 4.1: Create `useOnboarding.js` composable | Pending | 1 | — |
 | 4.2: Create `SubmitForm.vue` | Pending | 1 | — |
 | 4.3: Create `SubmitProgress.vue` | Pending | 1 | — |
