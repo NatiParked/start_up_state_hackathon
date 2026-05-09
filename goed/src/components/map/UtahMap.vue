@@ -8,7 +8,7 @@ import { createClusterStyle } from '@/lib/clusterStyle'
 
 const UTAH_CENTER = [-111.525, 40.65]
 const UTAH_ZOOM = 7
-const CLUSTER_THRESHOLD = 8
+const CLUSTER_THRESHOLD = 7
 
 const store = useStartupsStore()
 const { companies, filteredCompanies, selectedCompany } = storeToRefs(store)
@@ -85,7 +85,7 @@ function onPointerMove(event) {
       hoveredClusterPosition.value = feature.getGeometry().getCoordinates()
       foundCluster = true
     }
-  })
+  }, { hitTolerance: 5 })
   if (!foundCluster) {
     hoveredClusterCompanies.value = []
     hoveredClusterPosition.value = null
@@ -100,14 +100,16 @@ function onPointerMove(event) {
       <ol-tile-layer>
         <ol-source-osm />
       </ol-tile-layer>
-      <ol-vector-layer :style-function="createClusterStyle">
+      <ol-vector-layer :style-function="createClusterStyle" :visible="!showIndividualPins">
         <ol-source-cluster :distance="40">
           <ol-source-vector>
             <ol-feature
               v-for="company in pinnableCompanies"
               :key="company.id"
               :properties="{ companyId: company.id }"
-            />
+            >
+              <ol-geom-point :coordinates="[company.lng, company.lat]" />
+            </ol-feature>
           </ol-source-vector>
         </ol-source-cluster>
       </ol-vector-layer>
@@ -125,8 +127,7 @@ function onPointerMove(event) {
       <ol-overlay
         v-if="showClusterPreview"
         :position="hoveredClusterPosition"
-        positioning="bottom-center"
-        :offset="[0, -8]"
+        positioning="center-center"
         class="pointer-events-none z-20"
       >
         <PinCluster :companies="hoveredClusterCompanies" :count="hoveredClusterCompanies.length" />
