@@ -138,8 +138,13 @@ async function handleSignOut() {
       </button>
     </div>
 
-    <!-- Analytics cards -->
-    <CompanyAnalytics :startup-id="id" />
+    <!-- Analytics intro + cards -->
+    <div class="space-y-2">
+      <p class="text-sm text-gray-600">
+        How many people have viewed your listing.
+      </p>
+      <CompanyAnalytics :startup-id="id" />
+    </div>
 
     <!-- Loading state -->
     <div v-if="isLoading" class="text-sm text-gray-500">Loading…</div>
