@@ -1,10 +1,10 @@
-# Epic 0001: Utah Startup Map & Founder's Navigator
+# Epic 0001: Utah Startup Map
 
 ## Challenge Brief
 **Utah GOED AI Builder Day Hackathon** — Requirements and judging rubric: https://startupstate.netlify.app/
 
 ## Vision
-Build a polished, premium-feeling **platform** for the Utah startup ecosystem — not a one-time directory, but a recurring destination that turns visitors into subscribers and founders into advocates. The core experience is an interactive map that visualizes every Utah company as a logo pin, paired with an AI-powered onboarding pipeline that lets any founder add their company in one URL paste. Retention mechanics — weekly digest emails, job-match alerts, profile view analytics, and shareable branded OG cards — convert a first visit into a habit. A second product, Founder's Navigator, helps founders find the right GOED programs, capital, and community resources. Submitted to the Utah GOED AI Builder Day Hackathon ($10k prize, potential live deployment on startup.utah.gov).
+Build a polished, premium-feeling **platform** for the Utah startup ecosystem — not a one-time directory, but a recurring destination that turns visitors into subscribers and founders into advocates. The core experience is an interactive map that visualizes every Utah company as a logo pin, paired with an AI-powered onboarding pipeline that lets any founder add their company in one URL paste. Retention mechanics — weekly digest emails, job-match alerts, profile view analytics, and shareable branded OG cards — convert a first visit into a habit. Submitted to the Utah GOED AI Builder Day Hackathon ($10k prize, potential live deployment on startup.utah.gov).
 
 The weekly digest, job alerts, profile analytics, and shareable OG cards are the retention mechanics that turn a one-time visitor into a recurring user.
 
@@ -23,7 +23,6 @@ Investors specifically lack a way to browse the Utah ecosystem by portfolio, syn
 - Weekly recurring refresh of job postings via pg_cron + ATS JSON APIs (no AI cost); investor/funding data refreshed on founder claim or quarterly only
 - Admin UI for GOED staff to manage submissions, edit records, trigger refreshes, and monitor subscriber counts
 - **Engagement & retention layer:** weekly personalized digest emails, anonymous view tracking with founder-facing analytics, and shareable branded OG social cards — turning one-time visitors into recurring users and passive listings into active founder touchpoints
-- Founder's Navigator delivering personalized resource recommendations + recommended GOED contact + next-steps guide from a 100-resource corpus
 - Brand-aligned (Utah blue #0065A4) but architected for easy restyle if absorbed into startup.utah.gov
 
 ## Scope
@@ -38,7 +37,6 @@ Investors specifically lack a way to browse the Utah ecosystem by portfolio, syn
 - Claude Haiku 4.5 via OpenCode Zen for map onboarding gaps (Edge Function fetches HTML, passes to model — no native `web_fetch` through gateway); Crunchbase scraped directly by the Edge Function
 - logo.dev integration for logos by domain
 - Nominatim integration for address geocoding
-- pgvector for semantic search over the resources corpus (Founder's Navigator)
 - Admin route protected by Supabase auth (GOED staff only) with submission queue, edit/delete, manual refresh, and **subscriber count + last digest send time**
 - Domain-ownership claim flow (magic link to `admin@<domain>`) for existing-company edits
 - **Subscription flow:** `/subscribe` route with email + filter preferences; confirmation email via Resend; weekly pg_cron digest personalized per subscriber
@@ -64,7 +62,6 @@ These out-of-scope items are explicitly deferred, not abandoned. They represent 
 - **Frontend:** Vue 3.5 (Composition API), Vue Router 5, Pinia, Vite 8, Tailwind CSS, GSAP for animation, vue3-openlayers for the map
 - **Backend:** Supabase (Postgres, Edge Functions on Deno, pgvector extension, Auth, Storage for any cached photos), pg_cron for scheduled refresh
 - **AI (Map pipeline):** Claude Haiku 4.5 via OpenCode Zen — API-first enrichment; structured sources run first, AI fills remaining gaps from website HTML fetched by the Edge Function (no native `web_fetch` through a gateway — the Edge Function fetches, then passes content to the model)
-- **AI (Founder's Navigator):** Google Gemini 1.5 Flash (free tier) — `text-embedding-004` at 768 dimensions for pgvector, Gemini Flash for reranking and next-steps synthesis
 - **External APIs:** logo.dev (logos by domain), Nominatim (OSM geocoding, with self-hosted fallback if rate limits bite), ATS endpoints (Greenhouse, Lever, Ashby) for jobs, Resend (transactional + digest email delivery)
 - **Hosting:** Netlify (frontend), Supabase (everything backend)
 - **Key constraints:**
@@ -89,14 +86,14 @@ Tied to the four hackathon judging criteria:
 - **Geocoding:** Nominatim (OSM) — free, accurate enough for street addresses; self-host if rate-limited
 - **Enrichment order:** API-first — logo.dev → Nominatim → Utah DCC → Crunchbase → ATS job endpoints → Claude Haiku (gap-fill only); AI only touches what structured sources could not provide; fires on new submissions and claim events, never on the weekly cron
 - **Weekly refresh:** ATS job endpoint polling only (Greenhouse/Lever/Ashby structured JSON — no AI, no cost); investor/funding refreshed on founder claim or quarterly; company profile only on founder request
-- **AI providers:** Claude Haiku 4.5 via OpenCode Zen for map pipeline; Google Gemini 1.5 Flash (free tier) for Founder's Navigator (embeddings at 768 dims via `text-embedding-004`, reranking, synthesis)
-- **Database:** Supabase Postgres with pgvector — single backend for relational data, vector search, auth, edge functions, and cron
+- **AI provider:** Claude Haiku 4.5 via OpenCode Zen for map onboarding pipeline
+- **Database:** Supabase Postgres with pgvector — single backend for relational data, auth, edge functions, and cron
 - **Onboarding intake:** URL only (not a long form) — radical simplicity is the differentiator; the pipeline does the work
 - **Auto-publish gate:** Quality + Utah-bounds + no-duplicate; everything else routes to admin queue — keeps the map clean without bottlenecking on humans
 - **Refresh cadence:** Weekly cron for jobs only (cheap HTTP calls); investor and profile data event-driven — scales to hundreds of companies without meaningful cost
 - **Claim verification:** Magic link to `admin@<domain>` — proves domain ownership without OAuth complexity
 - **Brand:** Utah blue #0065A4 + white, but theming layer kept thin (Tailwind + CSS variables) so startup.utah.gov can restyle
-- **Build order:** Map (M1) before AI pipeline (M2) before refresh (M3) before admin (M4) before Navigator (M5) before retention (M6) — every milestone leaves a shippable artifact
+- **Build order:** Map (M1) → AI pipeline (M2) → refresh (M3) → admin (M4) → retention (M5/M6) — every milestone leaves a shippable artifact
 - **Investor data:** stored as `text[]` on `startups` — avoids a join table for the hackathon, still queryable with `@>` array operators and filterable in the sidebar; upgrade to a proper `investors` table post-hackathon
 - **Email delivery:** Resend API — developer-friendly, generous free tier, works cleanly from Deno Edge Functions
 - **OG image generation:** Satori (or `@vercel/og` pattern adapted for Deno) in an Edge Function — no headless browser needed, purely JS-based PNG rendering
@@ -111,4 +108,4 @@ Tied to the four hackathon judging criteria:
 | Marcus | 34 | Ogden | Early-stage fabrication, veteran founder | Find other Ogden / Northern Utah hardware companies and suppliers |
 | Priya | 31 | Salt Lake City | B2B SaaS, raising VC | Filter by SaaS + Series A/B + investor to map competitive landscape and identify peers for warm intros; subscribe to weekly digest of new SaaS companies |
 | David | 45 | Provo | Medical device, international expansion | Find other Utah medical device companies for partnership; verify his own listing is accurate; share his OG card on LinkedIn |
-| Dr. Amir | 29 | Salt Lake City | Deep-tech / novel commercialization, PhD | Discover other research-driven Utah startups; later, use Founder's Navigator to find non-dilutive funding programs |
+| Dr. Amir | 29 | Salt Lake City | Deep-tech / novel commercialization, PhD | Discover other research-driven Utah startups; filter by deep-tech / biotech peers in the SLC ecosystem |

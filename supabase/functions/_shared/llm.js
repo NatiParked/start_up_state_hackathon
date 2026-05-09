@@ -44,6 +44,7 @@ function toGeminiSchema(schema) {
 
   // Remove JSON-Schema-specific fields Gemini doesn't support
   delete out.required;
+  delete out.additionalProperties;
 
   return out;
 }

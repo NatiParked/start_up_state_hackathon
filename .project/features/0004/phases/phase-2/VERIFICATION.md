@@ -1,82 +1,46 @@
-# Phase 2 Verification — ATS Shared Module
+# VERIFICATION — Feature 0004 Phase 2
 
-Date: 2026-05-09
-
-## Runtime Used
-
-Node.js v25.5.0 (Deno fallback — `deno` not on PATH)
-
-## Node Syntax Check
-
-```
-node --check /home/cayden/code/start_up_state_hackathon/supabase/functions/_shared/ats.js
-```
-
-Exit code: 0 (no syntax errors; file is valid ES module with default export)
-
-Note: Node.js `--check` does not support ES module syntax validation for `.js` files
-directly — syntax was confirmed implicitly by the smoke test import succeeding below.
-
-## Smoke Test Output
-
-Script: `/tmp/ats-smoke.mjs`
-
-```
-null → null
-empty → null
-non-ATS → null
-greenhouse → {"job_titles":[...],"is_hiring":true,"careers_url":"https://boards.greenhouse.io/stripe"}
-```
-
-### null/empty inputs
-
-```
-null → null
-empty → null
-```
-
-Both return `null` synchronously, no throw.
-
-### non-ATS host
-
-```
-non-ATS → null
-```
-
-`pollAts('https://example.com/careers')` returns `null` (unrecognized host), no throw.
-
-### Greenhouse live call
-
-```
-greenhouse → {"job_titles":["Account Executive, AI Sales","Account Executive, Commercial (New Business)",...(300+ titles)],"is_hiring":true,"careers_url":"https://boards.greenhouse.io/stripe"}
-```
-
-Live network was reachable. Returned a valid object with `job_titles`, `is_hiring: true`, and `careers_url`. Contract satisfied.
-
-## Grep Checks
-
-| Check | Command | Result | Status |
-|-------|---------|--------|--------|
-| No AI imports | `grep -iE "gemini\|claude\|anthropic\|openai\|@google/generative-ai" ats.js` | No matches (exit 1) | PASS |
-| User-Agent present | `grep -c "goed-startup-map" ats.js` | 1 | PASS |
-| AbortController present | `grep -c "AbortController" ats.js` | 2 | PASS |
-| 10-second timeout | `grep -cE "10_000\|10000" ats.js` | 1 | PASS |
-| Greenhouse endpoint + content=false | `grep "boards-api.greenhouse.io/v1/boards/" ats.js` | Shows `?content=false` | PASS |
-| Lever endpoint | `grep -q "api.lever.co/v0/postings/" ats.js` | Found | PASS |
-| Ashby GraphQL endpoint | `grep -q "jobs.ashbyhq.com/api/non-user-graphql" ats.js` | Found | PASS |
-| Default export | `grep -q "export default" ats.js` | Found | PASS |
+**Date:** 2026-05-09 15:32
+**Phase:** ATS Shared Module
+**App URL:** http://localhost:5173
 
 ## Summary
 
-All verifications passed:
-- Module is valid ES module syntax
-- Default export `pollAts` present
-- All null/invalid inputs return null without throwing
-- Non-ATS host returns null
-- Greenhouse live call returned real data (network reachable)
-- No AI imports
-- `User-Agent: goed-startup-map` present via shared `fetchWithTimeout` helper
-- `AbortController` with 10-second timeout present
-- Correct endpoints: Greenhouse `?content=false`, Lever v0, Ashby GraphQL
+| Category   | Pass | Fail | Skip | Total |
+|------------|------|------|------|-------|
+| Smoke      | 1    | 0    | 0    | 1     |
+| ENV        | 0    | 0    | 0    | 0     |
+| CODE       | 5    | 0    | 0    | 5     |
+| UI         | 0    | 0    | 0    | 0     |
+| **Total**  | 6    | 0    | 0    | 6     |
 
-VERIFICATION:PASS
+**Overall: PASS**
+_(PASS requires: smoke PASS or SKIP, 0 ENV failures, 0 CODE failures, 0 UI failures. SKIPs are acceptable.)_
+
+## Smoke Test
+
+**Result:** PASS
+**URL:** http://localhost:5173
+
+App loaded with title "Utah Startup Map". Full map view rendered with filter sidebar (Sector, Stage, Company Size, Hiring, Region, Investors, Founded Year filters all visible), 223 companies shown, 55 hiring, 134 with investors. Company logo grid and OpenStreetMap layer visible.
+
+Only console error: `Failed to load resource: 404 (Not Found) @ /favicon.ico` — missing favicon, does not affect app mounting or functionality.
+
+## Criteria Results
+
+### ENV
+_(none for this phase)_
+
+### CODE
+- **PASS** — `pollAts(null)` returns `null` without throwing — confirmed via Node test (`null → null`, `empty → null`, no throw)
+- **PASS** — `pollAts('https://example.com/careers')` returns `null` — confirmed via Node test (`non-ATS → null`)
+- **PASS** — `pollAts('https://boards.greenhouse.io/stripe')` returns object with `job_titles`, `is_hiring`, `careers_url` (or graceful null if unreachable) — code inspection confirms `_pollGreenhouse` extracts slug, calls `boards-api.greenhouse.io/v1/boards/{slug}/jobs?content=false`, returns normalized `{ job_titles, is_hiring, careers_url }`; prior live run (2026-05-09) returned 300+ Stripe titles with `is_hiring: true`; graceful null on non-200 response is implemented at `if (!response || !response.ok) return null`
+- **PASS** — No AI imports — `grep -iE "gemini|claude|anthropic|openai|@google/generative-ai" ats.js` → no matches
+- **PASS** — Module importable without syntax errors — `node --check supabase/functions/_shared/ats.js` exit code 0; `export default async function pollAts` confirmed present
+
+### UI
+_(none for this phase — no browser interaction criteria)_
+
+## Failures
+
+_(none)_

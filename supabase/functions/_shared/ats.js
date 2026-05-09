@@ -3,45 +3,20 @@
  * Detects Greenhouse, Lever, and Ashby job boards from a careers URL,
  * fetches open job postings, and returns a normalized hiring record.
  *
- * Usage: import pollAts from '../_shared/ats.js'
+ * Shared with Feature 0005 — do NOT move this file out of `_shared/`.
+ * Usage: import { pollAts } from '../_shared/ats.js'
  */
 
 /**
- * Shared fetch wrapper: sets User-Agent, applies a 10-second AbortController
- * timeout, and returns null on any thrown error (network failure, abort, etc.).
+ * Extract the slug (first path segment after the host) from a URL string.
  *
- * @param {string} url
- * @param {RequestInit} [options]
- * @returns {Promise<Response|null>}
- */
-async function fetchWithTimeout(url, options = {}) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 10_000);
-  try {
-    return await fetch(url, {
-      ...options,
-      headers: {
-        'User-Agent': 'goed-startup-map',
-        ...(options.headers ?? {}),
-      },
-      signal: controller.signal,
-    });
-  } catch (_) {
-    return null;
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
-/**
- * Extract the slug (first non-empty path segment) from a URL string.
- *
- * @param {string} urlStr
- * @returns {string|null}
+ * @param {string} urlStr - a full URL, e.g. 'https://boards.greenhouse.io/acme/jobs/123'
+ * @returns {string|null} first non-empty path segment, or null if none found
  */
 function extractSlug(urlStr) {
   try {
-    const segments = new URL(urlStr).pathname.split('/').filter(Boolean);
+    const parsed = new URL(urlStr);
+    const segments = parsed.pathname.split('/').filter(Boolean);
     return segments.length > 0 ? segments[0] : null;
   } catch (_) {
     return null;
@@ -52,17 +27,22 @@ function extractSlug(urlStr) {
  * Detect the ATS platform from a careers URL and return open job postings.
  *
  * Supported platforms:
- *  - Greenhouse (`greenhouse.io`)  → GET boards-api.greenhouse.io/v1/boards/{slug}/jobs?content=false
- *  - Lever (`lever.co`)            → GET api.lever.co/v0/postings/{slug}?mode=json
- *  - Ashby (`ashbyhq.com`)         → POST jobs.ashbyhq.com/api/non-user-graphql (GraphQL)
+ *  - Greenhouse (`greenhouse.io`)  → GET https://boards-api.greenhouse.io/v1/boards/{slug}/jobs
+ *  - Lever (`lever.co`)            → GET https://api.lever.co/v0/postings/{slug}?mode=json
+ *  - Ashby (`ashbyhq.com`)         → GET https://api.ashbyhq.com/posting-api/job-board/{slug}
+ *
+ * The slug is extracted from the first path segment of the provided careers URL.
  *
  * @param {string|null|undefined} careersUrl - the company's careers page URL
  * @returns {Promise<{job_titles: string[], is_hiring: boolean, careers_url: string}|null>}
- *   Normalized hiring record, or null for: null/undefined/empty/non-string input,
- *   invalid URL, unrecognized ATS host, network errors, non-2xx responses,
- *   or Ashby 401/403. This function never throws.
+ *   Normalized hiring record, or null for:
+ *   - null/empty input
+ *   - unrecognized ATS host
+ *   - network errors
+ *   - non-2xx API responses
+ * @throws never — all errors are caught internally and return null
  */
-export default async function pollAts(careersUrl) {
+export async function pollAts(careersUrl) {
   if (!careersUrl || typeof careersUrl !== 'string' || careersUrl.trim() === '') {
     return null;
   }
@@ -76,79 +56,73 @@ export default async function pollAts(careersUrl) {
 
   const host = parsedUrl.hostname.toLowerCase();
   const slug = extractSlug(careersUrl);
+
   if (!slug) return null;
 
-  if (host.includes('greenhouse.io')) return _pollGreenhouse(slug, careersUrl);
-  if (host.includes('lever.co')) return _pollLever(slug, careersUrl);
-  if (host.includes('ashbyhq.com')) return _pollAshby(slug, careersUrl);
+  try {
+    if (host.includes('greenhouse.io')) {
+      return await _pollGreenhouse(slug, careersUrl);
+    }
 
-  return null;
+    if (host.includes('lever.co')) {
+      return await _pollLever(slug, careersUrl);
+    }
+
+    if (host.includes('ashbyhq.com')) {
+      return await _pollAshby(slug, careersUrl);
+    }
+
+    // Unrecognized ATS host
+    return null;
+  } catch (_) {
+    return null;
+  }
 }
 
-/**
- * @param {string} slug
- * @param {string} careersUrl
- * @returns {Promise<{job_titles: string[], is_hiring: boolean, careers_url: string}|null>}
- */
 async function _pollGreenhouse(slug, careersUrl) {
-  const response = await fetchWithTimeout(
-    `https://boards-api.greenhouse.io/v1/boards/${slug}/jobs?content=false`,
-  );
-  if (!response || !response.ok) return null;
-
-  let json;
-  try { json = await response.json(); } catch (_) { return null; }
-
-  const jobs = Array.isArray(json.jobs) ? json.jobs : [];
-  const job_titles = jobs.map(j => j.title).filter(Boolean);
-  return { job_titles, is_hiring: job_titles.length > 0, careers_url: careersUrl };
-}
-
-/**
- * @param {string} slug
- * @param {string} careersUrl
- * @returns {Promise<{job_titles: string[], is_hiring: boolean, careers_url: string}|null>}
- */
-async function _pollLever(slug, careersUrl) {
-  const response = await fetchWithTimeout(
-    `https://api.lever.co/v0/postings/${slug}?mode=json`,
-  );
-  if (!response || !response.ok) return null;
-
-  let json;
-  try { json = await response.json(); } catch (_) { return null; }
-
-  const postings = Array.isArray(json) ? json : [];
-  const job_titles = postings.map(p => p.text).filter(Boolean);
-  return { job_titles, is_hiring: job_titles.length > 0, careers_url: careersUrl };
-}
-
-/**
- * @param {string} slug
- * @param {string} careersUrl
- * @returns {Promise<{job_titles: string[], is_hiring: boolean, careers_url: string}|null>}
- */
-async function _pollAshby(slug, careersUrl) {
-  const response = await fetchWithTimeout('https://jobs.ashbyhq.com/api/non-user-graphql', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      operationName: 'ApiJobBoardWithTeams',
-      variables: { organizationHostedJobsPageName: slug },
-      query: '{ jobBoard { jobPostings { title } } }',
-    }),
-  });
-
-  if (!response) return null;
-  if (response.status === 401 || response.status === 403) return null;
+  const apiUrl = `https://boards-api.greenhouse.io/v1/boards/${slug}/jobs`;
+  let response;
+  try {
+    response = await fetch(apiUrl, { headers: { 'User-Agent': 'goed-hackathon' } });
+  } catch (_) {
+    return null;
+  }
   if (!response.ok) return null;
-
   let json;
   try { json = await response.json(); } catch (_) { return null; }
+  const jobs = Array.isArray(json.jobs) ? json.jobs : [];
+  const job_titles = jobs.map((j) => j.title).filter(Boolean);
+  return { job_titles, is_hiring: job_titles.length > 0, careers_url: careersUrl };
+}
 
-  const postings = Array.isArray(json?.data?.jobBoard?.jobPostings)
-    ? json.data.jobBoard.jobPostings
-    : [];
-  const job_titles = postings.map(p => p.title).filter(Boolean);
+async function _pollLever(slug, careersUrl) {
+  const apiUrl = `https://api.lever.co/v0/postings/${slug}?mode=json`;
+  let response;
+  try {
+    response = await fetch(apiUrl, { headers: { 'User-Agent': 'goed-hackathon' } });
+  } catch (_) {
+    return null;
+  }
+  if (!response.ok) return null;
+  let json;
+  try { json = await response.json(); } catch (_) { return null; }
+  const postings = Array.isArray(json) ? json : [];
+  const job_titles = postings.map((p) => p.text).filter(Boolean);
+  return { job_titles, is_hiring: job_titles.length > 0, careers_url: careersUrl };
+}
+
+async function _pollAshby(slug, careersUrl) {
+  const apiUrl = `https://api.ashbyhq.com/posting-api/job-board/${slug}`;
+  let response;
+  try {
+    response = await fetch(apiUrl, { headers: { 'User-Agent': 'goed-hackathon', 'Accept': 'application/json' } });
+  } catch (_) {
+    return null;
+  }
+  if (!response.ok) return null;
+  let json;
+  try { json = await response.json(); } catch (_) { return null; }
+  const postings = Array.isArray(json.jobPostings) ? json.jobPostings : Array.isArray(json.jobs) ? json.jobs : [];
+  const job_titles = postings.map((p) => p.title).filter(Boolean);
   return { job_titles, is_hiring: job_titles.length > 0, careers_url: careersUrl };
 }
