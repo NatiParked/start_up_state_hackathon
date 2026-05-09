@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Phase** | Phase 1: Auth Foundation & Route Guard |
+| **Phase** | Phase 2: Admin Shell & Dashboard |
 | **Status** | ✅ Complete |
 | **Blocker** | None |
 
@@ -14,8 +14,8 @@
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| Phase 1: Auth Foundation & Route Guard | ✅ Complete | 2026-05-09 | 2026-05-09 |
-| Phase 2: Admin Shell & Dashboard | 🔲 Pending | — | — |
+| Phase 1: Auth Foundation & Route Guard | ✅ Verified | 2026-05-09 | 2026-05-09 |
+| Phase 2: Admin Shell & Dashboard | ✅ Complete | 2026-05-09 | 2026-05-09 |
 | Phase 3: Submission Queue & Company CRUD | 🔲 Pending | — | — |
 | Phase 4: Refresh Control, Subscriber Shell & Roadmap Page | 🔲 Pending | — | — |
 
@@ -26,6 +26,9 @@
 | Task 1: Create 0006_admin_users.sql migration | ✅ Done | 1 | — |
 | Task 2: useAdminAuth composable + useAdminStore | ✅ Done | 2 | — |
 | Task 3: Router guard + routes + login/dashboard views | ✅ Done | 3 | — |
+| Task 2.1: Create AdminLayout.vue sidebar shell | ✅ Done | 1 | — |
+| Task 2.2: Overwrite AdminDashboard.vue with six metric cards | ✅ Done | 1 | — |
+| Task 2.3: Restructure router/index.js with nested layout | ✅ Done | 2 | — |
 
 ## Decisions Log
 
