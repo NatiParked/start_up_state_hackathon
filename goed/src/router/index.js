@@ -26,13 +26,41 @@ const router = createRouter({
     },
     {
       path: '/admin',
-      redirect: '/admin/dashboard',
-    },
-    {
-      path: '/admin/dashboard',
-      name: 'AdminDashboard',
-      component: () => import('@/views/admin/AdminDashboard.vue'),
+      name: 'Admin',
+      component: () => import('@/views/admin/AdminLayout.vue'),
       beforeEnter: adminGuard,
+      redirect: { name: 'AdminDashboard' },
+      children: [
+        {
+          path: 'dashboard',
+          name: 'AdminDashboard',
+          component: () => import('@/views/admin/AdminDashboard.vue'),
+        },
+        {
+          path: 'submissions',
+          name: 'AdminSubmissions',
+          component: () => import('@/views/PlaceholderView.vue'),
+          props: { title: 'Submissions' },
+        },
+        {
+          path: 'companies',
+          name: 'AdminCompanies',
+          component: () => import('@/views/PlaceholderView.vue'),
+          props: { title: 'Companies' },
+        },
+        {
+          path: 'refresh',
+          name: 'AdminRefresh',
+          component: () => import('@/views/PlaceholderView.vue'),
+          props: { title: 'Refresh' },
+        },
+        {
+          path: 'subscribers',
+          name: 'AdminSubscribers',
+          component: () => import('@/views/PlaceholderView.vue'),
+          props: { title: 'Subscribers' },
+        },
+      ],
     },
     {
       path: '/roadmap',
