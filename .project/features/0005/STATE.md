@@ -7,7 +7,7 @@
 | Field | Value |
 |-------|-------|
 | **Phase** | Phase 3: Submission Queue & Company CRUD |
-| **Status** | 🔄 In Progress |
+| **Status** | ✅ Complete |
 | **Blocker** | None |
 
 ## Phase Progress
@@ -16,7 +16,7 @@
 |-------|--------|---------|-----------|
 | Phase 1: Auth Foundation & Route Guard | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 2: Admin Shell & Dashboard | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 3: Submission Queue & Company CRUD | 🔄 In Progress | 2026-05-09 | — |
+| Phase 3: Submission Queue & Company CRUD | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 4: Refresh Control, Subscriber Shell & Roadmap Page | 🔲 Pending | — | — |
 
 ## Task Progress
@@ -30,6 +30,8 @@
 | Task 2.2: Overwrite AdminDashboard.vue with six metric cards | ✅ Done | 1 | — |
 | Task 2.3: Restructure router/index.js with nested layout | ✅ Done | 2 | — |
 | Task 3.1: RLS migration + approve/reject-submission Edge Functions | ✅ Done | 1 | — |
+| Task 3.2: SubmissionQueue.vue + SubmissionReview.vue | ✅ Done | 2 | — |
+| Task 3.3: CompanyList.vue + CompanyEditor.vue + router wire-up | ✅ Done | 2 | — |
 
 ## Decisions Log
 
