@@ -41,8 +41,8 @@ onMounted(() => {
         <div class="mt-auto pt-16">
           <hr class="hr-thin" />
           <div class="grid grid-cols-3 gap-6 pt-6 fade-up" data-anim="meta">
-            <div><div class="kicker">Resources</div><div class="display-sm mt-2">213</div></div>
-            <div><div class="kicker">Counties</div><div class="display-sm mt-2">29</div></div>
+            <div><div class="kicker">Resources</div><div class="display-sm mt-2">194</div></div>
+            <div><div class="kicker">Regions</div><div class="display-sm mt-2">8</div></div>
             <div><div class="kicker">Avg. time</div><div class="display-sm mt-2">~2 min</div></div>
           </div>
         </div>
