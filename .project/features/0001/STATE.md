@@ -1,12 +1,12 @@
 # Feature 0001: Map Foundation — Infrastructure & Data Import — State
 
-> Last updated: 2026-05-08
+> Last updated: 2026-05-09
 
 ## Current Status
 
 | Field | Value |
 |-------|-------|
-| **Phase** | Phase 2: Database Schema & Migration |
+| **Phase** | Phase 3: Seed Import Script |
 | **Status** | Pending |
 | **Blocker** | None |
 
@@ -14,8 +14,8 @@
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| Phase 1: Dependencies & Configuration | ✅ Complete | 2026-05-08 | 2026-05-08 |
-| Phase 2: Database Schema & Migration | ⏳ Pending | — | — |
+| Phase 1: Dependencies & Configuration | ✅ Verified | 2026-05-08 | 2026-05-08 |
+| Phase 2: Database Schema & Migration | ✅ Complete | 2026-05-09 | 2026-05-09 |
 | Phase 3: Seed Import Script | ⏳ Pending | — | — |
 | Phase 4: Pinia Stores, Router & Deploy Config | ⏳ Pending | — | — |
 
@@ -26,6 +26,7 @@
 | 1.1: Install npm dependencies | ✅ Done | 1 | ~51s |
 | 1.2: Create config files, brand CSS, Supabase client, .env.example | ✅ Done | 2 | ~48s |
 | 1.3: Wire main.js + App.vue | ✅ Done | 3 | ~88s |
+| 2.1: Author the initial migration SQL file | ✅ Done | 1 | ~61s |
 
 ## Decisions Log
 
