@@ -7,7 +7,7 @@
 | Field | Value |
 |-------|-------|
 | **Phase** | Phase 4: Frontend Submission UI |
-| **Status** | ✅ Complete — C2 fix applied |
+| **Status** | ✅ Verified |
 | **Blocker** | None |
 
 ## Phase Progress
@@ -17,7 +17,7 @@
 | Phase 1: Submissions Schema & Shared Helpers | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 2: Core Enrichers & Pipeline Orchestrator | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 3: onboard-company Edge Function | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 4: Frontend Submission UI | ✅ Complete | 2026-05-09 | 2026-05-09 |
+| Phase 4: Frontend Submission UI | ✅ Verified | 2026-05-09 | 2026-05-09 |
 
 ## Task Progress
 
@@ -64,7 +64,7 @@
 
 | Issue | Status | Resolution |
 |-------|--------|------------|
-| None | — | — |
+| C2/C3/C6 verify failures | ✅ Fixed (bbd2afb) | MIN_RUNNING_MS→8000; llm.js→Gemini; fn redeployed v4 |
 
 ---
 *Updated by `/spec:execute-phase` during implementation*
