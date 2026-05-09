@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Phase** | Phase 2: Company Drawer |
+| **Phase** | Phase 3: Filter Sidebar & URL Sync |
 | **Status** | ✅ Complete |
 | **Blocker** | None |
 
@@ -15,8 +15,8 @@
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | Phase 1: Map Shell & Logo-Pin Rendering | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 2: Company Drawer | ✅ Complete | 2026-05-09 | 2026-05-09 |
-| Phase 3: Filter Sidebar & URL Sync | Pending | — | — |
+| Phase 2: Company Drawer | ✅ Verified | 2026-05-09 | 2026-05-09 |
+| Phase 3: Filter Sidebar & URL Sync | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 4: Cluster Rendering & Polish | Pending | — | — |
 
 ## Task Progress
@@ -27,6 +27,9 @@
 | Phase 1 — Task 2: CompanyPin, UtahMap, EcosystemStatsBar, MapView | ✅ Complete | 2 | 2026-05-09 | 2026-05-09 |
 | Phase 2 — Task 1: CompanyDrawer.vue with computed sections + GSAP animation | ✅ Complete | 1 | 2026-05-09 | 2026-05-09 |
 | Phase 2 — Task 2: Wire CompanyDrawer into MapView with click-outside dismissal | ✅ Complete | 2 | 2026-05-09 | 2026-05-09 |
+| Phase 3 — Task 1: Build 7 filter sub-components | ✅ Complete | 1 | 2026-05-09 | 2026-05-09 |
+| Phase 3 — Task 2: Implement filteredCompanies predicate in startups.js | ✅ Complete | 1 | 2026-05-09 | 2026-05-09 |
+| Phase 3 — Task 3: FilterSidebar.vue + URL sync + MapView wire-up | ✅ Complete | 2 | 2026-05-09 | 2026-05-09 |
 
 ## Decisions Log
 
