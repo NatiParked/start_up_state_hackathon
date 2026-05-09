@@ -38,7 +38,7 @@ function isActive(name) {
 </script>
 
 <template>
-  <div class="min-h-screen flex bg-gray-100">
+  <div class="h-full flex bg-gray-100">
     <!-- Sidebar -->
     <aside ref="sidebarEl" class="w-56 bg-utah-blue flex flex-col">
       <!-- Logo / brand area -->
@@ -79,7 +79,7 @@ function isActive(name) {
       </header>
 
       <!-- Nested route content -->
-      <main class="flex-1 p-6">
+      <main class="flex-1 min-h-0 overflow-hidden flex flex-col">
         <RouterView />
       </main>
     </div>

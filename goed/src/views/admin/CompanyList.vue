@@ -4,6 +4,7 @@ import { useStartupsStore } from '@/stores/startups'
 import { storeToRefs } from 'pinia'
 import CompanyEditor from '@/components/admin/CompanyEditor.vue'
 import gsap from 'gsap'
+import { supabase } from '@/lib/supabase'
 
 const store = useStartupsStore()
 const { companies, isLoading } = storeToRefs(store)
@@ -13,6 +14,7 @@ const sortKey = ref('name')
 const sortDir = ref('asc')
 const selectedCompany = ref(null)
 const panelRef = ref(null)
+const actionError = ref(null)
 
 onMounted(() => store.fetchAll())
 
@@ -47,6 +49,36 @@ function closeEditor() {
   selectedCompany.value = null
 }
 
+async function toggleHidden(company) {
+  actionError.value = null
+  try {
+    const { error } = await supabase
+      .from('map_startups')
+      .update({ is_hidden: !company.is_hidden })
+      .eq('id', company.id)
+    if (error) throw error
+    await store.fetchAll()
+  } catch (err) {
+    actionError.value = err.message
+  }
+}
+
+async function softDelete(company) {
+  actionError.value = null
+  const confirmed = window.confirm('Soft-delete this company? It will be hidden from the public map but recoverable.')
+  if (!confirmed) return
+  try {
+    const { error } = await supabase
+      .from('map_startups')
+      .update({ deleted_at: new Date().toISOString() })
+      .eq('id', company.id)
+    if (error) throw error
+    await store.fetchAll()
+  } catch (err) {
+    actionError.value = err.message
+  }
+}
+
 watch(selectedCompany, (val) => {
   if (val && panelRef.value) {
     gsap.from(panelRef.value, { x: '100%', duration: 0.3, ease: 'power2.out' })
@@ -55,9 +87,9 @@ watch(selectedCompany, (val) => {
 </script>
 
 <template>
-  <div class="p-6">
+  <div class="h-full flex flex-col p-6">
     <!-- Page header -->
-    <div class="flex items-center gap-3 mb-6">
+    <div class="flex items-center gap-3 mb-6 shrink-0">
       <h1 class="text-2xl font-bold text-gray-900">Companies</h1>
       <span class="bg-utah-blue text-white text-sm font-semibold px-2.5 py-0.5 rounded-full">
         {{ displayedCompanies.length }}
@@ -65,13 +97,16 @@ watch(selectedCompany, (val) => {
     </div>
 
     <!-- Search -->
-    <div class="mb-4">
+    <div class="mb-4 shrink-0">
       <input
         v-model="searchQuery"
         type="text"
         placeholder="Search by name..."
         class="w-full max-w-sm border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
       />
+      <div v-if="actionError" class="mt-2 text-error-red text-sm bg-red-50 border border-red-200 rounded-md px-3 py-2 max-w-sm">
+        {{ actionError }}
+      </div>
     </div>
 
     <!-- Loading state -->
@@ -79,8 +114,8 @@ watch(selectedCompany, (val) => {
       Loading companies...
     </div>
 
-    <!-- Table -->
-    <div v-else class="overflow-x-auto rounded-lg border border-gray-200">
+    <!-- Table: scrolls independently -->
+    <div v-else class="flex-1 min-h-0 overflow-y-auto overflow-x-auto rounded-lg border border-gray-200">
       <table class="min-w-full divide-y divide-gray-200 text-sm">
         <thead class="bg-gray-50">
           <tr>
@@ -120,6 +155,7 @@ watch(selectedCompany, (val) => {
                 <span v-if="sortKey === 'created_at'">{{ sortDir === 'asc' ? '▲' : '▼' }}</span>
               </button>
             </th>
+            <th class="px-4 py-3 text-left font-semibold text-gray-600">Actions</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100 bg-white">
@@ -129,15 +165,41 @@ watch(selectedCompany, (val) => {
             class="cursor-pointer hover:bg-gray-50 transition-colors"
             @click="openEditor(c)"
           >
-            <td class="px-4 py-3 font-medium text-gray-900">{{ c.name }}</td>
+            <td class="px-4 py-3 font-medium text-gray-900">
+              <span>{{ c.name }}</span>
+              <span
+                v-if="c.deleted_at"
+                class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-error-red"
+              >Deleted</span>
+              <span
+                v-else-if="c.is_hidden"
+                class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-500"
+              >Hidden</span>
+            </td>
             <td class="px-4 py-3 text-gray-600">{{ c.sector ?? '—' }}</td>
             <td class="px-4 py-3 text-gray-600">{{ c.stage ?? '—' }}</td>
             <td class="px-4 py-3 text-gray-500">
               {{ c.created_at ? new Date(c.created_at).toLocaleDateString() : '—' }}
             </td>
+            <td class="px-4 py-3 text-gray-500">
+              <div class="flex items-center gap-2">
+                <button
+                  class="text-xs font-medium text-utah-blue hover:underline whitespace-nowrap"
+                  @click.stop="toggleHidden(c)"
+                >
+                  {{ c.is_hidden ? 'Show' : 'Hide' }}
+                </button>
+                <button
+                  class="text-xs font-medium text-error-red hover:underline whitespace-nowrap"
+                  @click.stop="softDelete(c)"
+                >
+                  Delete
+                </button>
+              </div>
+            </td>
           </tr>
           <tr v-if="displayedCompanies.length === 0">
-            <td colspan="4" class="px-4 py-8 text-center text-gray-400">No companies found.</td>
+            <td colspan="5" class="px-4 py-8 text-center text-gray-400">No companies found.</td>
           </tr>
         </tbody>
       </table>

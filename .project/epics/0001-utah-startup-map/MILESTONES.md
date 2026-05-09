@@ -182,6 +182,7 @@ All enrichers are best-effort: if a source returns no confident match, it is sil
 ## Milestone 4: AI Onboarding — Claim & Self-Service Edit
 **Complexity: M**
 **Tier: 3** — Build after M9 and M10. Demo-critical for founders but judges prioritize the AI pipeline and Navigator over the claim flow.
+**Linked Feature: 0006**
 
 Gives founders ownership of their listing. Domain-verified magic link → self-service edit UI → profile always current without GOED involvement.
 
@@ -271,6 +272,8 @@ Protected `/admin` route with Supabase auth (GOED staff allow-list), submission 
 ## Milestone 9: Engagement — Subscriptions & AI Digest
 **Complexity: M**
 **Tier: 3**
+**Linked Feature: 0007**
+**Linked Feature: 0007**
 
 The primary retention mechanic. Visitors subscribe to weekly Utah startup updates; Claude writes a personalized digest (or ecosystem highlights when their filter has no new activity).
 

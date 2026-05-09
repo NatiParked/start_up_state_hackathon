@@ -90,11 +90,11 @@ watch(
 
 <template>
   <aside
-    :class="['flex-shrink-0 border-r flex flex-col transition-all duration-200 overflow-y-auto', sidebarClass]"
+    :class="['flex-shrink-0 border-r flex flex-col transition-all duration-200', sidebarClass]"
     style="background: var(--bg-2); border-color: var(--hair);"
   >
     <!-- Header -->
-    <div class="flex items-center justify-between p-3 border-b sticky top-0 z-10" style="background: var(--bg-2); border-color: var(--hair);">
+    <div class="flex items-center justify-between p-3 border-b shrink-0" style="background: var(--bg-2); border-color: var(--hair);">
       <span v-if="bodyVisible" class="kicker">Filters</span>
       <button
         @click="isCollapsed = !isCollapsed"
@@ -105,8 +105,8 @@ watch(
       </button>
     </div>
 
-    <!-- Filter body -->
-    <div v-if="bodyVisible" class="flex flex-col p-3 space-y-0" style="--divide-color: var(--hair);">
+    <!-- Filter body: only this region scrolls -->
+    <div v-if="bodyVisible" class="flex-1 overflow-y-auto min-h-0 flex flex-col p-3 space-y-0" style="--divide-color: var(--hair);">
       <div class="py-3 border-b" style="border-color: var(--hair);"><SectorFilter /></div>
       <div class="py-3 border-b" style="border-color: var(--hair);"><StageFilter /></div>
       <div class="py-3 border-b" style="border-color: var(--hair);"><EmployeeRangeFilter /></div>
@@ -116,8 +116,8 @@ watch(
       <div class="py-3"><FoundedYearFilter /></div>
     </div>
 
-    <!-- Clear all -->
-    <div v-if="bodyVisible" class="p-3 border-t sticky bottom-0" style="background: var(--bg-2); border-color: var(--hair);">
+    <!-- Clear all: always visible at bottom -->
+    <div v-if="bodyVisible" class="p-3 border-t shrink-0" style="background: var(--bg-2); border-color: var(--hair);">
       <button
         @click="handleClearAll"
         class="btn btn-ghost w-full justify-center"

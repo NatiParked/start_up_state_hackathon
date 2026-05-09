@@ -18,7 +18,7 @@ async function save() {
   isSaving.value = true
   saveError.value = null
 
-  const { id, created_at, updated_at, last_refreshed_at, ...payload } = form
+  const { id, created_at, updated_at, last_refreshed_at, deleted_at, ...payload } = form
 
   if (typeof payload.job_titles === 'string') {
     payload.job_titles = payload.job_titles.split(',').map(s => s.trim()).filter(Boolean)
@@ -355,6 +355,17 @@ async function save() {
           class="h-4 w-4 rounded border-gray-300 text-utah-blue focus:ring-utah-blue"
         />
         <label for="verified" class="text-sm font-medium text-gray-700">Verified</label>
+      </div>
+
+      <!-- is_hidden -->
+      <div class="flex items-center gap-2">
+        <input
+          id="is_hidden"
+          v-model="form.is_hidden"
+          type="checkbox"
+          class="h-4 w-4 rounded border-gray-300 text-utah-blue focus:ring-utah-blue"
+        />
+        <label for="is_hidden" class="text-sm font-medium text-gray-700">Hidden from public map</label>
       </div>
 
       <!-- Save error -->
