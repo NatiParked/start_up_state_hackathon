@@ -79,6 +79,8 @@ The two tasks are **independent** — they touch disjoint paths and have no shar
 
 **Type:** auto
 **Sequence:** 1
+**Status:** Complete
+**Completed:** 2026-05-09
 
 <files>
 supabase/migrations/0002_submissions.sql
@@ -246,12 +248,12 @@ Use ES module syntax (`export function ...` / `export async function ...`). No T
 
 These match the Phase 1 success criteria from the roadmap:
 
-- [ ] `supabase db push` (or Supabase MCP `apply_migration`) applies `0002_submissions.sql` without error.
-- [ ] `map_startup_submissions` has all six M3 columns: `submitted_url`, `submitted_by_email`, `extracted_data`, `rejection_reason`, `reviewed_at`, `reviewed_by`.
-- [ ] `status` column accepts `'auto_published'` in addition to `'pending'`, `'approved'`, `'rejected'`, and rejects any other value.
-- [ ] B-tree index `map_startup_submissions_status_idx` exists.
-- [ ] Anon role can `INSERT` into `map_startup_submissions`; anon cannot `SELECT`. Authenticated role can `SELECT` and `UPDATE`.
-- [ ] Migration is idempotent (re-running succeeds).
+- [x] `supabase db push` (or Supabase MCP `apply_migration`) applies `0002_submissions.sql` without error.
+- [x] `map_startup_submissions` has all six M3 columns: `submitted_url`, `submitted_by_email`, `extracted_data`, `rejection_reason`, `reviewed_at`, `reviewed_by`.
+- [x] `status` column accepts `'auto_published'` in addition to `'pending'`, `'approved'`, `'rejected'`, and rejects any other value.
+- [x] B-tree index `map_startup_submissions_status_idx` exists.
+- [x] Anon role can `INSERT` into `map_startup_submissions`; anon cannot `SELECT`. Authenticated role can `SELECT` and `UPDATE`.
+- [x] Migration is idempotent (re-running succeeds).
 - [ ] Importing `_shared/llm.js` in a Deno context and calling `callLLM` with a test prompt returns a parsed response (requires `OPENCODE_ZEN_API_KEY` in Supabase secrets).
 - [ ] `fetchLogo('https://www.zonos.com/pricing')` returns `https://img.logo.dev/zonos.com?token=...&size=128` with the correct domain extracted.
 - [ ] `geocodeAddress('136 S Main St, Salt Lake City, UT')` returns `{ lat, lng, ... }` with lat ~40.76 and lng ~-111.89.
