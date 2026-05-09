@@ -19,7 +19,7 @@
       </RouterLink>
       <nav class="flex items-center gap-6">
         <RouterLink to="/">Startup Map</RouterLink>
-        <RouterLink to="/navigator">Founder's Navigator</RouterLink>
+        <a href="https://foundersjourney2.netlify.app/" target="_blank" rel="noopener noreferrer">Founder's Navigator</a>
         <RouterLink to="/admin">Admin</RouterLink>
         <RouterLink to="/roadmap">Roadmap</RouterLink>
         <RouterLink to="/subscribe">Subscribe</RouterLink>

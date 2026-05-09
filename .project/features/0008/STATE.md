@@ -18,7 +18,7 @@
 | Phase 2: Edge Function `track-view` + Drawer Wiring | ✅ Verified (2026-05-09) — `track-view` deployed (id `35427e86-…`, version 1, verify_jwt=false); end-to-end smoke PASS; `/spec:verify-phase` 5/5 criteria pass | 2026-05-09 | 2026-05-09 |
 | Phase 3: Live `CompanyAnalytics` + Digest Backfill | ✅ Verified (2026-05-09) — `/spec:verify-phase` PASS: smoke ✓, 3/3 code criteria, 1 UI verified via code, 1 ENV deferred (auth/DB-gated runtime smoke) | 2026-05-09 | 2026-05-09 |
 | Phase 4: Satori OG Image Edge Function | ✅ Verified (2026-05-09) — `/spec:verify-phase` PASS: smoke ✓, 5/5 CODE criteria; 5 runtime/manual SKIPs gated on ops deploy (function returns 404 — not yet deployed) | 2026-05-09 | 2026-05-09 |
-| Phase 5: `useShareCard` Composable + Drawer Share Button | ✅ Complete (2026-05-09) — simple-mode single-executor; inline verification PASS on all checks; commits 211c929 / c100874 / 1fdd277 | 2026-05-09 | 2026-05-09 |
+| Phase 5: `useShareCard` Composable + Drawer Share Button | ✅ Verified (2026-05-09) — `/spec:verify-phase` PASS: 1/1 ENV, 8/8 CODE; smoke + 5 UI items SKIP (Playwright MCP browser locked by another instance; PASS-by-code documented in phase-5/VERIFICATION.md). Criterion 4 (LinkedIn/Twitter validators) gated on Phase 4 ops deploy. Commits 211c929 / c100874 / 1fdd277 | 2026-05-09 | 2026-05-09 |
 
 ## Task Progress
 

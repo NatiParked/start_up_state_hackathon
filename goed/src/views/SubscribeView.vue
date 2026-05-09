@@ -16,7 +16,6 @@ const hiringOnly = ref(false)
 const investor = ref('')
 const isSubmitting = ref(false)
 const submitted = ref(false)
-const alreadySubscribed = ref(false)
 const error = ref(null)
 const banner = ref(null) // 'confirmed' | 'already' | 'invalid' | 'unsubscribed' | null
 
@@ -36,7 +35,6 @@ onMounted(async () => {
 async function handleSubmit() {
   isSubmitting.value = true
   error.value = null
-  alreadySubscribed.value = false
 
   const filter_criteria = {
     sectors: sectors.value,
@@ -48,13 +46,10 @@ async function handleSubmit() {
 
   const { error: dbError } = await supabase
     .from('map_subscriptions')
-    .insert({ email: email.value, filter_criteria })
-
-  if (dbError?.code === '23505') {
-    alreadySubscribed.value = true
-    isSubmitting.value = false
-    return
-  }
+    .upsert(
+      { email: email.value, filter_criteria, confirmed: false, confirm_token: crypto.randomUUID() },
+      { onConflict: 'email' }
+    )
 
   if (dbError) {
     error.value = dbError.message
@@ -159,19 +154,6 @@ async function handleSubmit() {
         <h2 class="display-sm" style="color: var(--fg)">Check your inbox</h2>
         <p class="lede" style="max-width: 40ch">
           We sent a confirmation link to <strong style="color: var(--fg)">{{ email }}</strong>. Click it to activate your subscription.
-        </p>
-      </div>
-
-      <!-- Already subscribed panel -->
-      <div
-        v-else-if="alreadySubscribed"
-        class="form-section flex flex-col items-center text-center gap-3 py-8"
-      >
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color: var(--info)">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <p style="color: var(--fg-2)" class="text-sm">
-          You're already subscribed with that email. Check your inbox for the confirmation link, or contact support if you need help.
         </p>
       </div>
 

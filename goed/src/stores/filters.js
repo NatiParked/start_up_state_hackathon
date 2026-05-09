@@ -6,7 +6,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useFiltersStore = defineStore('filters', () => {
-  // state — 9 filter dimensions
+  // state — 9 filter dimensions + name search
   const sectors = ref([])
   const stages = ref([])
   const employeeRanges = ref([])
@@ -16,6 +16,7 @@ export const useFiltersStore = defineStore('filters', () => {
   const businessTypes = ref([])
   const regions = ref([])
   const investors = ref([])
+  const searchQuery = ref('')
 
   // convention-required
   const isLoading = ref(false)
@@ -32,6 +33,7 @@ export const useFiltersStore = defineStore('filters', () => {
     businessTypes.value = []
     regions.value = []
     investors.value = []
+    searchQuery.value = ''
   }
 
   // TODO: wire URL query-string sync (push/replace on change, read on mount) — Feature 0002.
@@ -48,6 +50,7 @@ export const useFiltersStore = defineStore('filters', () => {
     businessTypes,
     regions,
     investors,
+    searchQuery,
     isLoading,
     error,
     clearAll,
