@@ -42,6 +42,19 @@ const linkedinHref = computed(() => company.value?.linkedin ?? null)
 const showWebsite = computed(() => Boolean(websiteHref.value))
 const showLinkedin = computed(() => Boolean(linkedinHref.value))
 
+function getOrCreateSessionId() {
+  try {
+    const existing = sessionStorage.getItem('goed_session_id')
+    if (existing) return existing
+    const fresh = crypto.randomUUID()
+    sessionStorage.setItem('goed_session_id', fresh)
+    return fresh
+  } catch {
+    // Safari private mode / SSR fallback — return a one-shot UUID; not persisted, but tracking still works for the lifetime of this tab.
+    return crypto.randomUUID()
+  }
+}
+
 function handleClose() {
   clearSelection()
 }
@@ -50,6 +63,22 @@ watch(isOpen, (open) => {
   if (!drawerEl.value) return
   if (open) {
     gsap.to(drawerEl.value, { x: 0, duration: 0.35, ease: 'power2.out' })
+    const id = company.value?.id
+    if (id) {
+      const session_id = getOrCreateSessionId()
+      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/track-view`
+      const anon = import.meta.env.VITE_SUPABASE_ANON_KEY
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: anon,
+          Authorization: `Bearer ${anon}`,
+        },
+        body: JSON.stringify({ startup_id: id, session_id }),
+        keepalive: true,
+      }).catch(() => {})
+    }
   } else {
     gsap.to(drawerEl.value, { x: '100%', duration: 0.35, ease: 'power2.out' })
   }
