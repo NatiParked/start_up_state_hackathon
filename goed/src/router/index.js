@@ -16,8 +16,7 @@ const router = createRouter({
     {
       path: '/submit',
       name: 'Submit',
-      component: () => import('@/views/PlaceholderView.vue'),
-      props: { title: 'Submit a Company' },
+      component: () => import('@/views/SubmitView.vue'),
     },
     {
       path: '/admin',
