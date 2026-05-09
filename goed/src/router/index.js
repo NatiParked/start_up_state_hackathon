@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { adminGuard } from './guards'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,10 +20,19 @@ const router = createRouter({
       component: () => import('@/views/SubmitView.vue'),
     },
     {
+      path: '/admin/login',
+      name: 'AdminLogin',
+      component: () => import('@/views/admin/AdminLogin.vue'),
+    },
+    {
       path: '/admin',
-      name: 'Admin',
-      component: () => import('@/views/PlaceholderView.vue'),
-      props: { title: 'Admin' },
+      redirect: '/admin/dashboard',
+    },
+    {
+      path: '/admin/dashboard',
+      name: 'AdminDashboard',
+      component: () => import('@/views/admin/AdminDashboard.vue'),
+      beforeEnter: adminGuard,
     },
     {
       path: '/roadmap',
