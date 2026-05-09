@@ -7,7 +7,7 @@
 | Field | Value |
 |-------|-------|
 | **Phase** | Phase 4: Frontend Submission UI |
-| **Status** | ✅ Complete |
+| **Status** | ✅ Complete — C2 fix applied |
 | **Blocker** | None |
 
 ## Phase Progress
@@ -17,7 +17,7 @@
 | Phase 1: Submissions Schema & Shared Helpers | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 2: Core Enrichers & Pipeline Orchestrator | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 3: onboard-company Edge Function | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 4: Frontend Submission UI | ✅ Verified | 2026-05-09 | 2026-05-09 |
+| Phase 4: Frontend Submission UI | ✅ Complete | 2026-05-09 | 2026-05-09 |
 
 ## Task Progress
 
@@ -57,6 +57,8 @@
 | 2026-05-09 | SubmitProgress stage advancement is client-side simulated on a timer | Edge Function is synchronous and does not stream stage events; simulated animation provides UX feedback during the ~30–90s execution window |
 | 2026-05-09 | Quality gate auto-publishes with `verified = false` on `map_startups` | Allows the pin to appear on the map immediately (satisfying the <90s demo) while flagging for GOED review; distinguishes AI-submitted from manually-verified seed data |
 | 2026-05-09 | `callLLM` uses Anthropic tool-use pattern (single `respond` tool) for structured JSON output | Forces deterministic JSON rather than parsing free-text; consistent with the Anthropic SDK's structured output pattern |
+| 2026-05-09 | `useOnboarding.submit()` enforces 1500ms minimum display time before leaving `running` state | CORS preflight failures were instant, causing `SubmitProgress` to flash and unmount before Playwright could snapshot it. `ensureMinDelay()` guarantees the progress view stays visible. |
+| 2026-05-09 | `onboard-company` Edge Function deployed to Supabase project `punpjzwxqazqbxvkyemv` | CORS headers were present in code but function was never deployed; Supabase returned no-endpoint CORS rejection on every preflight. Deployed with `verify_jwt: false` (public form, anon key sent by client). |
 
 ## Blockers & Issues
 
