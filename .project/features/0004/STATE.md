@@ -1,13 +1,13 @@
 # Feature 0004: Recurring Data Refresh — Weekly Job Refresh via ATS APIs — State
 
-> Last updated: 2026-05-09
+> Last updated: 2026-05-09 (Phase 4 complete)
 
 ## Current Status
 
 | Field | Value |
 |-------|-------|
 | **Phase** | Phase 4: End-to-End Integration & Verification |
-| **Status** | Pending |
+| **Status** | ✅ Verified |
 | **Blocker** | None |
 
 ## Phase Progress
@@ -16,8 +16,8 @@
 |-------|--------|---------|-----------|
 | Phase 1: Database Migrations | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 2: ATS Shared Module | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 3: refresh-jobs Edge Function | ✅ Complete | 2026-05-09 | 2026-05-09 |
-| Phase 4: End-to-End Integration & Verification | Pending | — | — |
+| Phase 3: refresh-jobs Edge Function | ✅ Verified | 2026-05-09 | 2026-05-09 |
+| Phase 4: End-to-End Integration & Verification | ✅ Verified | 2026-05-09 | 2026-05-09 |
 
 ## Task Progress
 
@@ -30,12 +30,12 @@
 | 3.1: Create supabase/functions/_shared/supabaseAdmin.js + refresh-jobs/logger.js | ✅ Done | 1 | ~5m |
 | 3.2: Create supabase/functions/refresh-jobs/index.js | ✅ Done | 2 | ~5m |
 | 3.3: Deploy refresh-jobs Edge Function + smoke tests | ✅ Done | 3 | ~10m |
-| 4.1: Verify cron schedule in cron.job table | Pending | 1 | — |
-| 4.2: Manual bulk invocation test | Pending | 2 | — |
-| 4.3: Recency gate test (second immediate run) | Pending | 3 | — |
-| 4.4: Force-refresh single company test | Pending | 4 | — |
-| 4.5: Verify refresh_log entries | Pending | 5 | — |
-| 4.6: Grep for AI imports (confirm zero) | Pending | 6 | — |
+| 4.1: Verify cron schedule in cron.job table | ✅ Done | 1 | ~1m |
+| 4.2: Manual bulk invocation test | ✅ Done | 2 | ~5m |
+| 4.3: Recency gate test (second immediate run) | ✅ Done | 3 | ~1m |
+| 4.4: Force-refresh single company test | ✅ Done | 4 | ~5m |
+| 4.5: Verify refresh_log entries | ✅ Done | 5 | ~1m |
+| 4.6: Grep for AI imports (confirm zero) | ✅ Done | 6 | ~1m |
 
 ## Decisions Log
 
@@ -49,6 +49,7 @@
 | 2026-05-09 | cron.schedule executed via MCP to fix verify failure | refresh-jobs-weekly registered in cron.job (jobid=1, schedule='0 6 * * 1', active=true) using real project URL + service_role key from .env.local. Phase 1 verification now passes. |
 | 2026-05-09 | Phase 2 complete — all verifications passed inline | ats.js rewritten: default export, goed-startup-map UA via shared fetchWithTimeout, 10s AbortController, Greenhouse ?content=false, Ashby GraphQL endpoint, Lever v0. Node smoke test confirmed null/empty/non-ATS all return null; Greenhouse live call returned 300+ Stripe job titles. |
 | 2026-05-09 | Phase 3 complete — all smokes passed, deployed to Supabase | supabaseAdmin.js + logger.js + index.js created. Deployed via Management API (CLI v2.98.2 hardcodes .ts entrypoints). Bulk cold: 223 skipped (all null careers_url). Bracket Labs forced single: 82 Greenhouse jobs. Recency gate: skipped=1. Invalid body: 400. refresh_log has rows with correct source/jobs_updated. |
+| 2026-05-09 | Phase 4 complete — all 6 E2E checks passed | cron.job verified (jobid=1, schedule='0 6 * * 1', active=true). Smoke A: bulk cold {refreshed:0, skipped:222, errors:0} — valid (all null careers_url). Smoke B: recency gate held {refreshed:0}. Smoke C: Bracket Labs force single {refreshed:1, skipped:0, errors:0} — 82 Greenhouse jobs fetched. Smoke D: recency gate {skipped:1}. refresh_log (actual table name, not map_refresh_log) has 8 rows with correct fields. Zero AI imports confirmed. Feature 0004 fully complete. |
 
 ## Blockers & Issues
 
