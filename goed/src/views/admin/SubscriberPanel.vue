@@ -70,69 +70,72 @@ onMounted(fetchStats)
 <template>
   <div class="h-full overflow-y-auto p-6 space-y-6">
     <!-- Header card -->
-    <div class="bg-white rounded-lg border border-gray-200 p-5 flex items-center justify-between">
-      <h1 class="text-xl font-semibold text-gray-900">Subscriber Stats</h1>
-      <button
-        type="button"
-        class="text-xs text-utah-blue hover:underline"
-        @click="fetchStats"
-      >
-        Refresh
-      </button>
+    <div class="card card-pad flex items-center justify-between">
+      <div>
+        <div class="kicker">— Subscribers</div>
+        <h1 class="display-sm mt-1 text-[var(--fg)]">Subscriber Stats</h1>
+      </div>
+      <button type="button" class="btn-text" @click="fetchStats">Refresh</button>
     </div>
 
     <!-- Error banner -->
-    <div v-if="error" class="p-3 bg-red-50 border border-error-red text-error-red text-sm rounded">{{ error }}</div>
+    <div
+      v-if="error"
+      class="p-3 rounded-md text-sm"
+      style="background: rgba(244,162,97,0.08); border: 1px solid rgba(244,162,97,0.35); color: var(--warn);"
+    >
+      {{ error }}
+    </div>
 
     <!-- Three metric tiles -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <div class="bg-white rounded-lg border border-gray-200 p-5">
-        <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Total confirmed subscribers</p>
-        <div v-if="isLoading" class="h-7 w-24 bg-gray-200 rounded animate-pulse" />
-        <p v-else class="text-2xl font-bold text-gray-900">{{ totalConfirmed }}</p>
+      <div class="card card-pad">
+        <p class="lbl mb-2">Total confirmed subscribers</p>
+        <div v-if="isLoading" class="h-7 w-24 rounded animate-pulse" style="background: var(--hair-2);" />
+        <p v-else class="text-[var(--fg)]" style="font-family: var(--display); font-weight: 600; font-size: clamp(1.6rem, 2.6vw, 2.1rem); line-height: 1.05; letter-spacing: -0.02em;">{{ totalConfirmed }}</p>
       </div>
-      <div class="bg-white rounded-lg border border-gray-200 p-5">
-        <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Last digest sent</p>
-        <div v-if="isLoading" class="h-7 w-24 bg-gray-200 rounded animate-pulse" />
-        <p v-else class="text-2xl font-bold text-gray-900">{{ lastDigestDisplay }}</p>
+      <div class="card card-pad">
+        <p class="lbl mb-2">Last digest sent</p>
+        <div v-if="isLoading" class="h-7 w-24 rounded animate-pulse" style="background: var(--hair-2);" />
+        <p v-else class="text-[var(--fg)]" style="font-family: var(--display); font-weight: 600; font-size: clamp(1rem, 1.4vw, 1.1rem); line-height: 1.2; letter-spacing: -0.01em;">{{ lastDigestDisplay }}</p>
       </div>
-      <div class="bg-white rounded-lg border border-gray-200 p-5">
-        <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Subscribers in last digest</p>
-        <div v-if="isLoading" class="h-7 w-24 bg-gray-200 rounded animate-pulse" />
-        <p v-else class="text-2xl font-bold text-gray-900">{{ lastDigestRun?.subscribers_sent ?? '—' }}</p>
+      <div class="card card-pad">
+        <p class="lbl mb-2">Subscribers in last digest</p>
+        <div v-if="isLoading" class="h-7 w-24 rounded animate-pulse" style="background: var(--hair-2);" />
+        <p v-else class="text-[var(--fg)]" style="font-family: var(--display); font-weight: 600; font-size: clamp(1.6rem, 2.6vw, 2.1rem); line-height: 1.05; letter-spacing: -0.02em;">{{ lastDigestRun?.subscribers_sent ?? '—' }}</p>
       </div>
     </div>
 
     <!-- Breakdown tables -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div class="px-5 py-3 border-b border-gray-200 bg-gray-50">
-          <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wide">By Sector</h2>
+      <div class="rounded-xl border overflow-hidden" style="background: var(--surface); border-color: var(--hair);">
+        <div class="px-5 py-3 border-b" style="background: var(--surface-2); border-color: var(--hair);">
+          <h2 class="kicker">By Sector</h2>
         </div>
-        <table class="min-w-full divide-y divide-gray-100 text-sm">
+        <table class="min-w-full text-sm">
           <tbody>
             <tr v-if="filterBreakdown.sectors.length === 0">
-              <td class="px-5 py-2 text-gray-400 italic" colspan="2">No data yet</td>
+              <td class="px-5 py-2 text-[var(--fg-3)] italic" colspan="2">No data yet</td>
             </tr>
-            <tr v-for="row in filterBreakdown.sectors" :key="row.label">
-              <td class="px-5 py-2 text-gray-700">{{ row.label }}</td>
-              <td class="px-5 py-2 text-right text-gray-400 font-mono">{{ row.count }}</td>
+            <tr v-for="row in filterBreakdown.sectors" :key="row.label" class="border-t" style="border-color: var(--hair);">
+              <td class="px-5 py-2 text-[var(--fg-2)]">{{ row.label }}</td>
+              <td class="px-5 py-2 text-right text-[var(--fg-3)]" style="font-family: var(--mono);">{{ row.count }}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div class="px-5 py-3 border-b border-gray-200 bg-gray-50">
-          <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wide">By Stage</h2>
+      <div class="rounded-xl border overflow-hidden" style="background: var(--surface); border-color: var(--hair);">
+        <div class="px-5 py-3 border-b" style="background: var(--surface-2); border-color: var(--hair);">
+          <h2 class="kicker">By Stage</h2>
         </div>
-        <table class="min-w-full divide-y divide-gray-100 text-sm">
+        <table class="min-w-full text-sm">
           <tbody>
             <tr v-if="filterBreakdown.stages.length === 0">
-              <td class="px-5 py-2 text-gray-400 italic" colspan="2">No data yet</td>
+              <td class="px-5 py-2 text-[var(--fg-3)] italic" colspan="2">No data yet</td>
             </tr>
-            <tr v-for="row in filterBreakdown.stages" :key="row.label">
-              <td class="px-5 py-2 text-gray-700">{{ row.label }}</td>
-              <td class="px-5 py-2 text-right text-gray-400 font-mono">{{ row.count }}</td>
+            <tr v-for="row in filterBreakdown.stages" :key="row.label" class="border-t" style="border-color: var(--hair);">
+              <td class="px-5 py-2 text-[var(--fg-2)]">{{ row.label }}</td>
+              <td class="px-5 py-2 text-right text-[var(--fg-3)]" style="font-family: var(--mono);">{{ row.count }}</td>
             </tr>
           </tbody>
         </table>
@@ -140,7 +143,7 @@ onMounted(fetchStats)
     </div>
 
     <!-- Footer note -->
-    <p class="text-xs text-gray-400 italic">Counts include confirmed subscribers only. Updated on page load.</p>
+    <p class="text-xs text-[var(--fg-3)] italic">Counts include confirmed subscribers only. Updated on page load.</p>
   </div>
 </template>
 

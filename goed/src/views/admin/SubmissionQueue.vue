@@ -42,59 +42,57 @@ function onRejected(submissionId) {
     <!-- Header -->
     <div class="shrink-0 flex items-center justify-between mb-6">
       <div class="flex items-center gap-3">
-        <h1 class="text-xl font-semibold text-gray-900">Submission Queue</h1>
-        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-          {{ submissions.length }}
-        </span>
+        <div>
+          <div class="kicker">— Queue</div>
+          <h1 class="display-sm mt-1 text-[var(--fg)]">Submission Queue</h1>
+        </div>
+        <span class="chip-soft">{{ submissions.length }}</span>
       </div>
     </div>
 
     <!-- Loading state -->
-    <div v-if="isLoading" class="flex-1 py-12 text-center text-gray-500 text-sm">
+    <div v-if="isLoading" class="flex-1 py-12 text-center text-[var(--fg-2)] text-sm">
       Loading submissions…
     </div>
 
     <!-- Empty state -->
     <div
       v-else-if="!isLoading && submissions.length === 0"
-      class="flex-1 py-12 text-center text-gray-400 text-sm"
+      class="flex-1 py-12 text-center text-[var(--fg-3)] text-sm"
     >
       No pending submissions.
     </div>
 
     <!-- Table -->
-    <div v-else class="flex-1 min-h-0 overflow-y-auto rounded-lg border border-gray-200 bg-white">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50 sticky top-0">
+    <div
+      v-else
+      class="flex-1 min-h-0 overflow-y-auto rounded-xl border"
+      style="background: var(--surface); border-color: var(--hair);"
+    >
+      <table class="min-w-full">
+        <thead class="sticky top-0" style="background: var(--surface-2);">
           <tr>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
-              Submitted At
-            </th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
-              Name
-            </th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
-              Website
-            </th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
-              Submitter Email
-            </th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
-              Action
-            </th>
+            <th class="px-4 py-3 text-left lbl">Submitted At</th>
+            <th class="px-4 py-3 text-left lbl">Name</th>
+            <th class="px-4 py-3 text-left lbl">Website</th>
+            <th class="px-4 py-3 text-left lbl">Submitter Email</th>
+            <th class="px-4 py-3 text-left lbl">Action</th>
           </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-100">
+        <tbody>
           <tr
             v-for="row in submissions"
             :key="row.id"
-            class="hover:bg-gray-50 cursor-pointer transition-colors"
+            class="cursor-pointer transition-colors border-t"
+            style="border-color: var(--hair);"
             @click="openReview(row)"
+            @mouseenter="(e) => e.currentTarget.style.background = 'var(--surface-2)'"
+            @mouseleave="(e) => e.currentTarget.style.background = 'transparent'"
           >
-            <td class="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
+            <td class="px-4 py-3 text-sm text-[var(--fg-2)] whitespace-nowrap">
               {{ row.submitted_at ? new Date(row.submitted_at).toLocaleDateString() : '—' }}
             </td>
-            <td class="px-4 py-3 text-sm text-gray-900 font-medium">
+            <td class="px-4 py-3 text-sm text-[var(--fg)] font-medium">
               {{ row.extracted_data?.name ?? row.name ?? '—' }}
             </td>
             <td class="px-4 py-3 text-sm">
@@ -103,19 +101,19 @@ function onRejected(submissionId) {
                 :href="row.extracted_data?.website ?? row.website"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-blue-600 underline hover:text-blue-800 transition-colors"
+                class="link-storm"
                 @click.stop
               >
                 {{ row.extracted_data?.website ?? row.website }}
               </a>
-              <span v-else class="text-gray-400">—</span>
+              <span v-else class="text-[var(--fg-3)]">—</span>
             </td>
-            <td class="px-4 py-3 text-sm text-gray-700">
+            <td class="px-4 py-3 text-sm text-[var(--fg-2)]">
               {{ row.submitted_by_email ?? '—' }}
             </td>
             <td class="px-4 py-3 text-sm" @click.stop>
               <button
-                class="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors"
+                class="btn btn-primary py-[0.4rem] px-3 text-xs"
                 @click="openReview(row)"
               >
                 Review
@@ -134,11 +132,12 @@ function onRejected(submissionId) {
         @click.self="closeReview"
       >
         <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/30" @click="closeReview" />
+        <div class="absolute inset-0" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(2px);" @click="closeReview" />
         <!-- Panel: right 50% of screen -->
         <div
           ref="panelRef"
-          class="absolute top-0 right-0 h-full w-full sm:w-1/2 bg-white shadow-2xl z-10 flex flex-col"
+          class="absolute top-0 right-0 h-full w-full sm:w-1/2 z-10 flex flex-col border-l"
+          style="background: var(--bg-2); border-color: var(--hair); box-shadow: -30px 0 60px -20px rgba(0,0,0,0.6);"
         >
           <SubmissionReview
             :submission="selectedSubmission"

@@ -38,12 +38,12 @@ function isActive(name) {
 </script>
 
 <template>
-  <div class="h-full flex bg-gray-100">
+  <div class="h-full flex">
     <!-- Sidebar -->
-    <aside ref="sidebarEl" class="w-56 bg-utah-blue flex flex-col">
+    <aside ref="sidebarEl" class="w-56 flex flex-col border-r" style="background: var(--bg-2); border-color: var(--hair);">
       <!-- Logo / brand area -->
-      <div class="px-4 py-5 border-b border-blue-700">
-        <span class="text-white font-bold text-sm tracking-wide">GOED Admin</span>
+      <div class="px-4 py-5 border-b" style="border-color: var(--hair);">
+        <span class="kicker">GOED Admin</span>
       </div>
 
       <!-- Nav links -->
@@ -52,18 +52,18 @@ function isActive(name) {
           v-for="link in navLinks"
           :key="link.name"
           :to="{ name: link.name }"
-          class="block px-3 py-2 rounded text-sm font-medium text-blue-100 hover:bg-blue-700 hover:text-white transition-colors"
-          :class="{ 'bg-blue-800 text-white': isActive(link.name) }"
+          class="admin-nav-link block px-3 py-2 rounded-md text-sm font-medium transition-colors"
+          :class="{ 'admin-nav-link-active': isActive(link.name) }"
         >
           {{ link.label }}
         </RouterLink>
       </nav>
 
       <!-- Sign out -->
-      <div class="px-2 py-4 border-t border-blue-700">
+      <div class="px-2 py-4 border-t" style="border-color: var(--hair);">
         <button
           @click="handleSignOut"
-          class="w-full px-3 py-2 rounded text-sm font-medium text-blue-200 hover:bg-blue-700 hover:text-white transition-colors text-left"
+          class="admin-nav-link w-full px-3 py-2 rounded-md text-sm font-medium text-left"
         >
           Sign out
         </button>
@@ -71,11 +71,16 @@ function isActive(name) {
     </aside>
 
     <!-- Main content area -->
-    <div class="flex-1 flex flex-col">
+    <div class="flex-1 flex flex-col min-w-0">
       <!-- Sticky top bar -->
-      <header class="sticky top-0 z-10 bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
-        <span class="text-sm text-gray-600">Signed in as <strong class="text-gray-900">{{ adminEmail }}</strong></span>
-        <span class="text-xs text-gray-400">Last login: {{ lastLogin }}</span>
+      <header
+        class="sticky top-0 z-10 border-b px-6 py-3 flex items-center justify-between shrink-0"
+        style="background: rgba(13,25,45,0.6); backdrop-filter: blur(8px); border-color: var(--hair);"
+      >
+        <span class="text-sm text-[var(--fg-2)]">
+          Signed in as <strong class="text-[var(--fg)] font-semibold">{{ adminEmail }}</strong>
+        </span>
+        <span class="text-xs text-[var(--fg-3)]">Last login: {{ lastLogin }}</span>
       </header>
 
       <!-- Nested route content -->
@@ -85,3 +90,22 @@ function isActive(name) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.admin-nav-link {
+  color: var(--fg-2);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+.admin-nav-link:hover {
+  background: var(--surface);
+  color: var(--fg);
+}
+.admin-nav-link-active {
+  background: var(--accent-soft);
+  color: var(--accent) !important;
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+</style>
