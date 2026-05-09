@@ -43,4 +43,15 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+header {
+  animation: fadeSlideIn 0.5s ease-out both;
+}
+main {
+  animation: fadeSlideIn 0.65s ease-out both;
+}
+</style>
