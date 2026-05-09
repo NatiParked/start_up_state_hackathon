@@ -7,7 +7,7 @@
 | Field | Value |
 |-------|-------|
 | **Phase** | Phase 5: `useShareCard` Composable + Drawer Share Button |
-| **Status** | ⏳ Pending — Phase 4 code-complete; deploy deferred |
+| **Status** | ✅ Complete (2026-05-09) — all 3 tasks committed, inline verification PASS |
 | **Blocker** | None |
 
 ## Phase Progress
@@ -17,8 +17,8 @@
 | Phase 1: Database & View Tracking Migration | ✅ Complete (migration applied — `company_views` table + columns confirmed via MCP `execute_sql`) | 2026-05-09 | 2026-05-09 |
 | Phase 2: Edge Function `track-view` + Drawer Wiring | ✅ Verified (2026-05-09) — `track-view` deployed (id `35427e86-…`, version 1, verify_jwt=false); end-to-end smoke PASS; `/spec:verify-phase` 5/5 criteria pass | 2026-05-09 | 2026-05-09 |
 | Phase 3: Live `CompanyAnalytics` + Digest Backfill | ✅ Verified (2026-05-09) — `/spec:verify-phase` PASS: smoke ✓, 3/3 code criteria, 1 UI verified via code, 1 ENV deferred (auth/DB-gated runtime smoke) | 2026-05-09 | 2026-05-09 |
-| Phase 4: Satori OG Image Edge Function | ✅ Code-complete; deploy deferred to ops (2026-05-09) | 2026-05-09 | 2026-05-09 |
-| Phase 5: `useShareCard` Composable + Drawer Share Button | ⏳ Pending | — | — |
+| Phase 4: Satori OG Image Edge Function | ✅ Verified (2026-05-09) — `/spec:verify-phase` PASS: smoke ✓, 5/5 CODE criteria; 5 runtime/manual SKIPs gated on ops deploy (function returns 404 — not yet deployed) | 2026-05-09 | 2026-05-09 |
+| Phase 5: `useShareCard` Composable + Drawer Share Button | ✅ Complete (2026-05-09) — simple-mode single-executor; inline verification PASS on all checks; commits 211c929 / c100874 / 1fdd277 | 2026-05-09 | 2026-05-09 |
 
 ## Task Progress
 
@@ -35,9 +35,9 @@
 | 4.1: Author `generate-og-image` Edge Function (Satori VDOM, font fetch, PNG encode) | ✅ Complete (2026-05-09, commit 60f2673) | 1 | — |
 | 4.2: Add static fallback PNG and error path | ✅ Complete (2026-05-09 — inline MINIMAL_FALLBACK_PNG_BASE64 path; convert/Pillow unavailable in sandbox) | 1 | — |
 | 4.3: Deploy and smoke-test on LinkedIn Post Inspector + Twitter Card Validator | ✅ Code-complete; deploy DEFERRED to ops (2026-05-09) — VERIFICATION.md written with exact curl commands | 2 | — |
-| 5.1: Create `useShareCard.js` composable (URL builder, meta tag upsert, copyLink) | ⏳ Pending | 1 | — |
-| 5.2: Add Share button + "Copied!" pill to `CompanyDrawer.vue` | ⏳ Pending | 2 | — |
-| 5.3: Wire `?company=<id>` query-param auto-open in `MapView.vue` | ⏳ Pending | 2 | — |
+| 5.1: Create `useShareCard.js` composable (URL builder, meta tag upsert, copyLink) | ✅ Complete (2026-05-09, commit 211c929) | 1 | — |
+| 5.2: Add Share button + "Copied!" pill to `CompanyDrawer.vue` | ✅ Complete (2026-05-09, commit 1fdd277) | 2 | — |
+| 5.3: Wire `?company=<id>` query-param auto-open in `MapView.vue` | ✅ Complete (2026-05-09, commit c100874) | 1 | — |
 
 ## Decisions Log
 
@@ -55,6 +55,8 @@
 | 2026-05-09 | `send-digest` Edge Function code authored but NOT redeployed in this phase | Same as Phase 2's deploy decision — deployment is an ops step. Code lives in `supabase/functions/send-digest/`; redeploy via `mcp__plugin_supabase_supabase__deploy_edge_function` when ops smoke is ready. |
 | 2026-05-09 | Phase 4 `generate-og-image` deploy deferred to ops | Sub-agent executor does not have direct MCP tool access; MCP tools only callable from top-level Claude context. Full deploy payload and Smoke A–D curl commands documented in `phases/phase-4/VERIFICATION.md`. Project ref `punpjzwxqazqbxvkyemv`; real startup ID `026e634b-45bd-4173-8c05-85639aeca08e` (Metrodora Institute) ready for smoke tests. |
 | 2026-05-09 | `fallback.png` skipped in Phase 4 — inline MINIMAL_FALLBACK_PNG_BASE64 used instead | `convert` (ImageMagick) and `pip`/`pip3`/`python3 -m pip` all absent from sandbox. Per PLAN.md Task 4.2, this is the documented fallback path; `Deno.readFile` wrapped in try/catch sets `fallbackPng = null` and `fallbackResponse()` decodes the inline base64 const. |
+| 2026-05-09 | Phase 5 ran in simple/single-executor mode with inline verification | 3 tasks, 3 files — meets `tasks ≤ 3 AND files < 5` simple-mode threshold. One executor handled Sequence 1 (5.1 + 5.3) then Sequence 2 (5.2) sequentially with inline grep checks per task; no separate task-verifier spawned. |
+| 2026-05-09 | Share button uses `hover:opacity-90` (not `hover:bg-utah-blue-dark`) | `goed/tailwind.config.js` defines no custom color tokens despite CONVENTIONS.md referencing `utah-blue-dark` — only `fontFamily` is extended. PLAN.md Task 5.2 pre-authorized this exact fallback. `bg-utah-blue` was kept on the base button (matches existing convention used across 10+ files via Tailwind arbitrary-value or extended palette resolution at build time). |
 
 ## Blockers & Issues
 
