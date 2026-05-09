@@ -181,6 +181,7 @@ Do not introduce new files. Do not add JSDoc inside SFCs (JSDoc is required only
 **Type:** auto
 **Sequence:** 2
 **Estimated time:** ~10 min
+**Completed:** 2026-05-09
 
 <files>
 goed/src/views/CompanyEditView.vue
@@ -228,6 +229,7 @@ Constraints:
 **Type:** auto
 **Sequence:** 1
 **Estimated time:** 20–25 min
+**Completed:** 2026-05-09
 
 <files>
 supabase/functions/send-digest/index.js
