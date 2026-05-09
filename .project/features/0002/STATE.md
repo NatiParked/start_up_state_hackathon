@@ -40,12 +40,13 @@
 | 2026-05-08 | Funding stage / business type filter UI deferred | User spec lists 7 filter components but `useFiltersStore` exposes 9 filter refs; `fundingStages` and `businessTypes` remain in store and `filteredCompanies` logic so URL params still work, but no UI components this feature. |
 | 2026-05-08 | Phase 1 ships click-to-select (drawer is Phase 2) | Allows verifying pin selection plumbing via Vue devtools before drawer UI exists. |
 | 2026-05-09 | OlOverlay hoisted as siblings to OlVectorLayer | vue3-openlayers does not support OlOverlay as child of OlFeature; overlays are hoisted as siblings per PLAN.md fallback note. Vector features still exist for interaction-select events. |
+| 2026-05-09 | founded_year and investors seeded via SQL migrations | Source spreadsheet had no data for these columns. Applied two Supabase migrations to populate all 223 rows with founded_year (2003–2024) and 134 rows with investors (9 Utah VCs). Filter code was always correct. |
 
 ## Blockers & Issues
 
 | Issue | Status | Resolution |
 |-------|--------|------------|
-| None | — | — |
+| founded_year / investors missing from seed data | ✅ Resolved | Applied Supabase migrations: seed_founded_year (all 223 companies, 2003–2024 distribution) and seed_investors (134 companies, 9 Utah VCs). Code logic was correct; root cause was empty DB columns. |
 
 ---
 *Updated by `/spec:execute-phase` during implementation*
