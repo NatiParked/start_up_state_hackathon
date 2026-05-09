@@ -129,6 +129,8 @@ Template:
 
 **Type:** auto
 **Sequence:** 2
+**Status:** COMPLETE
+**Completed:** 2026-05-09
 
 <files>
 goed/src/components/map/UtahMap.vue
