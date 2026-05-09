@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { adminGuard } from './guards'
+import { adminGuard, claimGuard } from './guards'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +19,8 @@ const router = createRouter({
       name: 'Submit',
       component: () => import('@/views/SubmitView.vue'),
     },
+    { path: '/company/:id/claim', name: 'ClaimLogin', component: () => import('@/views/ClaimLoginView.vue') },
+    { path: '/company/:id/edit', name: 'CompanyEdit', component: () => import('@/views/CompanyEditView.vue'), beforeEnter: claimGuard },
     {
       path: '/admin/login',
       name: 'AdminLogin',

@@ -130,6 +130,8 @@ Add the standard file header comment ("Reactive auth composable for the founder 
 
 ### Task 2: Add `claimGuard` to `router/guards.js`
 
+**Status:** Complete
+**Completed:** 2026-05-09
 **Type:** auto
 **Sequence:** 1
 
@@ -164,6 +166,8 @@ Add JSDoc matching the style of `adminGuard`. No semicolons. Reuse the existing 
 
 ### Task 3: Register routes and create `ClaimLoginView` + `CompanyEditView` stub
 
+**Status:** Complete
+**Completed:** 2026-05-09
 **Type:** auto
 **Sequence:** 2
 
