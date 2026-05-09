@@ -141,7 +141,8 @@ Create `enrichFromUtahDcc(name)`. POST to `https://secure.utah.gov/bes/index.htm
 </verify>
 
 <done>
-[ ] Task 2.3 complete
+[x] Task 2.3 complete
+Completed: 2026-05-09
 </done>
 
 ### Task 2.4: Build GitHub enricher (`enrichers/github.js`)
@@ -212,7 +213,8 @@ Create `enrichFromProductHunt(name)`. Attempt a public ProductHunt search: fetch
 </verify>
 
 <done>
-[ ] Task 2.6 complete
+[x] Task 2.6 complete
+Completed: 2026-05-09
 </done>
 
 ### Task 2.7: Build News stretch enricher (`enrichers/news.js`)
