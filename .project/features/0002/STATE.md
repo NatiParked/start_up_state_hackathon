@@ -50,6 +50,8 @@
 | Issue | Status | Resolution |
 |-------|--------|------------|
 | founded_year / investors missing from seed data | ✅ Resolved | Applied Supabase migrations: seed_founded_year (all 223 companies, 2003–2024 distribution) and seed_investors (134 companies, 9 Utah VCs). Code logic was correct; root cause was empty DB columns. |
+| Phase 4 verify: no pins on landing + cluster hover not working | ✅ Resolved | CLUSTER_THRESHOLD 8→7 (pins visible at initial zoom 7); canvas features given ol-geom-point geometry; cluster overlay positioning changed to center-center (group-hover now triggers); hitTolerance:5 added; canvas layer hidden when DOM pins shown. |
+| Phase 4 verify: cluster click not zooming | ✅ Resolved | PinCluster DOM overlay intercepted clicks but had no handler. Added handleClusterClick() bound via @click.stop to PinCluster in the overlay; removed non-functional pointer-events-none from ol-overlay container. |
 
 ---
 *Updated by `/spec:execute-phase` during implementation*
