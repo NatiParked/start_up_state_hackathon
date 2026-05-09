@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Phase** | Phase 3: Filter Sidebar & URL Sync |
+| **Phase** | Phase 4: Cluster Rendering & Polish |
 | **Status** | ✅ Complete |
 | **Blocker** | None |
 
@@ -17,7 +17,7 @@
 | Phase 1: Map Shell & Logo-Pin Rendering | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 2: Company Drawer | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 3: Filter Sidebar & URL Sync | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 4: Cluster Rendering & Polish | Pending | — | — |
+| Phase 4: Cluster Rendering & Polish | ✅ Complete | 2026-05-09 | 2026-05-09 |
 
 ## Task Progress
 
@@ -30,6 +30,9 @@
 | Phase 3 — Task 1: Build 7 filter sub-components | ✅ Complete | 1 | 2026-05-09 | 2026-05-09 |
 | Phase 3 — Task 2: Implement filteredCompanies predicate in startups.js | ✅ Complete | 1 | 2026-05-09 | 2026-05-09 |
 | Phase 3 — Task 3: FilterSidebar.vue + URL sync + MapView wire-up | ✅ Complete | 2 | 2026-05-09 | 2026-05-09 |
+| Phase 4 — Task 1: Create PinCluster.vue with hover-preview logo fan | ✅ Complete | 1 | 2026-05-09 | 2026-05-09 |
+| Phase 4 — Task 2: Wire ol-source-cluster into UtahMap.vue with dual style + click routing | ✅ Complete | 2 | 2026-05-09 | 2026-05-09 |
+| Phase 4 — Task 3: Final layout pass on MapView.vue + polish on CompanyPin.vue and EcosystemStatsBar.vue | ✅ Complete | 3 | 2026-05-09 | 2026-05-09 |
 
 ## Decisions Log
 
