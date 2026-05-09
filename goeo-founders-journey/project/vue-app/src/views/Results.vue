@@ -17,13 +17,14 @@ const filterStage    = ref(quizState.stage)
 const filterIndustry = ref(quizState.industry)
 const filterTopic    = ref(quizState.topic)
 const filterRegion   = ref(quizState.region)
+const filterType     = ref(null)
 
 const PAGE_SIZE = 15
 const page = ref(1)
 
 function resetPage() { page.value = 1 }
 
-watch([filterStage, filterIndustry, filterTopic, filterRegion], resetPage)
+watch([filterStage, filterIndustry, filterTopic, filterRegion, filterType], resetPage)
 
 onMounted(async () => {
   results.value = await scoreQuiz({ ...quizState })
@@ -35,9 +36,10 @@ onMounted(async () => {
 const filteredResults = computed(() => {
   let list = results.value
   if (filterStage.value)    list = list.filter(r => r.tags.stage.includes('any') || r.tags.stage.includes(filterStage.value))
-  if (filterIndustry.value) list = list.filter(r => r.tags.industry.includes(filterIndustry.value))
-  if (filterTopic.value)    list = list.filter(r => r.tags.goal.includes(filterTopic.value))
+  if (filterIndustry.value) list = list.filter(r => r.tags.industry.includes('general') || r.tags.industry.includes(filterIndustry.value))
+  if (filterTopic.value)    list = list.filter(r => r.tags.goal.includes('any') || r.tags.goal.includes(filterTopic.value))
   if (filterRegion.value)   list = list.filter(r => r.tags.region.includes('statewide') || r.tags.region.includes(filterRegion.value))
+  if (filterType.value)     list = list.filter(r => r.tags.resource_type.includes(filterType.value))
   return list
 })
 
@@ -72,6 +74,13 @@ function regionLabel(slug) { return REGION_LABELS[slug] ?? slug }
       </div>
 
       <div class="mt-8 flex flex-wrap items-center gap-2">
+        <span class="kicker mr-3">Type</span>
+        <button class="chip" :class="{ 'is-active': !filterType }" @click="filterType = null">All</button>
+        <button v-for="(label, key) in RESOURCE_TYPE_LABELS" :key="key" class="chip"
+                :class="{ 'is-active': filterType === key }"
+                @click="filterType = filterType === key ? null : key">{{ label }}</button>
+      </div>
+      <div class="mt-2 flex flex-wrap items-center gap-2">
         <span class="kicker mr-3">Stage</span>
         <button class="chip" :class="{ 'is-active': !filterStage }" @click="filterStage = null">All</button>
         <button v-for="s in STAGE_OPTIONS" :key="s.id" class="chip" :class="{ 'is-active': filterStage === s.id }" @click="filterStage = filterStage === s.id ? null : s.id">{{ s.title }}</button>

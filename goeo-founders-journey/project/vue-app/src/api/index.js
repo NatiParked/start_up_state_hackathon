@@ -66,6 +66,7 @@ export const RESOURCE_TYPE_LABELS = {
   industry_association: 'Association',
   chamber_econ_dev:     'Chamber',
   event:                'Event',
+  legal_information:    'Legal / Info',
 }
 
 export const REGION_LABELS = {
@@ -104,9 +105,9 @@ export async function scoreQuiz({ stage, industry, topic, region }) {
   const scored = pool.map(r => {
     let score = 0
 
-    if (industry && r.tags.industry.includes(industry)) score += 100
+    if (industry && (r.tags.industry.includes('general') || r.tags.industry.includes(industry))) score += 100
 
-    if (topic && r.tags.goal.includes(topic)) score += 80
+    if (topic && (r.tags.goal.includes('any') || r.tags.goal.includes(topic))) score += 80
 
     if (stage) {
       if (r.tags.stage.includes('any') || r.tags.stage.includes(stage)) score += 40

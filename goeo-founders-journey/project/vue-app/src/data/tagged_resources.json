@@ -8,6 +8,7 @@
     "email": null,
     "tags": {
       "stage": [
+        "idea",
         "early_stage",
         "growth"
       ],
@@ -38,6 +39,7 @@
     "email": "cameron.cuch@usu.edu",
     "tags": {
       "stage": [
+        "idea",
         "early_stage"
       ],
       "industry": [
@@ -66,6 +68,7 @@
     "email": "cet@byu.edu",
     "tags": {
       "stage": [
+        "idea",
         "early_stage"
       ],
       "industry": [
@@ -127,6 +130,7 @@
     "email": "snowcollege@snow.edu",
     "tags": {
       "stage": [
+        "idea",
         "early_stage"
       ],
       "industry": [
@@ -155,6 +159,7 @@
     "email": "einstitute@uvu.edu",
     "tags": {
       "stage": [
+        "idea",
         "early_stage"
       ],
       "industry": [
@@ -184,6 +189,7 @@
     "email": "entrepreneur@suu.edu",
     "tags": {
       "stage": [
+        "idea",
         "early_stage"
       ],
       "industry": [
@@ -244,6 +250,7 @@
     "email": "entrepreneurship@usu.edu",
     "tags": {
       "stage": [
+        "idea",
         "early_stage"
       ],
       "industry": [
@@ -334,7 +341,10 @@
       "industry": [
         "arts_media"
       ],
-      "goal": [],
+      "goal": [
+        "find_workspace",
+        "network_community"
+      ],
       "resource_type": [
         "training_education"
       ],
@@ -818,7 +828,11 @@
       "industry": [
         "general"
       ],
-      "goal": [],
+      "goal": [
+        "start_business",
+        "validate_idea",
+        "network_community"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -890,6 +904,7 @@
     "email": "lassonde@utah.edu",
     "tags": {
       "stage": [
+        "idea",
         "early_stage"
       ],
       "industry": [
@@ -923,7 +938,10 @@
       "industry": [
         "aerospace_defense"
       ],
-      "goal": [],
+      "goal": [
+        "government_contracting",
+        "network_community"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -947,7 +965,9 @@
       "industry": [
         "general"
       ],
-      "goal": [],
+      "goal": [
+        "find_workspace"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -997,7 +1017,11 @@
       "industry": [
         "aerospace_defense"
       ],
-      "goal": [],
+      "goal": [
+        "government_contracting",
+        "network_community",
+        "raise_capital"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -1016,12 +1040,16 @@
     "email": "info@uammi.org",
     "tags": {
       "stage": [
-        "growth"
+        "any"
       ],
       "industry": [
         "aerospace_defense"
       ],
-      "goal": [],
+      "goal": [
+        "network_community",
+        "raise_capital",
+        "start_business"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -1280,7 +1308,10 @@
       "industry": [
         "agriculture_food"
       ],
-      "goal": [],
+      "goal": [
+        "grow_sales_marketing",
+        "network_community"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -1569,7 +1600,10 @@
       "industry": [
         "life_sciences"
       ],
-      "goal": [],
+      "goal": [
+        "network_community",
+        "raise_capital"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -1827,6 +1861,7 @@
     "email": "wildcatmicrofund@weber.edu",
     "tags": {
       "stage": [
+        "idea",
         "early_stage"
       ],
       "industry": [
@@ -1881,6 +1916,7 @@
     "email": null,
     "tags": {
       "stage": [
+        "idea",
         "early_stage",
         "growth"
       ],
@@ -1916,7 +1952,11 @@
       "industry": [
         "manufacturing"
       ],
-      "goal": [],
+      "goal": [
+        "grow_sales_marketing",
+        "hire_workforce",
+        "network_community"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -2100,6 +2140,7 @@
     "email": "answerdesk@sba.gov",
     "tags": {
       "stage": [
+        "idea",
         "early_stage",
         "growth"
       ],
@@ -2134,7 +2175,9 @@
       "industry": [
         "general"
       ],
-      "goal": [],
+      "goal": [
+        "network_community"
+      ],
       "resource_type": [
         "event"
       ],
@@ -2185,7 +2228,10 @@
       "industry": [
         "general"
       ],
-      "goal": [],
+      "goal": [
+        "start_business",
+        "network_community"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -2217,7 +2263,7 @@
         "southern_utah"
       ]
     },
-    "needs_review": false
+    "needs_review": true
   },
   {
     "id": "what-s-up-down-south-economic-summit",
@@ -2336,9 +2382,13 @@
       "industry": [
         "general"
       ],
-      "goal": [],
+      "goal": [
+        "start_business",
+        "government_contracting"
+      ],
       "resource_type": [
-        "government_program"
+        "government_program",
+        "legal_information"
       ],
       "region": [
         "statewide"
@@ -2462,12 +2512,16 @@
     "email": "mike.finnerty@usu.edu",
     "tags": {
       "stage": [
-        "early_stage"
+        "idea",
+        "early_stage",
+        "growth"
       ],
       "industry": [
         "general"
       ],
-      "goal": [],
+      "goal": [
+        "any"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -2510,12 +2564,18 @@
     "email": "startup@utah.gov",
     "tags": {
       "stage": [
+        "idea",
         "early_stage"
       ],
       "industry": [
         "general"
       ],
-      "goal": [],
+      "goal": [
+        "start_business",
+        "validate_idea",
+        "network_community",
+        "raise_capital"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -2592,7 +2652,11 @@
       "industry": [
         "general"
       ],
-      "goal": [],
+      "goal": [
+        "grow_sales_marketing",
+        "hire_workforce",
+        "raise_capital"
+      ],
       "resource_type": [
         "training_education"
       ],
@@ -2750,14 +2814,19 @@
     "email": null,
     "tags": {
       "stage": [
-        "early_stage"
+        "idea",
+        "early_stage",
+        "growth"
       ],
       "industry": [
         "general"
       ],
       "goal": [
+        "start_business",
+        "validate_idea",
+        "raise_capital",
         "grow_sales_marketing",
-        "raise_capital"
+        "network_community"
       ],
       "resource_type": [
         "training_education"
@@ -2921,6 +2990,7 @@
     "email": "info@wbcutah.org",
     "tags": {
       "stage": [
+        "idea",
         "early_stage",
         "growth"
       ],
@@ -2950,6 +3020,7 @@
     "email": "wasatchwomensbusinessalliance@gmail.com",
     "tags": {
       "stage": [
+        "idea",
         "early_stage"
       ],
       "industry": [
@@ -3333,12 +3404,14 @@
     "email": "business@utah.gov",
     "tags": {
       "stage": [
-        "early_stage"
+        "any"
       ],
       "industry": [
         "general"
       ],
-      "goal": [],
+      "goal": [
+        "any"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -3419,7 +3492,9 @@
         "consumer_brands",
         "hospitality_tourism"
       ],
-      "goal": [],
+      "goal": [
+        "grow_sales_marketing"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -5138,7 +5213,11 @@
       "industry": [
         "general"
       ],
-      "goal": [],
+      "goal": [
+        "start_business",
+        "validate_idea",
+        "hire_workforce"
+      ],
       "resource_type": [
         "government_program"
       ],
@@ -5236,6 +5315,7 @@
     "email": "art@artharrisonofficial.com",
     "tags": {
       "stage": [
+        "idea",
         "early_stage"
       ],
       "industry": [
@@ -5275,7 +5355,7 @@
         "salt_lake_metro"
       ]
     },
-    "needs_review": false
+    "needs_review": true
   },
   {
     "id": "utah-department-of-workforce-services",
@@ -5685,5 +5765,117 @@
       ]
     },
     "needs_review": true
+  },
+  {
+    "id": "utah-division-of-corporations",
+    "name": "Utah Division of Corporations",
+    "summary": "The official state portal to register your business entity in Utah — LLC, corporation, partnership, or sole proprietorship. Required first step to legally operate.",
+    "eligibility": "Any person or entity forming or registering a business in Utah.",
+    "url": "https://corporations.utah.gov/",
+    "email": null,
+    "tags": {
+      "stage": [
+        "any"
+      ],
+      "industry": [
+        "general"
+      ],
+      "goal": [
+        "start_business"
+      ],
+      "resource_type": [
+        "government_program",
+        "legal_information"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "utah-one-stop-business-registration",
+    "name": "Utah One Stop Business Registration",
+    "summary": "Utah's unified online portal to register your business, get a tax ID, obtain licenses, and meet state compliance requirements in one place.",
+    "eligibility": "Any business starting or operating in Utah.",
+    "url": "https://onestop.utah.gov/",
+    "email": null,
+    "tags": {
+      "stage": [
+        "any"
+      ],
+      "industry": [
+        "general"
+      ],
+      "goal": [
+        "start_business"
+      ],
+      "resource_type": [
+        "government_program",
+        "legal_information"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "utah-sbdc-market-research",
+    "name": "Utah SBDC Market Research Center",
+    "summary": "Free access to premium market research databases, industry reports, and competitive analysis tools through Utah's Small Business Development Center network.",
+    "eligibility": "Open to any Utah entrepreneur or small business owner.",
+    "url": "https://utahsbdc.org/services/market-research/",
+    "email": null,
+    "tags": {
+      "stage": [
+        "idea",
+        "early_stage"
+      ],
+      "industry": [
+        "general"
+      ],
+      "goal": [
+        "validate_idea",
+        "grow_sales_marketing",
+        "start_business"
+      ],
+      "resource_type": [
+        "government_program"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
+  },
+  {
+    "id": "utah-legal-services-small-business",
+    "name": "Utah Small Business Legal Help (UTC Law Clinics)",
+    "summary": "Free and low-cost legal consultations for entrepreneurs through Utah law school clinics covering business formation, contracts, IP basics, and compliance.",
+    "eligibility": "Utah small business owners and early-stage entrepreneurs who cannot afford private counsel.",
+    "url": "https://www.utahbar.org/public-services/",
+    "email": null,
+    "tags": {
+      "stage": [
+        "idea",
+        "early_stage"
+      ],
+      "industry": [
+        "general"
+      ],
+      "goal": [
+        "start_business",
+        "validate_idea"
+      ],
+      "resource_type": [
+        "government_program",
+        "legal_information"
+      ],
+      "region": [
+        "statewide"
+      ]
+    },
+    "needs_review": false
   }
 ]
