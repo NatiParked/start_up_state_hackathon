@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Phase** | Phase 3: Submission Queue & Company CRUD |
+| **Phase** | Phase 4: Refresh Control, Subscriber Shell & Roadmap Page |
 | **Status** | ✅ Complete |
 | **Blocker** | None |
 
@@ -17,7 +17,7 @@
 | Phase 1: Auth Foundation & Route Guard | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 2: Admin Shell & Dashboard | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 3: Submission Queue & Company CRUD | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 4: Refresh Control, Subscriber Shell & Roadmap Page | 🔲 Pending | — | — |
+| Phase 4: Refresh Control, Subscriber Shell & Roadmap Page | ✅ Complete | 2026-05-09 | 2026-05-09 |
 
 ## Task Progress
 
@@ -32,6 +32,9 @@
 | Task 3.1: RLS migration + approve/reject-submission Edge Functions | ✅ Done | 1 | — |
 | Task 3.2: SubmissionQueue.vue + SubmissionReview.vue | ✅ Done | 2 | — |
 | Task 3.3: CompanyList.vue + CompanyEditor.vue + router wire-up | ✅ Done | 2 | — |
+| Task 4.1: RefreshControl.vue + router /admin/refresh | ✅ Done | 1 | 41s |
+| Task 4.2: SubscriberPanel.vue + router /admin/subscribers | ✅ Done | 2 | 29s |
+| Task 4.3: RoadmapCard.vue + RoadmapView.vue + router /roadmap | ✅ Done | 3 | 43s |
 
 ## Decisions Log
 
