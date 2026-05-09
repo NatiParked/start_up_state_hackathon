@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Phase** | Phase 1: Map Shell & Logo-Pin Rendering |
+| **Phase** | Phase 2: Company Drawer |
 | **Status** | ✅ Complete |
 | **Blocker** | None |
 
@@ -14,8 +14,8 @@
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| Phase 1: Map Shell & Logo-Pin Rendering | ✅ Complete | 2026-05-09 | 2026-05-09 |
-| Phase 2: Company Drawer | Pending | — | — |
+| Phase 1: Map Shell & Logo-Pin Rendering | ✅ Verified | 2026-05-09 | 2026-05-09 |
+| Phase 2: Company Drawer | ✅ Complete | 2026-05-09 | 2026-05-09 |
 | Phase 3: Filter Sidebar & URL Sync | Pending | — | — |
 | Phase 4: Cluster Rendering & Polish | Pending | — | — |
 
@@ -23,8 +23,10 @@
 
 | Task | Status | Sequence | Started | Completed |
 |------|--------|----------|---------|-----------|
-| Task 1: useLogoDev composable + startups store extension | ✅ Complete | 1 | 2026-05-09 | 2026-05-09 |
-| Task 2: CompanyPin, UtahMap, EcosystemStatsBar, MapView | ✅ Complete | 2 | 2026-05-09 | 2026-05-09 |
+| Phase 1 — Task 1: useLogoDev composable + startups store extension | ✅ Complete | 1 | 2026-05-09 | 2026-05-09 |
+| Phase 1 — Task 2: CompanyPin, UtahMap, EcosystemStatsBar, MapView | ✅ Complete | 2 | 2026-05-09 | 2026-05-09 |
+| Phase 2 — Task 1: CompanyDrawer.vue with computed sections + GSAP animation | ✅ Complete | 1 | 2026-05-09 | 2026-05-09 |
+| Phase 2 — Task 2: Wire CompanyDrawer into MapView with click-outside dismissal | ✅ Complete | 2 | 2026-05-09 | 2026-05-09 |
 
 ## Decisions Log
 
