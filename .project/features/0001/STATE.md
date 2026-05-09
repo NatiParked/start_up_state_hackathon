@@ -16,7 +16,7 @@
 |-------|--------|---------|-----------|
 | Phase 1: Dependencies & Configuration | ✅ Verified | 2026-05-08 | 2026-05-08 |
 | Phase 2: Database Schema & Migration | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 3: Seed Import Script | ✅ Complete | 2026-05-09 | 2026-05-09 |
+| Phase 3: Seed Import Script | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 4: Pinia Stores, Router & Deploy Config | ⏳ Pending | — | — |
 
 ## Task Progress
@@ -43,7 +43,8 @@
 
 | Issue | Status | Resolution |
 |-------|--------|------------|
-| None | — | — |
+| Phase 2 migration never applied to live DB | ✅ Resolved | Applied via Supabase MCP `apply_migration` on 2026-05-09; seed script re-run successfully (223/223 rows imported) |
+| Script column headers mismatched sheet | ✅ Resolved | Fixed `enrichRow()`: `'Section/Sector'`→`'Section'`, `'Description'`→`'Description of startup'`, `'LinkedIn Link'`→full header with parenthetical |
 
 ---
 *Updated by `/spec:execute-phase` during implementation*
