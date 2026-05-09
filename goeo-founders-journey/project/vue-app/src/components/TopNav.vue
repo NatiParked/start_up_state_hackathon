@@ -7,8 +7,7 @@ import { RouterLink } from 'vue-router'
     <nav class="flex items-center gap-7">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/quiz">Find resources</RouterLink>
-      <RouterLink to="/submit">Add a startup</RouterLink>
-      <span class="foot-mark hidden md:inline">Utah — GOEO</span>
+<span class="foot-mark hidden md:inline">Utah — GOEO</span>
     </nav>
   </header>
 </template>

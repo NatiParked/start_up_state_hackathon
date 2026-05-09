@@ -64,7 +64,7 @@ function back() {
         <div class="idx mb-6">— 0{{ step + 1 }} / {{ steps[step].key }}</div>
         <h2 class="display-md max-w-[18ch]">{{ steps[step].title }}</h2>
         <p class="lede mt-4">{{ steps[step].sub }}</p>
-        <div class="grid sm:grid-cols-2 gap-4 mt-12">
+        <div class="grid sm:grid-cols-3 gap-4 mt-12">
           <button v-for="(o, i) in steps[step].options" :key="o.id"
                   data-anim="quiz-opt" class="opt"
                   :class="{ 'is-selected': quizState[steps[step].key] === o.id }"
