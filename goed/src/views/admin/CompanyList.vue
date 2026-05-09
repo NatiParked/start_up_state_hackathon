@@ -90,10 +90,11 @@ watch(selectedCompany, (val) => {
   <div class="h-full flex flex-col p-6">
     <!-- Page header -->
     <div class="flex items-center gap-3 mb-6 shrink-0">
-      <h1 class="text-2xl font-bold text-gray-900">Companies</h1>
-      <span class="bg-utah-blue text-white text-sm font-semibold px-2.5 py-0.5 rounded-full">
-        {{ displayedCompanies.length }}
-      </span>
+      <div>
+        <div class="kicker">— Directory</div>
+        <h1 class="display-sm mt-1 text-[var(--fg)]">Companies</h1>
+      </div>
+      <span class="chip-soft">{{ displayedCompanies.length }}</span>
     </div>
 
     <!-- Search -->
@@ -102,95 +103,108 @@ watch(selectedCompany, (val) => {
         v-model="searchQuery"
         type="text"
         placeholder="Search by name..."
-        class="w-full max-w-sm border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+        class="input max-w-sm"
       />
-      <div v-if="actionError" class="mt-2 text-error-red text-sm bg-red-50 border border-red-200 rounded-md px-3 py-2 max-w-sm">
+      <div
+        v-if="actionError"
+        class="mt-2 max-w-sm rounded-md px-3 py-2 text-sm"
+        style="background: rgba(244,162,97,0.08); border: 1px solid rgba(244,162,97,0.35); color: var(--warn);"
+      >
         {{ actionError }}
       </div>
     </div>
 
     <!-- Loading state -->
-    <div v-if="isLoading" class="flex items-center justify-center py-16 text-gray-500">
+    <div v-if="isLoading" class="flex items-center justify-center py-16 text-[var(--fg-2)]">
       Loading companies...
     </div>
 
     <!-- Table: scrolls independently -->
-    <div v-else class="flex-1 min-h-0 overflow-y-auto overflow-x-auto rounded-lg border border-gray-200">
-      <table class="min-w-full divide-y divide-gray-200 text-sm">
-        <thead class="bg-gray-50 sticky top-0">
+    <div
+      v-else
+      class="flex-1 min-h-0 overflow-y-auto overflow-x-auto rounded-xl border"
+      style="background: var(--surface); border-color: var(--hair);"
+    >
+      <table class="min-w-full text-sm">
+        <thead class="sticky top-0" style="background: var(--surface-2);">
           <tr>
-            <th class="px-4 py-3 text-left font-semibold text-gray-600">
+            <th class="px-4 py-3 text-left lbl">
               <button
-                class="flex items-center gap-1 hover:text-utah-blue"
+                class="flex items-center gap-1 hover:text-[var(--accent)]"
                 @click="toggleSort('name')"
               >
                 Name
                 <span v-if="sortKey === 'name'">{{ sortDir === 'asc' ? '▲' : '▼' }}</span>
               </button>
             </th>
-            <th class="px-4 py-3 text-left font-semibold text-gray-600">
+            <th class="px-4 py-3 text-left lbl">
               <button
-                class="flex items-center gap-1 hover:text-utah-blue"
+                class="flex items-center gap-1 hover:text-[var(--accent)]"
                 @click="toggleSort('sector')"
               >
                 Sector
                 <span v-if="sortKey === 'sector'">{{ sortDir === 'asc' ? '▲' : '▼' }}</span>
               </button>
             </th>
-            <th class="px-4 py-3 text-left font-semibold text-gray-600">
+            <th class="px-4 py-3 text-left lbl">
               <button
-                class="flex items-center gap-1 hover:text-utah-blue"
+                class="flex items-center gap-1 hover:text-[var(--accent)]"
                 @click="toggleSort('stage')"
               >
                 Stage
                 <span v-if="sortKey === 'stage'">{{ sortDir === 'asc' ? '▲' : '▼' }}</span>
               </button>
             </th>
-            <th class="px-4 py-3 text-left font-semibold text-gray-600">
+            <th class="px-4 py-3 text-left lbl">
               <button
-                class="flex items-center gap-1 hover:text-utah-blue"
+                class="flex items-center gap-1 hover:text-[var(--accent)]"
                 @click="toggleSort('created_at')"
               >
                 Created At
                 <span v-if="sortKey === 'created_at'">{{ sortDir === 'asc' ? '▲' : '▼' }}</span>
               </button>
             </th>
-            <th class="px-4 py-3 text-left font-semibold text-gray-600">Actions</th>
+            <th class="px-4 py-3 text-left lbl">Actions</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-100 bg-white">
+        <tbody>
           <tr
             v-for="c in displayedCompanies"
             :key="c.id"
-            class="cursor-pointer hover:bg-gray-50 transition-colors"
+            class="cursor-pointer transition-colors border-t"
+            style="border-color: var(--hair);"
             @click="openEditor(c)"
+            @mouseenter="(e) => e.currentTarget.style.background = 'var(--surface-2)'"
+            @mouseleave="(e) => e.currentTarget.style.background = 'transparent'"
           >
-            <td class="px-4 py-3 font-medium text-gray-900">
+            <td class="px-4 py-3 font-medium text-[var(--fg)]">
               <span>{{ c.name }}</span>
               <span
                 v-if="c.deleted_at"
-                class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-error-red"
+                class="ml-2 badge-cat"
+                style="background: rgba(244,162,97,0.12); color: var(--warn); border-color: rgba(244,162,97,0.35);"
               >Deleted</span>
               <span
                 v-else-if="c.is_hidden"
-                class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-500"
+                class="ml-2 badge-cat outline"
               >Hidden</span>
             </td>
-            <td class="px-4 py-3 text-gray-600">{{ c.sector ?? '—' }}</td>
-            <td class="px-4 py-3 text-gray-600">{{ c.stage ?? '—' }}</td>
-            <td class="px-4 py-3 text-gray-500">
+            <td class="px-4 py-3 text-[var(--fg-2)]">{{ c.sector ?? '—' }}</td>
+            <td class="px-4 py-3 text-[var(--fg-2)]">{{ c.stage ?? '—' }}</td>
+            <td class="px-4 py-3 text-[var(--fg-3)]">
               {{ c.created_at ? new Date(c.created_at).toLocaleDateString() : '—' }}
             </td>
-            <td class="px-4 py-3 text-gray-500">
-              <div class="flex items-center gap-2">
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-3">
                 <button
-                  class="text-xs font-medium text-utah-blue hover:underline whitespace-nowrap"
+                  class="text-xs font-medium text-[var(--accent)] hover:underline whitespace-nowrap"
                   @click.stop="toggleHidden(c)"
                 >
                   {{ c.is_hidden ? 'Show' : 'Hide' }}
                 </button>
                 <button
-                  class="text-xs font-medium text-error-red hover:underline whitespace-nowrap"
+                  class="text-xs font-medium hover:underline whitespace-nowrap"
+                  style="color: var(--warn);"
                   @click.stop="softDelete(c)"
                 >
                   Delete
@@ -199,7 +213,7 @@ watch(selectedCompany, (val) => {
             </td>
           </tr>
           <tr v-if="displayedCompanies.length === 0">
-            <td colspan="5" class="px-4 py-8 text-center text-gray-400">No companies found.</td>
+            <td colspan="5" class="px-4 py-8 text-center text-[var(--fg-3)]">No companies found.</td>
           </tr>
         </tbody>
       </table>
@@ -207,10 +221,15 @@ watch(selectedCompany, (val) => {
 
     <!-- Slide-in editor panel -->
     <Teleport v-if="selectedCompany" to="body">
-      <div class="fixed inset-0 bg-black/30 z-40" @click="closeEditor" />
+      <div
+        class="fixed inset-0 z-40"
+        style="background: rgba(0,0,0,0.5); backdrop-filter: blur(2px);"
+        @click="closeEditor"
+      />
       <div
         ref="panelRef"
-        class="fixed top-0 right-0 h-full w-1/2 bg-white shadow-xl z-50 overflow-y-auto"
+        class="fixed top-0 right-0 h-full w-1/2 z-50 overflow-y-auto border-l"
+        style="background: var(--bg-2); border-color: var(--hair); box-shadow: -30px 0 60px -20px rgba(0,0,0,0.6);"
       >
         <CompanyEditor
           :company="selectedCompany"

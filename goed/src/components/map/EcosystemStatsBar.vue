@@ -40,30 +40,33 @@ const hasTopSectors = computed(() => topSectorsDisplay.value.length > 0)
 
 <template>
   <div
-    class="inline-flex flex-nowrap items-center gap-x-6 px-4 py-3 rounded-xl border w-max max-w-[calc(100%-2rem)] overflow-x-auto whitespace-nowrap"
-    style="background: rgba(13,25,45,0.78); backdrop-filter: blur(12px); border-color: var(--hair-2); box-shadow: 0 20px 40px -16px rgba(0,0,0,0.6);"
+    class="flex flex-nowrap items-center gap-x-5 whitespace-nowrap overflow-x-auto"
     @click.stop
   >
-    <div class="metric text-center">
-      <div class="num">{{ totalCount }}</div>
-      <div class="lbl">Companies</div>
+    <div class="flex items-baseline gap-1.5 shrink-0">
+      <span class="font-display font-semibold text-[var(--fg)] tabular-nums" style="font-size: 22px; line-height: 1;">{{ totalCount }}</span>
+      <span class="lbl">Companies</span>
     </div>
-    <div class="metric text-center">
-      <div class="num">{{ hiringCount }}</div>
-      <div class="lbl">Hiring</div>
+    <div class="flex items-baseline gap-1.5 shrink-0">
+      <span class="font-display font-semibold text-[var(--fg)] tabular-nums" style="font-size: 22px; line-height: 1;">{{ hiringCount }}</span>
+      <span class="lbl">Hiring</span>
     </div>
-    <div class="metric text-center">
-      <div class="num">{{ withInvestorsCount }}</div>
-      <div class="lbl">With Investors</div>
+    <div class="flex items-baseline gap-1.5 shrink-0">
+      <span class="font-display font-semibold text-[var(--fg)] tabular-nums" style="font-size: 22px; line-height: 1;">{{ withInvestorsCount }}</span>
+      <span class="lbl">With Investors</span>
     </div>
-    <div v-if="hasTopSectors" class="flex flex-nowrap gap-x-6 items-end">
+    <div
+      v-if="hasTopSectors"
+      class="flex flex-nowrap items-baseline gap-x-4 pl-5 border-l shrink-0"
+      style="border-color: var(--hair-2);"
+    >
       <div
         v-for="sector in topSectorsDisplay"
         :key="sector.name"
-        class="text-center"
+        class="flex items-baseline gap-1.5"
       >
-        <div class="text-sm font-semibold text-[var(--accent)]">{{ sector.name }}</div>
-        <div class="lbl">{{ sector.count }} co.</div>
+        <span class="font-semibold text-[var(--accent)]" style="font-size: 13px;">{{ sector.name }}</span>
+        <span class="lbl">{{ sector.count }}</span>
       </div>
     </div>
   </div>

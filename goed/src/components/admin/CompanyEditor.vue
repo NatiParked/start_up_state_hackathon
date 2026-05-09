@@ -45,76 +45,77 @@ async function save() {
 
 <template>
   <div class="p-6">
-    <h2 class="text-xl font-bold text-gray-900 mb-6">Edit Company</h2>
+    <div class="kicker">— Edit</div>
+    <h2 class="display-sm mt-1 mb-6 text-[var(--fg)]">Edit Company</h2>
 
     <form class="space-y-4" @submit.prevent="save">
 
       <!-- name -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+        <label class="field-label">Name</label>
         <input
           v-model="form.name"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- description -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+        <label class="field-label">Description</label>
         <textarea
           v-model="form.description"
           rows="3"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- website -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Website</label>
+        <label class="field-label">Website</label>
         <input
           v-model="form.website"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- linkedin -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">LinkedIn</label>
+        <label class="field-label">LinkedIn</label>
         <input
           v-model="form.linkedin"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- address -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+        <label class="field-label">Address</label>
         <input
           v-model="form.address"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- city -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+        <label class="field-label">City</label>
         <input
           v-model="form.city"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- region -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Region</label>
+        <label class="field-label">Region</label>
         <select
           v-model="form.region"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="select"
         >
           <option value="">— Select region —</option>
           <option>Salt Lake City</option>
@@ -127,32 +128,32 @@ async function save() {
 
       <!-- lat -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
+        <label class="field-label">Latitude</label>
         <input
           v-model.number="form.lat"
           type="number"
           step="any"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- lng -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
+        <label class="field-label">Longitude</label>
         <input
           v-model.number="form.lng"
           type="number"
           step="any"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- sector -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Sector</label>
+        <label class="field-label">Sector</label>
         <select
           v-model="form.sector"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="select"
         >
           <option value="">— Select sector —</option>
           <option>Fintech</option>
@@ -171,10 +172,10 @@ async function save() {
 
       <!-- stage -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Stage</label>
+        <label class="field-label">Stage</label>
         <select
           v-model="form.stage"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="select"
         >
           <option value="">— Select stage —</option>
           <option>Pre-seed</option>
@@ -190,10 +191,10 @@ async function save() {
 
       <!-- funding_stage -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Funding Stage</label>
+        <label class="field-label">Funding Stage</label>
         <select
           v-model="form.funding_stage"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="select"
         >
           <option value="">— Select funding stage —</option>
           <option>Pre-seed</option>
@@ -209,10 +210,10 @@ async function save() {
 
       <!-- business_type -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Business Type</label>
+        <label class="field-label">Business Type</label>
         <select
           v-model="form.business_type"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="select"
         >
           <option value="">— Select business type —</option>
           <option>B2B</option>
@@ -226,10 +227,10 @@ async function save() {
 
       <!-- employee_range -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Employee Range</label>
+        <label class="field-label">Employee Range</label>
         <select
           v-model="form.employee_range"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="select"
         >
           <option value="">— Select employee range —</option>
           <option>1-10</option>
@@ -242,11 +243,11 @@ async function save() {
 
       <!-- founded_year -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Founded Year</label>
+        <label class="field-label">Founded Year</label>
         <input
           v-model.number="form.founded_year"
           type="number"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
@@ -256,93 +257,93 @@ async function save() {
           id="is_hiring"
           v-model="form.is_hiring"
           type="checkbox"
-          class="h-4 w-4 rounded border-gray-300 text-utah-blue focus:ring-utah-blue"
+          class="h-4 w-4 rounded accent-[var(--accent)]"
         />
-        <label for="is_hiring" class="text-sm font-medium text-gray-700">Is Hiring</label>
+        <label for="is_hiring" class="text-sm font-medium text-[var(--fg)]">Is Hiring</label>
       </div>
 
       <!-- job_titles -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Job Titles (comma-separated)</label>
+        <label class="field-label">Job Titles (comma-separated)</label>
         <input
           :value="Array.isArray(form.job_titles) ? form.job_titles.join(', ') : form.job_titles"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
           @input="form.job_titles = $event.target.value"
         />
       </div>
 
       <!-- careers_url -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Careers URL</label>
+        <label class="field-label">Careers URL</label>
         <input
           v-model="form.careers_url"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- logo_url -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Logo URL</label>
+        <label class="field-label">Logo URL</label>
         <input
           v-model="form.logo_url"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- google_place_id -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Google Place ID</label>
+        <label class="field-label">Google Place ID</label>
         <input
           v-model="form.google_place_id"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- google_rating -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Google Rating</label>
+        <label class="field-label">Google Rating</label>
         <input
           v-model.number="form.google_rating"
           type="number"
           step="0.1"
           min="0"
           max="5"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- phone -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+        <label class="field-label">Phone</label>
         <input
           v-model="form.phone"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
       <!-- investors -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Investors (comma-separated)</label>
+        <label class="field-label">Investors (comma-separated)</label>
         <input
           :value="Array.isArray(form.investors) ? form.investors.join(', ') : form.investors"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
           @input="form.investors = $event.target.value"
         />
       </div>
 
       <!-- total_raised -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Total Raised</label>
+        <label class="field-label">Total Raised</label>
         <input
           v-model="form.total_raised"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          class="input"
         />
       </div>
 
@@ -352,9 +353,9 @@ async function save() {
           id="verified"
           v-model="form.verified"
           type="checkbox"
-          class="h-4 w-4 rounded border-gray-300 text-utah-blue focus:ring-utah-blue"
+          class="h-4 w-4 rounded accent-[var(--accent)]"
         />
-        <label for="verified" class="text-sm font-medium text-gray-700">Verified</label>
+        <label for="verified" class="text-sm font-medium text-[var(--fg)]">Verified</label>
       </div>
 
       <!-- is_hidden -->
@@ -363,13 +364,17 @@ async function save() {
           id="is_hidden"
           v-model="form.is_hidden"
           type="checkbox"
-          class="h-4 w-4 rounded border-gray-300 text-utah-blue focus:ring-utah-blue"
+          class="h-4 w-4 rounded accent-[var(--accent)]"
         />
-        <label for="is_hidden" class="text-sm font-medium text-gray-700">Hidden from public map</label>
+        <label for="is_hidden" class="text-sm font-medium text-[var(--fg)]">Hidden from public map</label>
       </div>
 
       <!-- Save error -->
-      <div v-if="saveError" class="text-error-red text-sm bg-red-50 border border-red-200 rounded-md px-3 py-2">
+      <div
+        v-if="saveError"
+        class="rounded-md px-3 py-2 text-sm"
+        style="background: rgba(244,162,97,0.08); border: 1px solid rgba(244,162,97,0.35); color: var(--warn);"
+      >
         {{ saveError }}
       </div>
 
@@ -378,13 +383,14 @@ async function save() {
         <button
           type="submit"
           :disabled="isSaving"
-          class="bg-utah-blue hover:bg-utah-blue-dark disabled:opacity-50 text-white font-semibold px-4 py-2 rounded-md text-sm transition-colors"
+          class="btn btn-primary"
+          :class="{ 'opacity-60 cursor-not-allowed': isSaving }"
         >
           {{ isSaving ? 'Saving...' : 'Save' }}
         </button>
         <button
           type="button"
-          class="border border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold px-4 py-2 rounded-md text-sm transition-colors"
+          class="btn btn-ghost"
           @click="emit('close')"
         >
           Cancel

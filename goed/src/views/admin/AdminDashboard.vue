@@ -49,9 +49,14 @@ onMounted(loadMetrics)
 
 <template>
   <div class="h-full overflow-y-auto p-6">
-    <h1 class="text-xl font-semibold text-gray-900 mb-6">Dashboard</h1>
+    <div class="kicker">— Overview</div>
+    <h1 class="display-sm mt-2 mb-6 text-[var(--fg)]">Dashboard</h1>
 
-    <div v-if="loadError" class="mb-4 p-3 bg-red-50 border border-error-red text-error-red text-sm rounded">
+    <div
+      v-if="loadError"
+      class="mb-4 p-3 rounded-md text-sm"
+      style="background: rgba(244,162,97,0.08); border: 1px solid rgba(244,162,97,0.35); color: var(--warn);"
+    >
       {{ loadError }}
     </div>
 
@@ -59,12 +64,16 @@ onMounted(loadMetrics)
       <div
         v-for="metric in metrics"
         :key="metric.label"
-        class="bg-white rounded-lg border border-gray-200 p-5"
+        class="card card-pad"
       >
-        <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">{{ metric.label }}</p>
-        <div v-if="metric.loading" class="h-7 w-24 bg-gray-200 rounded animate-pulse" />
-        <p v-else class="text-2xl font-bold text-gray-900">{{ metric.value }}</p>
-        <p v-if="metric.m9" class="mt-1 text-xs text-gray-400">Populates in M9</p>
+        <p class="lbl mb-2">{{ metric.label }}</p>
+        <div
+          v-if="metric.loading"
+          class="h-7 w-24 rounded animate-pulse"
+          style="background: var(--hair-2);"
+        />
+        <p v-else class="num text-[var(--fg)]" style="font-family: var(--display); font-weight: 600; font-size: clamp(1.6rem, 2.6vw, 2.1rem); line-height: 1.05; letter-spacing: -0.02em;">{{ metric.value }}</p>
+        <p v-if="metric.m9" class="mt-1 text-xs text-[var(--fg-3)]">Populates in M9</p>
       </div>
     </div>
   </div>

@@ -46,38 +46,52 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50">
-    <div class="bg-white p-8 rounded-lg shadow max-w-md w-full">
-      <h1 class="text-2xl font-semibold text-gray-900 mb-6">Admin Sign In</h1>
+  <div class="min-h-screen flex items-center justify-center px-4">
+    <div class="form-section max-w-md w-full">
+      <div class="kicker">— Admin</div>
+      <h1 class="display-sm mt-2 mb-6 text-[var(--fg)]">Sign in</h1>
 
-      <div v-if="notAllowedNotice" class="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
+      <div
+        v-if="notAllowedNotice"
+        class="mb-4 p-3 rounded-md text-sm"
+        style="background: rgba(244,162,97,0.08); border: 1px solid rgba(244,162,97,0.35); color: var(--warn);"
+      >
         {{ notAllowedNotice }}
       </div>
 
-      <div v-if="submitError" class="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
+      <div
+        v-if="submitError"
+        class="mb-4 p-3 rounded-md text-sm"
+        style="background: rgba(244,162,97,0.08); border: 1px solid rgba(244,162,97,0.35); color: var(--warn);"
+      >
         {{ submitError }}
       </div>
 
-      <div v-if="confirmationMessage" class="mb-4 p-3 bg-green-50 border border-green-200 rounded text-green-700 text-sm">
+      <div
+        v-if="confirmationMessage"
+        class="mb-4 p-3 rounded-md text-sm"
+        style="background: var(--accent-soft); border: 1px solid rgba(17,223,129,0.3); color: var(--accent);"
+      >
         {{ confirmationMessage }}
       </div>
 
       <form v-if="!linkSent" @submit.prevent="handleSubmit" class="space-y-4">
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+          <label for="email" class="field-label">Email address</label>
           <input
             id="email"
             v-model="email"
             type="email"
             required
             placeholder="you@example.com"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            class="input"
           />
         </div>
         <button
           type="submit"
           :disabled="isSubmitting"
-          class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white text-sm font-medium rounded-md transition-colors"
+          class="btn btn-primary w-full justify-center"
+          :class="{ 'opacity-60 cursor-not-allowed': isSubmitting }"
         >
           {{ isSubmitting ? 'Sending…' : 'Send magic link' }}
         </button>
