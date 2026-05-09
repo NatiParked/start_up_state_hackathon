@@ -37,7 +37,7 @@ onMounted(() => {
       style="background: rgba(13, 25, 45, 0.5); backdrop-filter: blur(8px)"
     >
       <span class="kicker">— Map</span>
-      <span class="display-sm text-[var(--fg)]">Utah Startup Map</span>
+      <span class="display-sm text-[var(--accent)]">Utah Startup Map</span>
     </header>
     <main class="flex flex-1 min-h-0 overflow-hidden pb-6">
       <div :class="mapZoneClasses">

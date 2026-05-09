@@ -40,6 +40,9 @@ __screenshots__/
 *.jpg
 *.jpeg
 *.webp
+!goed/public/logos/*.jpg
+!goed/public/logos/*.jpeg
+!goed/public/logos/*.webp
 
 # Claude Code / AI tooling
 .claude/
