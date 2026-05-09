@@ -7,7 +7,7 @@
 | Field | Value |
 |-------|-------|
 | **Phase** | Phase 2: Send-Digest Edge Function |
-| **Status** | ✅ Complete |
+| **Status** | ✅ Verified |
 | **Blocker** | None |
 
 ## Phase Progress
@@ -15,7 +15,7 @@
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | Phase 1: Database Schema & Migration | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 2: Send-Digest Edge Function | ✅ Complete | 2026-05-09 | 2026-05-09 |
+| Phase 2: Send-Digest Edge Function | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 3: Subscribe View & Confirmation Flow | ⏳ Pending | — | — |
 | Phase 4: Map CTA & Admin Panel Population | ⏳ Pending | — | — |
 
@@ -46,6 +46,7 @@
 | 2026-05-09 | Confirmation handled by `confirm-subscription` Edge Function (redirect) | The confirm link goes directly to the Edge Function URL which redirects to `/subscribe?confirmed=true`; no client-side token-in-URL parsing needed, simpler UX. |
 | 2026-05-09 | `send-confirmation` is a separate Edge Function from `send-digest` | Keeps `send-digest` focused on the weekly batch job; confirmation emails are triggered on-demand from `SubscribeView` via `supabase.functions.invoke`. |
 | 2026-05-09 | Phase 1 executed inline (no subagent) | Task 2 requires Supabase MCP tools only available in orchestrator context; single-executor mode used for the whole phase. |
+| 2026-05-09 | `send-digest` deployed via MCP `deploy_edge_function` | CLI `invoke` subcommand absent in locally installed Supabase CLI v2.98.2; deployment done directly via Supabase MCP tool instead. Function ID: c2d9348e, status: ACTIVE. |
 
 ## Blockers & Issues
 
