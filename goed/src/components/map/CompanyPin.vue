@@ -29,7 +29,7 @@ const monogramClasses = computed(() => 'w-full h-full flex items-center justify-
 </script>
 
 <template>
-  <div :class="pinClasses" @click="selectCompany(company.id)">
+  <div :class="pinClasses" @click.stop="selectCompany(company.id)">
     <img
       v-if="!showMonogram"
       :src="logoUrl"
