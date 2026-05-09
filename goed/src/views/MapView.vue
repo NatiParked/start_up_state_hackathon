@@ -5,6 +5,7 @@ import { useStartupsStore } from '@/stores/startups'
 import UtahMap from '@/components/map/UtahMap.vue'
 import EcosystemStatsBar from '@/components/map/EcosystemStatsBar.vue'
 import CompanyDrawer from '@/components/drawer/CompanyDrawer.vue'
+import FilterSidebar from '@/components/filters/FilterSidebar.vue'
 
 const store = useStartupsStore()
 const { companies } = storeToRefs(store)
@@ -22,12 +23,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="relative flex flex-col h-screen w-screen">
-    <EcosystemStatsBar />
-    <div @click="handleMapBackgroundClick" class="relative flex-1 min-h-0 z-10">
-      <UtahMap class="w-full h-full" />
+  <div class="flex h-screen w-screen overflow-hidden">
+    <FilterSidebar />
+    <div class="relative flex flex-col flex-1 min-w-0">
+      <EcosystemStatsBar />
+      <div @click="handleMapBackgroundClick" class="relative flex-1 min-h-0 z-10">
+        <UtahMap class="w-full h-full" />
+      </div>
+      <CompanyDrawer />
     </div>
-    <CompanyDrawer />
   </div>
 </template>
 
