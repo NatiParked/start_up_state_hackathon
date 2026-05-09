@@ -147,6 +147,8 @@ Create the composable and store that expose admin auth state to the rest of the 
 
 **Type:** auto
 **Sequence:** 3
+**Status:** Complete
+**Completed:** 2026-05-09
 
 **Files:**
 - `goed/src/router/guards.js` (create)
@@ -208,7 +210,7 @@ Create the composable and store that expose admin auth state to the rest of the 
 - [x] RLS policy on `map_startup_submissions` is gated by `auth.jwt() ->> 'email' in (select email from map_admin_users)`.
 - [x] `useAdminAuth` composable exists with the documented five-key return shape and JSDoc on every export.
 - [x] `useAdminStore` Pinia store exists, follows setup-style pattern, exposes `isLoading` + `error` refs and `setSession` + `fetchSubmissions` actions.
-- [ ] `adminGuard` exists and is wired into `/admin` and `/admin/dashboard` via `beforeEnter`.
+- [x] `adminGuard` exists and is wired into `/admin` and `/admin/dashboard` via `beforeEnter`.
 - [ ] `/admin` while logged out redirects to `/admin/login`.
 - [ ] `/admin` while logged in with a non-allow-listed email signs the user out and redirects to `/admin/login?reason=not-allowed` with a visible red notice.
 - [ ] `/admin/login` submits an allow-listed email and shows "Check your email — link sent to <email>".
