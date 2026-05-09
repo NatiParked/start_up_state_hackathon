@@ -56,7 +56,9 @@ watch(isOpen, (open) => {
 })
 
 onMounted(() => {
-  gsap.set(drawerEl.value, { x: '100%' })
+  if (drawerEl.value) {
+    gsap.set(drawerEl.value, { x: '100%' })
+  }
 })
 </script>
 
@@ -83,7 +85,7 @@ onMounted(() => {
           >{{ monogram }}</div>
 
           <div>
-            <h2 class="text-xl font-bold text-gray-900">{{ company?.name }}</h2>
+            <h2 class="text-xl font-bold text-gray-900">{{ company.name }}</h2>
             <div class="flex flex-wrap gap-2 mt-1">
               <span class="bg-utah-blue/10 text-utah-blue rounded-full px-2 py-1 text-xs">{{ sectorLabel }}</span>
               <span class="bg-gray-100 text-gray-700 rounded-full px-2 py-1 text-xs">{{ stageLabel }}</span>
