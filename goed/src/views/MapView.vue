@@ -13,7 +13,7 @@ const { companies } = storeToRefs(store);
 const { clearSelection } = store;
 
 const layoutClasses = computed(
-  () => "flex flex-col h-full w-full overflow-hidden",
+  () => "flex flex-col flex-1 min-h-0 w-full overflow-hidden",
 );
 const mapZoneClasses = computed(
   () => "flex flex-col flex-1 min-w-0 min-h-0 relative",
@@ -39,12 +39,16 @@ onMounted(() => {
       <span class="kicker">— Map</span>
       <span class="display-sm text-[var(--fg)]">Utah Startup Map</span>
     </header>
-    <main class="flex flex-1 min-h-0 overflow-hidden">
-      <FilterSidebar />
+    <main class="flex flex-1 min-h-0 overflow-hidden pb-6">
       <div :class="mapZoneClasses">
-        <EcosystemStatsBar />
         <div class="relative flex-1 min-h-0" @click="handleMapBackgroundClick">
           <UtahMap class="w-full h-full" />
+          <div class="absolute top-4 left-4 right-4 bottom-0 z-20 flex items-stretch gap-3 pointer-events-none">
+            <FilterSidebar class="pointer-events-auto" />
+            <div class="flex-1 flex flex-col justify-end items-start min-w-0 pointer-events-none">
+              <EcosystemStatsBar class="pointer-events-auto" />
+            </div>
+          </div>
           <CompanyDrawer />
         </div>
       </div>
