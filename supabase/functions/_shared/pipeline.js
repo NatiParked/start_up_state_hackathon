@@ -75,7 +75,8 @@ function emptyRecord() {
  */
 function findAtsUrlInHtml(html) {
   if (!html) return null;
-  const hrefPattern = /href=["']([^"']*(?:greenhouse\.io|lever\.co|ashbyhq\.com)[^"']*)/gi;
+  const escaped = ATS_HOSTS.map(h => h.replace(/\./g, '\\.')).join('|');
+  const hrefPattern = new RegExp(`href=["']([^"']*(?:${escaped})[^"']*)`, 'i');
   const match = hrefPattern.exec(html);
   return match ? match[1] : null;
 }

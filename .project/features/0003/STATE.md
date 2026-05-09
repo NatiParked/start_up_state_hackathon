@@ -7,15 +7,15 @@
 | Field | Value |
 |-------|-------|
 | **Phase** | Phase 2: Core Enrichers & Pipeline Orchestrator |
-| **Status** | Pending |
+| **Status** | In Progress |
 | **Blocker** | None |
 
 ## Phase Progress
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| Phase 1: Submissions Schema & Shared Helpers | ✅ Complete | 2026-05-09 | 2026-05-09 |
-| Phase 2: Core Enrichers & Pipeline Orchestrator | Pending | — | — |
+| Phase 1: Submissions Schema & Shared Helpers | ✅ Verified | 2026-05-09 | 2026-05-09 |
+| Phase 2: Core Enrichers & Pipeline Orchestrator | ✅ Complete | 2026-05-09 | 2026-05-09 |
 | Phase 3: onboard-company Edge Function | Pending | — | — |
 | Phase 4: Frontend Submission UI | Pending | — | — |
 
@@ -28,14 +28,14 @@
 | 1.3: Create `_shared/logo-dev.js` | ✅ Done | 1 | ~2 min |
 | 1.4: Create `_shared/nominatim.js` | ✅ Done | 1 | ~2 min |
 | 1.5: Create `_shared/google-places.js` | ✅ Done | 1 | ~2 min |
-| 2.1: Create `_shared/ats.js` | Pending | 1 | — |
-| 2.2: Create `_shared/enrichers/crunchbase.js` | Pending | 1 | — |
-| 2.3: Create `_shared/enrichers/utah-dcc.js` | Pending | 1 | — |
-| 2.4: Create `_shared/enrichers/github.js` | Pending | 1 | — |
-| 2.5: Create `_shared/enrichers/wappalyzer.js` | Pending | 1 | — |
-| 2.6: Create `_shared/enrichers/producthunt.js` | Pending | 1 | — |
-| 2.7: Create `_shared/enrichers/news.js` | Pending | 1 | — |
-| 2.8: Create `_shared/pipeline.js` | Pending | 2 | — |
+| 2.1: Create `_shared/ats.js` | ✅ Done | 1 | ~2 min |
+| 2.2: Create `_shared/enrichers/crunchbase.js` | ✅ Done | 1 | ~2 min |
+| 2.3: Create `_shared/enrichers/utah-dcc.js` | ✅ Done | 1 | ~2 min |
+| 2.4: Create `_shared/enrichers/github.js` | ✅ Done | 1 | ~1 min |
+| 2.5: Create `_shared/enrichers/wappalyzer.js` | ✅ Done | 1 | ~1 min |
+| 2.6: Create `_shared/enrichers/producthunt.js` | ✅ Done | 1 | ~2 min |
+| 2.7: Create `_shared/enrichers/news.js` | ✅ Done | 1 | ~1 min |
+| 2.8: Create `_shared/pipeline.js` | ✅ Done | 2 | ~2 min |
 | 3.1: Create `onboard-company/utah-bounds.js` | Pending | 1 | — |
 | 3.2: Create `onboard-company/quality-gate.js` | Pending | 1 | — |
 | 3.3: Create `onboard-company/prompts.js` | Pending | 1 | — |

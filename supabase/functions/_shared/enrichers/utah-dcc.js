@@ -99,7 +99,6 @@ function parseUtahDccHtml(html, searchName) {
     // Extract all <tr> blocks from the HTML
     // We look for table rows containing entity data
     const trPattern = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
-    const tdPattern = /<td[^>]*>([\s\S]*?)<\/td>/gi;
 
     const rows = [];
     let trMatch;
