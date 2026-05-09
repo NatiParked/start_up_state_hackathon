@@ -201,6 +201,8 @@ Modify `UtahMap.vue` to cluster nearby features and render either `<CompanyPin>`
 
 **Type:** auto
 **Sequence:** 3
+**Status:** COMPLETE
+**Completed:** 2026-05-09
 
 <files>
 goed/src/views/MapView.vue

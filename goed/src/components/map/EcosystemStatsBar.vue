@@ -31,28 +31,36 @@ const withInvestorsCount = computed(() =>
   }).length,
 )
 
-const topSectorsLabel = computed(() =>
-  topSectors.value.map(s => s.name).join(' · ') || '—',
+const topSectorsDisplay = computed(() =>
+  topSectors.value.length > 0 ? topSectors.value : [],
 )
+
+const hasTopSectors = computed(() => topSectorsDisplay.value.length > 0)
 </script>
 
 <template>
-  <div class="flex items-center gap-8 bg-white border-b border-gray-200 px-6 py-3 shrink-0">
+  <div class="bg-white border-b border-gray-200 px-6 py-3 shrink-0 flex flex-wrap items-center gap-x-8 gap-y-2">
     <div class="text-center">
-      <div class="text-2xl font-bold text-utah-blue">{{ totalCount }}</div>
-      <div class="text-xs text-gray-500 uppercase tracking-wide">Companies</div>
+      <div class="text-3xl font-bold text-utah-blue-dark">{{ totalCount }}</div>
+      <div class="text-xs uppercase tracking-wide text-gray-500">Companies</div>
     </div>
     <div class="text-center">
-      <div class="text-2xl font-bold text-utah-blue">{{ hiringCount }}</div>
-      <div class="text-xs text-gray-500 uppercase tracking-wide">Hiring</div>
+      <div class="text-3xl font-bold text-utah-blue-dark">{{ hiringCount }}</div>
+      <div class="text-xs uppercase tracking-wide text-gray-500">Hiring</div>
     </div>
     <div class="text-center">
-      <div class="text-sm font-semibold text-utah-blue">{{ topSectorsLabel }}</div>
-      <div class="text-xs text-gray-500 uppercase tracking-wide">Top Sectors</div>
+      <div class="text-3xl font-bold text-utah-blue-dark">{{ withInvestorsCount }}</div>
+      <div class="text-xs uppercase tracking-wide text-gray-500">With Investors</div>
     </div>
-    <div class="text-center">
-      <div class="text-2xl font-bold text-utah-blue">{{ withInvestorsCount }}</div>
-      <div class="text-xs text-gray-500 uppercase tracking-wide">With Investors</div>
+    <div v-if="hasTopSectors" class="flex flex-wrap gap-x-6 gap-y-2 items-end">
+      <div
+        v-for="sector in topSectorsDisplay"
+        :key="sector.name"
+        class="text-center"
+      >
+        <div class="text-sm font-semibold text-utah-blue">{{ sector.name }}</div>
+        <div class="text-xs uppercase tracking-wide text-gray-500">{{ sector.count }} co.</div>
+      </div>
     </div>
   </div>
 </template>
