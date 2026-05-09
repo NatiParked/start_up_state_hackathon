@@ -7,15 +7,15 @@
 | Field | Value |
 |-------|-------|
 | **Phase** | Phase 2: Send-Digest Edge Function |
-| **Status** | Pending |
+| **Status** | ✅ Complete |
 | **Blocker** | None |
 
 ## Phase Progress
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| Phase 1: Database Schema & Migration | ✅ Complete | 2026-05-09 | 2026-05-09 |
-| Phase 2: Send-Digest Edge Function | ⏳ Pending | — | — |
+| Phase 1: Database Schema & Migration | ✅ Verified | 2026-05-09 | 2026-05-09 |
+| Phase 2: Send-Digest Edge Function | ✅ Complete | 2026-05-09 | 2026-05-09 |
 | Phase 3: Subscribe View & Confirmation Flow | ⏳ Pending | — | — |
 | Phase 4: Map CTA & Admin Panel Population | ⏳ Pending | — | — |
 
@@ -25,8 +25,8 @@
 |------|--------|----------|----------|
 | 1.1: Author `0009_subscriptions.sql` migration | ✅ Done | 1 | ~5 min |
 | 1.2: Apply migration to Supabase and verify schema + RLS | ✅ Done | 2 | ~5 min |
-| 2.1: Create `send-digest/prompts.js` with prompt builders | ⏳ Pending | 1 | — |
-| 2.2: Create `send-digest/index.js` orchestrator | ⏳ Pending | 2 | — |
+| 2.1: Create `send-digest/prompts.js` with prompt builders | ✅ Done | 1 | ~2 min |
+| 2.2: Create `send-digest/index.js` orchestrator | ✅ Done | 2 | ~2 min |
 | 3.1: Create `confirm-subscription/index.js` Edge Function | ⏳ Pending | 1 | — |
 | 3.2: Create `send-confirmation/index.js` Edge Function | ⏳ Pending | 1 | — |
 | 3.3: Create `SubscribeView.vue` with filter form + opt-in flow | ⏳ Pending | 2 | — |
