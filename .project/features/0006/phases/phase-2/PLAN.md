@@ -228,6 +228,8 @@ The two new routes are registered, the claim login view renders with company nam
 
 ### Task 4: Wire claim CTAs in `SubmitResult.vue` and `CompanyDrawer.vue`
 
+**Status:** Complete
+**Completed:** 2026-05-09
 **Type:** auto
 **Sequence:** 3
 

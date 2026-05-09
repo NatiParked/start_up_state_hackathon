@@ -139,6 +139,7 @@ onMounted(() => {
         </section>
 
         <p class="county-tag inline-block">{{ regionLabel }}</p>
+        <router-link :to="{ name: 'ClaimLogin', params: { id: company.id } }" class="btn btn-ghost mt-6 inline-block">Claim your listing</router-link>
       </div>
     </div>
   </aside>
