@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted } from "vue";
 import { storeToRefs } from "pinia";
+import { useRoute } from "vue-router";
 import { useStartupsStore } from "@/stores/startups";
 import UtahMap from "@/components/map/UtahMap.vue";
 import EcosystemStatsBar from "@/components/map/EcosystemStatsBar.vue";
@@ -10,7 +11,8 @@ import SubscribeCTA from "@/components/map/SubscribeCTA.vue";
 
 const store = useStartupsStore();
 const { companies } = storeToRefs(store);
-const { clearSelection } = store;
+const { clearSelection, selectCompany } = store;
+const route = useRoute();
 
 const layoutClasses = computed(
   () => "flex flex-col flex-1 min-h-0 w-full overflow-hidden",
@@ -23,9 +25,16 @@ function handleMapBackgroundClick() {
   clearSelection();
 }
 
-onMounted(() => {
+onMounted(async () => {
   if (companies.value.length === 0) {
-    store.fetchAll();
+    await store.fetchAll();
+  }
+  const requestedId = route.query.company;
+  if (typeof requestedId === "string" && requestedId.length > 0) {
+    const match = companies.value.find((c) => c.id === requestedId);
+    if (match) {
+      selectCompany(requestedId);
+    }
   }
 });
 </script>
