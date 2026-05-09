@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useStartupsStore } from '@/stores/startups'
 import UtahMap from '@/components/map/UtahMap.vue'
