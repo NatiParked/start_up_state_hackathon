@@ -9,7 +9,9 @@ const props = defineProps({
 })
 
 const { getLogoUrl } = useLogoDev()
-const { selectedCompany } = storeToRefs(useStartupsStore())
+const store = useStartupsStore()
+const { selectedCompany } = storeToRefs(store)
+const { selectCompany } = store
 
 const hasError = ref(false)
 
@@ -27,7 +29,7 @@ const monogramClasses = computed(() => 'w-full h-full flex items-center justify-
 </script>
 
 <template>
-  <div :class="pinClasses">
+  <div :class="pinClasses" @click="selectCompany(company.id)">
     <img
       v-if="!showMonogram"
       :src="logoUrl"
