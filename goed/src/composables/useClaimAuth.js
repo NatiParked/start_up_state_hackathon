@@ -46,8 +46,15 @@ export function useClaimAuth(startupId) {
   const isOwner = computed(() => claimVerified.value)
 
   async function requestClaim(id, email) {
-    const { error } = await supabase.functions.invoke('claim-company', { body: { startup_id: id, email } })
-    if (error) return { data: null, error }
+    const { error } = await supabase.functions.invoke('claim-company', { body: { startup_id: id, claimer_email: email } })
+    if (error) {
+      try {
+        const body = await error.context?.json()
+        return { data: null, error: { message: body?.error ?? error.message } }
+      } catch {
+        return { data: null, error }
+      }
+    }
     return supabase.auth.signInWithOtp({
       email,
       options: { emailRedirectTo: window.location.origin + '/company/' + id + '/edit' },

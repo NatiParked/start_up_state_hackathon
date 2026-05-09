@@ -13,7 +13,7 @@
  */
 export async function logRun(supabase, { startup_id, source, success, error_message, jobs_updated }) {
   const { error } = await supabase
-    .from('refresh_log')
+    .from('map_refresh_log')
     .insert({
       startup_id: startup_id ?? null,
       source,

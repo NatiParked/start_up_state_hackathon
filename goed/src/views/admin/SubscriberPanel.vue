@@ -68,7 +68,7 @@ onMounted(fetchStats)
 </script>
 
 <template>
-  <div class="p-6 space-y-6">
+  <div class="h-full overflow-y-auto p-6 space-y-6">
     <!-- Header card -->
     <div class="bg-white rounded-lg border border-gray-200 p-5 flex items-center justify-between">
       <h1 class="text-xl font-semibold text-gray-900">Subscriber Stats</h1>

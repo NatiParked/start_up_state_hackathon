@@ -38,9 +38,9 @@ function onRejected(submissionId) {
 </script>
 
 <template>
-  <div class="relative">
+  <div class="h-full flex flex-col p-6">
     <!-- Header -->
-    <div class="flex items-center justify-between mb-6">
+    <div class="shrink-0 flex items-center justify-between mb-6">
       <div class="flex items-center gap-3">
         <h1 class="text-xl font-semibold text-gray-900">Submission Queue</h1>
         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
@@ -50,22 +50,22 @@ function onRejected(submissionId) {
     </div>
 
     <!-- Loading state -->
-    <div v-if="isLoading" class="py-12 text-center text-gray-500 text-sm">
+    <div v-if="isLoading" class="flex-1 py-12 text-center text-gray-500 text-sm">
       Loading submissions…
     </div>
 
     <!-- Empty state -->
     <div
       v-else-if="!isLoading && submissions.length === 0"
-      class="py-12 text-center text-gray-400 text-sm"
+      class="flex-1 py-12 text-center text-gray-400 text-sm"
     >
       No pending submissions.
     </div>
 
     <!-- Table -->
-    <div v-else class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div v-else class="flex-1 min-h-0 overflow-y-auto rounded-lg border border-gray-200 bg-white">
       <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
+        <thead class="bg-gray-50 sticky top-0">
           <tr>
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
               Submitted At

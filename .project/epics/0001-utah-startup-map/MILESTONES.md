@@ -305,6 +305,7 @@ Both modes share one system prompt and the same Resend send path. The user promp
 ## Milestone 10: Engagement — Analytics & Share Cards
 **Complexity: M**
 **Tier: 3** — OG image generation via Satori is the highest-risk deliverable in this milestone. If time is tight, ship view tracking + basic meta tags first; defer full Satori OG rendering to roadmap.
+**Linked Feature: 0008**
 
 Closes the retention loop for founders. View tracking gives them a reason to check back; OG social cards give them a reason to share.
 

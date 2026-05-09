@@ -17,7 +17,7 @@
 | Phase 1: Database Schema & Migration | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 2: Send-Digest Edge Function | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 3: Subscribe View & Confirmation Flow | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 4: Map CTA & Admin Panel Population | ✅ Code Complete | 2026-05-09 | 2026-05-09 |
+| Phase 4: Map CTA & Admin Panel Population | ✅ Verified (admin UI criteria SKIPPED — see VERIFICATION.md) | 2026-05-09 | 2026-05-09 |
 
 ## Task Progress
 

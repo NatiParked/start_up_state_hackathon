@@ -48,7 +48,7 @@ onMounted(loadMetrics)
 </script>
 
 <template>
-  <div>
+  <div class="h-full overflow-y-auto p-6">
     <h1 class="text-xl font-semibold text-gray-900 mb-6">Dashboard</h1>
 
     <div v-if="loadError" class="mb-4 p-3 bg-red-50 border border-error-red text-error-red text-sm rounded">

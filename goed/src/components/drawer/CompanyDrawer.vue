@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import gsap from 'gsap'
 import { useStartupsStore } from '@/stores/startups'
 import { useLogoDev } from '@/composables/useLogoDev'
+import { supabase } from '@/lib/supabase'
 
 const store = useStartupsStore()
 const { selectedCompany } = storeToRefs(store)
@@ -41,6 +42,27 @@ const websiteHref = computed(() => company.value?.website ?? null)
 const linkedinHref = computed(() => company.value?.linkedin ?? null)
 const showWebsite = computed(() => Boolean(websiteHref.value))
 const showLinkedin = computed(() => Boolean(linkedinHref.value))
+
+const sessionEmail = ref(null)
+supabase.auth.getSession().then(({ data }) => {
+  sessionEmail.value = data.session?.user?.email ?? null
+})
+supabase.auth.onAuthStateChange((_, session) => {
+  sessionEmail.value = session?.user?.email ?? null
+})
+
+const isOwner = ref(false)
+watch([company, sessionEmail], async ([c, email]) => {
+  isOwner.value = false
+  if (!c?.id || !email) return
+  const { data } = await supabase
+    .from('company_claims')
+    .select('claimer_email')
+    .eq('startup_id', c.id)
+    .eq('claimer_email', email)
+    .maybeSingle()
+  isOwner.value = !!data
+}, { immediate: true })
 
 function getOrCreateSessionId() {
   try {
@@ -168,7 +190,16 @@ onMounted(() => {
         </section>
 
         <p class="county-tag inline-block">{{ regionLabel }}</p>
-        <router-link :to="{ name: 'ClaimLogin', params: { id: company.id } }" class="btn btn-ghost mt-6 inline-block">Claim your listing</router-link>
+        <router-link
+          v-if="isOwner"
+          :to="{ name: 'CompanyEdit', params: { id: company.id } }"
+          class="btn btn-ghost mt-6 inline-block"
+        >Edit your listing</router-link>
+        <router-link
+          v-else
+          :to="{ name: 'ClaimLogin', params: { id: company.id } }"
+          class="btn btn-ghost mt-6 inline-block"
+        >Claim your listing</router-link>
       </div>
     </div>
   </aside>

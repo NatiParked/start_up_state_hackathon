@@ -43,14 +43,30 @@ onMounted(async () => {
   }
 })
 
+async function geocodeAddress(address, city) {
+  const q = [address, city, 'Utah', 'USA'].filter(Boolean).join(', ')
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=1&q=${encodeURIComponent(q)}`,
+      { headers: { 'User-Agent': 'goed-hackathon' } }
+    )
+    if (!res.ok) return null
+    const results = await res.json()
+    if (!results.length) return null
+    const r = results[0]
+    const a = r.address ?? {}
+    const resolvedCity = a.city ?? a.town ?? a.village ?? a.municipality ?? a.county ?? null
+    return { lat: parseFloat(r.lat), lng: parseFloat(r.lon), city: resolvedCity }
+  } catch {
+    return null
+  }
+}
+
 async function save() {
   isSaving.value = true
   saveError.value = null
   saveSuccess.value = false
 
-  // Build patch from editable fields only.
-  // NOTE: contact_email is intentionally omitted — that column does not exist
-  // in map_startups (confirmed: not in 0001_init.sql or any migration).
   const patch = {
     name: form.name,
     description: form.description,
@@ -59,10 +75,21 @@ async function save() {
     employee_range: form.employee_range,
     total_raised: form.total_raised,
     website: form.website,
-    // Convert investors comma string back to array
+    address: form.address,
+    city: form.city,
     investors: typeof form.investors === 'string'
       ? form.investors.split(',').map(s => s.trim()).filter(Boolean)
       : (Array.isArray(form.investors) ? form.investors : []),
+  }
+
+  // Geocode if address is present
+  if (form.address || form.city) {
+    const coords = await geocodeAddress(form.address, form.city)
+    if (coords) {
+      patch.lat = coords.lat
+      patch.lng = coords.lng
+      if (!patch.city && coords.city) patch.city = coords.city
+    }
   }
 
   try {
@@ -84,7 +111,6 @@ async function save() {
     }
 
     saveSuccess.value = true
-    // Sync company ref so PhotoGallery stays in sync
     company.value = { ...company.value, ...patch, investors: patch.investors }
   } finally {
     isSaving.value = false
@@ -233,6 +259,28 @@ async function handleSignOut() {
           type="text"
           class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
           placeholder="https://example.com"
+        />
+      </div>
+
+      <!-- address -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+        <input
+          v-model="form.address"
+          type="text"
+          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          placeholder="123 Main St"
+        />
+      </div>
+
+      <!-- city -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+        <input
+          v-model="form.city"
+          type="text"
+          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-utah-blue"
+          placeholder="Salt Lake City"
         />
       </div>
 

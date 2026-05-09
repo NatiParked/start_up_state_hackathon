@@ -117,7 +117,7 @@ watch(selectedCompany, (val) => {
     <!-- Table: scrolls independently -->
     <div v-else class="flex-1 min-h-0 overflow-y-auto overflow-x-auto rounded-lg border border-gray-200">
       <table class="min-w-full divide-y divide-gray-200 text-sm">
-        <thead class="bg-gray-50">
+        <thead class="bg-gray-50 sticky top-0">
           <tr>
             <th class="px-4 py-3 text-left font-semibold text-gray-600">
               <button

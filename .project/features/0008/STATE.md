@@ -6,8 +6,8 @@
 
 | Field | Value |
 |-------|-------|
-| **Phase** | Phase 2: Edge Function `track-view` + Drawer Wiring |
-| **Status** | ✅ Complete (2026-05-09) — function deployed via Supabase MCP; smoke-tested end-to-end (POST 200, OPTIONS 200, DB row inserted) |
+| **Phase** | Phase 3: Live `CompanyAnalytics` + Digest Backfill |
+| **Status** | 🚧 In Progress (started 2026-05-09) |
 | **Blocker** | None |
 
 ## Phase Progress
@@ -15,8 +15,8 @@
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | Phase 1: Database & View Tracking Migration | ✅ Complete (migration applied — `company_views` table + columns confirmed via MCP `execute_sql`) | 2026-05-09 | 2026-05-09 |
-| Phase 2: Edge Function `track-view` + Drawer Wiring | ✅ Complete — `track-view` deployed (id `35427e86-…`, version 1, verify_jwt=false); end-to-end smoke PASS | 2026-05-09 | 2026-05-09 |
-| Phase 3: Live `CompanyAnalytics` + Digest Backfill | ⏳ Pending | — | — |
+| Phase 2: Edge Function `track-view` + Drawer Wiring | ✅ Verified (2026-05-09) — `track-view` deployed (id `35427e86-…`, version 1, verify_jwt=false); end-to-end smoke PASS; `/spec:verify-phase` 5/5 criteria pass | 2026-05-09 | 2026-05-09 |
+| Phase 3: Live `CompanyAnalytics` + Digest Backfill | 🚧 In Progress | 2026-05-09 | — |
 | Phase 4: Satori OG Image Edge Function | ⏳ Pending | — | — |
 | Phase 5: `useShareCard` Composable + Drawer Share Button | ⏳ Pending | — | — |
 

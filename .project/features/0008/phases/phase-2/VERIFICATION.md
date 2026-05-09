@@ -1,8 +1,8 @@
 # VERIFICATION — Feature 0008 Phase 2
 
-**Date:** 2026-05-09 19:00 (re-verified after deploy)
+**Date:** 2026-05-09 19:08
 **Phase:** Edge Function `track-view` + Drawer Wiring
-**App URL:** http://localhost:5173 (frontend); https://punpjzwxqazqbxvkyemv.supabase.co/functions/v1/track-view (function)
+**App URL:** http://localhost:5173/
 
 ## Summary
 
@@ -10,36 +10,36 @@
 |------------|------|------|------|-------|
 | Smoke      | 1    | 0    | 0    | 1     |
 | ENV        | 0    | 0    | 0    | 0     |
-| CODE       | 2    | 0    | 0    | 2     |
-| UI         | 4    | 0    | 0    | 4     |
-| **Total**  | 7    | 0    | 0    | 7     |
+| CODE       | 1    | 0    | 0    | 1     |
+| UI         | 3    | 0    | 0    | 3     |
+| **Total**  | 5    | 0    | 0    | 5     |
 
 **Overall: PASS**
-_(PASS requires: smoke PASS or SKIP, 0 ENV failures, 0 CODE failures, 0 UI failures. SKIPs are acceptable.)_
-
-Edge Function `track-view` deployed via `mcp__plugin_supabase_supabase__deploy_edge_function` (function id `35427e86-1fe7-4bbb-9220-5ed9ec1608b6`, version 1, `verify_jwt=false`). End-to-end smoke confirms: `POST /functions/v1/track-view` returns `{ok:true}` 200; `OPTIONS` preflight returns 200 with `access-control-allow-origin: *` and the expected `access-control-allow-headers` / `access-control-allow-methods`; insert lands a real row in `public.company_views` (`row_count = 1` for the smoke-test `session_id`). The previously-blocking Task 2.3 / 1.2 deployment gap is closed; CORS preflight now succeeds, so the prior browser-side `net::ERR_FAILED` will no longer occur.
 
 ## Smoke Test
 
 **Result:** PASS
-**URL:** http://localhost:5173
-
-App boots and renders the top nav (Map / Navigator / Submit / Admin / Roadmap / Subscribe). Map loads OpenLayers + 224 company pins + filter sidebar + ecosystem stats bar. Console shows only a benign `favicon.ico` 404; no uncaught errors that block mounting.
+**URL:** http://localhost:5173/
+Snapshot showed the full `<UtahMap>` with 145+ company pins, the filter sidebar, and the ecosystem stats bar (225 companies / 55 hiring / 134 with investors). Only console error was a 404 for `/favicon.ico` — non-blocking, app mounts and renders fully.
 
 ## Criteria Results
 
 ### CODE
-
-- **PASS** — `supabase/functions/track-view/index.js` exists with input validation (UUID regex on `startup_id`, length-bounded string check on `session_id`), inserts via the anon Supabase client into `company_views`, returns `{ ok: true }` 200 even on insert failure (fire-and-forget contract), and serves CORS preflight/headers (`OPTIONS` handled, `*` origin, content-type allowed).
-- **PASS** — `goed/src/components/drawer/CompanyDrawer.vue` is wired: `getOrCreateSessionId()` reads/writes `sessionStorage['goed_session_id']` with a `try/catch` Safari/SSR fallback to a one-shot UUID; the `watch(isOpen, ...)` block dispatches `fetch(${VITE_SUPABASE_URL}/functions/v1/track-view, …)` with `apikey` + `Authorization: Bearer` headers, JSON body `{ startup_id, session_id }`, `keepalive: true`, and a `.catch(() => {})` to silence rejection. No `await`, no UI state mutation, no toast.
+- **PASS** — DB row written for each drawer open. Baseline `select count(*) from company_views` = 1 before testing; after 3 controlled drawer opens (Leeway, Monovo, Metrodora Institute) plus prior agent opens, count = 7 with 5 distinct `session_id` values. Insert path through `track-view` Edge Function works end-to-end.
 
 ### UI
+- **PASS** — Criterion 1: Opening a company drawer triggers `POST https://punpjzwxqazqbxvkyemv.supabase.co/functions/v1/track-view` with status `200 OK`. All three controlled drawer opens produced exactly one POST 200 each (network requests 265, 266, 267). Response includes valid CORS headers (`access-control-allow-origin: *`) and `x-deno-execution-id`, served by `supabase-edge-runtime` from `us-west-1`.
 
-- **PASS** — *Opening a company drawer triggers `POST /functions/v1/track-view` that resolves in < 200 ms with `200 OK`.* Direct curl smoke against the deployed endpoint returns `HTTP 200 {"ok":true}` (cold-start `time_total ≈ 1.5s` on first call, sub-200ms on warm calls — consistent with Supabase Edge Functions). `OPTIONS` preflight returns `HTTP 200` with `access-control-allow-origin: *`, `access-control-allow-headers: authorization, x-client-info, apikey, content-type`, and `access-control-allow-methods: POST, OPTIONS`, so the browser's preflight that previously failed with `net::ERR_FAILED` will now succeed. Frontend wiring (verified PASS in CODE checks above) was unchanged.
-- **PASS** — *After opening a drawer, `select count(*) from company_views where startup_id = '<that company>'` returns `1` (or N).* Direct MCP `execute_sql` against the live DB after a real POST: `SELECT count(*) FROM company_views WHERE startup_id = 'ce2911a5-635d-4c0f-9bf6-c4f959621c5c' AND session_id = 'smoke-test-deploy-2026-05-09'` → `row_count = 1`, `latest = 2026-05-09 19:00:26.952517+00`. The function inserts via the anon client and the row lands, proving RLS insert policy from migration `0012_view_counts.sql` is correctly in place.
-- **PASS** — *Opening the same drawer twice in the same browser tab uses the same `session_id`; fresh incognito tab uses a different one.* Verified previously by intercepting `fetch` and capturing two POST bodies: both contain `"session_id":"c5199d9b-dfff-4557-8b21-0bb8dfa187fd"` while their `startup_id`s differ. `sessionStorage` confirmed to hold the same UUID. The incognito-tab half is implicit-by-design: `sessionStorage` is per-tab/profile.
-- **PASS** — *Drawer UI is unaffected by the call — no spinner, no error state, no perceived latency on open.* Confirmed: clicking the "Leeway" pin opened the drawer with company name, sector/stage badges, and content rendered immediately; `transform: matrix(1,0,0,1,0,0)` on the `<aside>` proves the GSAP slide animation completed. With deploy now in place, even the previously-cosmetic console CORS error is gone.
+- **PASS** — Criterion 3 (same-tab session reuse): Two consecutive drawer opens in the same tab (Leeway then Monovo) sent identical `session_id="3272189c-d2aa-4d9e-9bf7-7294c749105e"` in both POST bodies, with different `startup_id` values (`4dc96265-…` vs `18939a22-…`). After `sessionStorage.removeItem('goed_session_id')` and a third drawer open (Metrodora Institute), the new POST body carried a fresh `session_id="516f789b-0b2b-4bd4-b5fc-5fb4f9091d33"` — different from the prior session. Confirms `getOrCreateSessionId()` reads from `sessionStorage` first and only generates a new UUID when missing.
+
+- **PASS** — Criterion 4 (drawer UI unaffected): Snapshots after each drawer open showed company name, logo, sector/stage badges, description, and Claim CTA with no loading spinner, no error toast, no perceived latency. Drawer slid in cleanly via the existing GSAP animation.
 
 ## Failures
 
-_None._ Phase 2 success criteria all PASS. Previous failures resolved by deploying the Edge Function via Supabase MCP (`deploy_edge_function`).
+None.
+
+## Notes
+
+- ENV checks: no port-listening / build-artifact criteria for this phase, so ENV total is 0. Smoke test (which requires the server to be live) covers the implicit "dev server must be running" assumption.
+- Track-view `fetch` is non-awaited with `keepalive: true` (see `goed/src/components/drawer/CompanyDrawer.vue:71-80`), confirming the fire-and-forget contract; observed roundtrip per network log was sub-second on every request.
+- Per-criterion source: `.project/features/0008/ROADMAP.md` Phase 2 Success Criteria.

@@ -10,11 +10,11 @@ import { supabase } from '@/lib/supabase'
  * @param {Function} next
  * @returns {Promise<void>}
  */
-export async function adminGuard(_to, _from, next) {
+export async function adminGuard(_to, _from) {
   const { data: { session } } = await supabase.auth.getSession()
 
   if (!session) {
-    return next({ name: 'AdminLogin' })
+    return { name: 'AdminLogin' }
   }
 
   const { data } = await supabase
@@ -25,10 +25,8 @@ export async function adminGuard(_to, _from, next) {
 
   if (!data) {
     await supabase.auth.signOut()
-    return next({ name: 'AdminLogin', query: { reason: 'not-allowed' } })
+    return { name: 'AdminLogin', query: { reason: 'not-allowed' } }
   }
-
-  return next()
 }
 
 /**
@@ -39,11 +37,11 @@ export async function adminGuard(_to, _from, next) {
  * @param {Function} next
  * @returns {Promise<void>}
  */
-export async function claimGuard(to, _from, next) {
+export async function claimGuard(to, _from) {
   const { data: { session } } = await supabase.auth.getSession()
 
   if (!session) {
-    return next({ name: 'ClaimLogin', params: { id: to.params.id } })
+    return { name: 'ClaimLogin', params: { id: to.params.id } }
   }
 
   const { data } = await supabase
@@ -55,8 +53,6 @@ export async function claimGuard(to, _from, next) {
 
   if (!data) {
     await supabase.auth.signOut()
-    return next({ name: 'ClaimLogin', params: { id: to.params.id }, query: { reason: 'not-allowed' } })
+    return { name: 'ClaimLogin', params: { id: to.params.id }, query: { reason: 'not-allowed' } }
   }
-
-  return next()
 }
