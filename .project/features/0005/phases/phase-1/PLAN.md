@@ -103,6 +103,8 @@ Header comment must follow the style of `0002_submissions.sql` (apply instructio
 
 **Type:** auto
 **Sequence:** 2
+**Status:** Complete
+**Completed:** 2026-05-09
 
 **Files:**
 - `goed/src/composables/useAdminAuth.js` (create)
@@ -204,8 +206,8 @@ Create the composable and store that expose admin auth state to the rest of the 
 - [x] `map_admin_users` has the three seed rows (`cayden@sempurnadev.com`, `admin@goed.utah.gov`, `staff@goed.utah.gov`).
 - [x] `map_startup_submissions` has `rejection_reason`, `reviewed_at`, `reviewed_by` columns (idempotent — may already be present from `0002`).
 - [x] RLS policy on `map_startup_submissions` is gated by `auth.jwt() ->> 'email' in (select email from map_admin_users)`.
-- [ ] `useAdminAuth` composable exists with the documented five-key return shape and JSDoc on every export.
-- [ ] `useAdminStore` Pinia store exists, follows setup-style pattern, exposes `isLoading` + `error` refs and `setSession` + `fetchSubmissions` actions.
+- [x] `useAdminAuth` composable exists with the documented five-key return shape and JSDoc on every export.
+- [x] `useAdminStore` Pinia store exists, follows setup-style pattern, exposes `isLoading` + `error` refs and `setSession` + `fetchSubmissions` actions.
 - [ ] `adminGuard` exists and is wired into `/admin` and `/admin/dashboard` via `beforeEnter`.
 - [ ] `/admin` while logged out redirects to `/admin/login`.
 - [ ] `/admin` while logged in with a non-allow-listed email signs the user out and redirects to `/admin/login?reason=not-allowed` with a visible red notice.
