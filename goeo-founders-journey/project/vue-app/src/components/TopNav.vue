@@ -7,6 +7,7 @@ import { RouterLink } from 'vue-router'
     <nav class="flex items-center gap-7">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/quiz">Find resources</RouterLink>
+      <a href="https://goeomap.netlify.app/" target="_blank" rel="noopener">Startup Map</a>
 <span class="foot-mark hidden md:inline">Utah — GOEO</span>
     </nav>
   </header>
