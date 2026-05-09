@@ -40,8 +40,10 @@ function buildQueryFromFilters() {
   if (businessTypes.value.length) q.businessTypes = [...businessTypes.value]
   if (regions.value.length) q.regions = [...regions.value]
   if (investors.value.length) q.investors = [...investors.value]
-  q.foundedYearMin = String(foundedYearRange.value[0] ?? '')
-  q.foundedYearMax = String(foundedYearRange.value[1] ?? '')
+  const minVal = foundedYearRange.value[0]
+  const maxVal = foundedYearRange.value[1]
+  if (minVal != null && minVal !== '') q.foundedYearMin = String(minVal)
+  if (maxVal != null && maxVal !== '') q.foundedYearMax = String(maxVal)
   return q
 }
 

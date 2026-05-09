@@ -8,10 +8,16 @@ const UTAH_CENTER = [-111.525, 40.65]
 const UTAH_ZOOM = 7
 
 const store = useStartupsStore()
-const { filteredCompanies, selectedCompany } = storeToRefs(store)
+const { companies, filteredCompanies, selectedCompany } = storeToRefs(store)
 const { selectCompany, clearSelection } = store
 
 const mapRef = ref(null)
+
+const allPinnableCompanies = computed(() =>
+  companies.value.filter(c => Number.isFinite(c.lat) && Number.isFinite(c.lng)),
+)
+
+const filteredIds = computed(() => new Set(filteredCompanies.value.map(c => c.id)))
 
 const pinnableCompanies = computed(() =>
   filteredCompanies.value.filter(
@@ -54,12 +60,12 @@ onMounted(() => {
         </ol-source-vector>
       </ol-vector-layer>
       <ol-overlay
-        v-for="company in pinnableCompanies"
+        v-for="company in allPinnableCompanies"
         :key="'overlay-' + company.id"
         :position="[company.lng, company.lat]"
         positioning="center-center"
       >
-        <CompanyPin :company="company" />
+        <CompanyPin v-show="filteredIds.has(company.id)" :company="company" />
       </ol-overlay>
       <ol-interaction-select @select="handleSelect" />
     </ol-map>
