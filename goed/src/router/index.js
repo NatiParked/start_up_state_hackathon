@@ -49,8 +49,7 @@ const router = createRouter({
         {
           path: 'refresh',
           name: 'AdminRefresh',
-          component: () => import('@/views/PlaceholderView.vue'),
-          props: { title: 'Refresh' },
+          component: () => import('@/views/admin/RefreshControl.vue'),
         },
         {
           path: 'subscribers',
