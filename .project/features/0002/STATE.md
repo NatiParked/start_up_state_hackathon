@@ -7,14 +7,14 @@
 | Field | Value |
 |-------|-------|
 | **Phase** | Phase 1: Map Shell & Logo-Pin Rendering |
-| **Status** | Phase 1 Complete |
+| **Status** | ✅ Complete |
 | **Blocker** | None |
 
 ## Phase Progress
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| Phase 1: Map Shell & Logo-Pin Rendering | 🔄 In Progress | 2026-05-09 | — |
+| Phase 1: Map Shell & Logo-Pin Rendering | ✅ Complete | 2026-05-09 | 2026-05-09 |
 | Phase 2: Company Drawer | Pending | — | — |
 | Phase 3: Filter Sidebar & URL Sync | Pending | — | — |
 | Phase 4: Cluster Rendering & Polish | Pending | — | — |
@@ -34,6 +34,7 @@
 | 2026-05-08 | No automated tests this feature | Hackathon scope — verification is observable behavior only per user constraints. |
 | 2026-05-08 | Funding stage / business type filter UI deferred | User spec lists 7 filter components but `useFiltersStore` exposes 9 filter refs; `fundingStages` and `businessTypes` remain in store and `filteredCompanies` logic so URL params still work, but no UI components this feature. |
 | 2026-05-08 | Phase 1 ships click-to-select (drawer is Phase 2) | Allows verifying pin selection plumbing via Vue devtools before drawer UI exists. |
+| 2026-05-09 | OlOverlay hoisted as siblings to OlVectorLayer | vue3-openlayers does not support OlOverlay as child of OlFeature; overlays are hoisted as siblings per PLAN.md fallback note. Vector features still exist for interaction-select events. |
 
 ## Blockers & Issues
 
