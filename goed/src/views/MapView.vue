@@ -6,6 +6,7 @@ import UtahMap from "@/components/map/UtahMap.vue";
 import EcosystemStatsBar from "@/components/map/EcosystemStatsBar.vue";
 import CompanyDrawer from "@/components/drawer/CompanyDrawer.vue";
 import FilterSidebar from "@/components/filters/FilterSidebar.vue";
+import SubscribeCTA from "@/components/map/SubscribeCTA.vue";
 
 const store = useStartupsStore();
 const { companies } = storeToRefs(store);
@@ -48,6 +49,7 @@ onMounted(() => {
         </div>
       </div>
     </main>
+    <SubscribeCTA />
   </div>
 </template>
 
