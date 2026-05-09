@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Founder's Navigator — Find Utah's startup resources</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind (Play CDN — fine for prototype; real build in /vue-app) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0D192D',
+            bg2: '#0A1424',
+            fg: '#EAF1F8',
+            fg2: '#9BAEC4',
+            fg3: '#5E7088',
+            accent: '#11DF81',
+            warn: '#F4A261',
+            info: '#5FB3FF',
+          },
+          fontFamily: {
+            display: ['Sora', 'sans-serif'],
+            body: ['"Source Sans 3"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Vue 3 + GSAP via CDN -->
+  <script src="https://unpkg.com/vue@3.4.27/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body class="paper">
+  <div id="app"></div>
+  <script src="app.js?v=3"></script>
+</body>
+</html>
+
+<style id="__om-edit-overrides">
+:is(h1,h2,h3,h4,h5,h6) >span:nth-child(1) >:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) { font-family: "Source Sans Pro" !important }
+div > div:nth-child(1) > button:nth-child(2) { font-family: "Source Sans Pro" !important }
+:is(h1,h2,h3,h4,h5,h6) >span:nth-child(1) >:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) { font-family: Sora !important }
+#app [aria-label="Founder's Navigator home"] { font-weight: 700 !important }
+#app [aria-label="Founder's Navigator home"] { font-family: Sora !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { padding: 4px 0px 0px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { padding: 4px 4px 0px 0px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { padding: 4px 4px 0px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { padding: 4px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { padding: 4px 4px 0px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { padding: 4px 4px 0px 0px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { padding: 4px 0px 0px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { padding: 0px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { border-width: 2px 0px 0px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { border-width: 2px 2px 0px 0px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { border-width: 2px 2px 0px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { border-width: 2px !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { border-color: rgb(222, 231, 240) !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { border-color: rgb(248, 248, 248) !important }
+#app .topnav [aria-label="Startup State"] >:is(img,video) { border-color: rgb(255, 255, 255) !important }
+</style>
