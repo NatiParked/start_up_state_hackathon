@@ -1,6 +1,6 @@
 /**
  * Shared helper: LLM client using Google Gemini API.
- * Usage: import { callLLM } from '../_shared/llm.js'
+ * Usage: import { callLLM, extractJsonFromText } from '../_shared/llm.js'
  */
 
 const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
@@ -50,19 +50,30 @@ function toGeminiSchema(schema) {
 }
 
 /**
- * Call Google Gemini to generate content or structured JSON output.
+ * Call Google Gemini to generate content, structured JSON output, or grounded web-search output.
  *
- * @param {{ model?: string, systemPrompt: string, userPrompt: string, schema?: object }} options
+ * @param {{
+ *   model?: string,
+ *   systemPrompt: string,
+ *   userPrompt: string,
+ *   schema?: object,
+ *   useGrounding?: boolean,
+ * }} options
  *   - model: Gemini model ID (defaults to 'gemini-2.0-flash')
  *   - systemPrompt: system instruction content
  *   - userPrompt: user turn content
  *   - schema: optional JSON Schema object; when provided forces JSON output matching the schema
- * @returns {Promise<string|object>} Text string when no schema provided,
- *   or parsed JSON object when schema is provided
+ *     (ignored when useGrounding is true — grounding is incompatible with responseSchema)
+ *   - useGrounding: when true, adds `tools: [{ google_search: {} }]` to the request and
+ *     returns the raw text string (the caller must parse it via extractJsonFromText)
+ * @returns {Promise<string|object>}
+ *   - string when useGrounding is true (raw model output, may contain markdown fences)
+ *   - parsed JSON object when schema is provided (and useGrounding is false)
+ *   - plain string otherwise
  * @throws {Error} if GOOGLE_AI_API_KEY is not set
  * @throws {Error} if the HTTP call returns a non-2xx response
  */
-export async function callLLM({ model, systemPrompt, userPrompt, schema }) {
+export async function callLLM({ model, systemPrompt, userPrompt, schema, useGrounding }) {
   const apiKey = Deno.env.get('GOOGLE_AI_API_KEY');
   if (!apiKey) throw new Error('GOOGLE_AI_API_KEY not set');
 
@@ -74,7 +85,11 @@ export async function callLLM({ model, systemPrompt, userPrompt, schema }) {
     contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
   };
 
-  if (schema) {
+  if (useGrounding) {
+    // Grounding mode: add Google Search tool; skip responseSchema / responseMimeType
+    // (gemini-2.0-flash does not support both simultaneously)
+    body.tools = [{ google_search: {} }];
+  } else if (schema) {
     body.generationConfig = {
       responseMimeType: 'application/json',
       responseSchema: toGeminiSchema(schema),
@@ -95,6 +110,11 @@ export async function callLLM({ model, systemPrompt, userPrompt, schema }) {
   const data = await response.json();
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
 
+  if (useGrounding) {
+    // Return raw text — caller parses via extractJsonFromText
+    return text;
+  }
+
   if (schema) {
     try {
       return JSON.parse(text);
@@ -104,4 +124,28 @@ export async function callLLM({ model, systemPrompt, userPrompt, schema }) {
   }
 
   return text;
+}
+
+/**
+ * Extract and parse a JSON object from a raw LLM text response.
+ *
+ * Handles responses that may be wrapped in markdown code fences:
+ *   ```json\n{...}\n```  or  ```\n{...}\n```
+ *
+ * @param {string} text - Raw string returned by callLLM (typically with useGrounding: true).
+ * @returns {object|null} Parsed JSON object, or null on any failure (never throws).
+ */
+export function extractJsonFromText(text) {
+  if (typeof text !== 'string') return null;
+  try {
+    let s = text.trim();
+    // Strip ```json ... ``` or ``` ... ``` fences
+    const fenceMatch = s.match(/^```(?:json)?\s*\n?([\s\S]*?)\n?```\s*$/);
+    if (fenceMatch) {
+      s = fenceMatch[1].trim();
+    }
+    return JSON.parse(s);
+  } catch (_) {
+    return null;
+  }
 }

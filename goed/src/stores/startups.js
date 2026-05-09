@@ -17,6 +17,12 @@ export const useStartupsStore = defineStore('startups', () => {
   // getters
   const filteredCompanies = computed(() =>
     companies.value.filter(c => {
+      // 0. searchQuery (name substring)
+      const q = filters.searchQuery.trim()
+      if (q) {
+        if (!c.name) return false
+        if (!c.name.toLowerCase().includes(q.toLowerCase())) return false
+      }
       // 1. sectors
       if (filters.sectors.length > 0 && !filters.sectors.includes(c.sector)) return false
       // 2. stages

@@ -14,7 +14,7 @@ import FoundedYearFilter from '@/components/filters/FoundedYearFilter.vue'
 const route = useRoute()
 const router = useRouter()
 const filtersStore = useFiltersStore()
-const { sectors, stages, employeeRanges, isHiring, foundedYearRange, fundingStages, businessTypes, regions, investors } = storeToRefs(filtersStore)
+const { sectors, stages, employeeRanges, isHiring, foundedYearRange, fundingStages, businessTypes, regions, investors, searchQuery } = storeToRefs(filtersStore)
 
 const isCollapsed = ref(false)
 
@@ -104,6 +104,25 @@ watch(
       >
         {{ isCollapsed ? '→' : '←' }}
       </button>
+    </div>
+
+    <!-- Name search -->
+    <div v-if="bodyVisible" class="px-3 py-2 border-b sticky top-[49px] z-10" style="background: rgba(13,25,45,0.92); backdrop-filter: blur(12px); border-color: var(--hair-2);">
+      <div class="flex items-center gap-1">
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Search by name…"
+          class="flex-1 text-xs px-2 py-1 rounded border focus:outline-none focus:border-[var(--accent)]"
+          style="background: transparent; border-color: var(--hair-2); color: var(--fg);"
+        />
+        <button
+          v-if="searchQuery"
+          @click="searchQuery = ''"
+          class="text-[var(--fg-2)] hover:text-[var(--accent)] text-xs px-1 py-1 rounded hover:bg-[var(--surface)] flex-shrink-0"
+          title="Clear search"
+        >✕</button>
+      </div>
     </div>
 
     <!-- Filter body -->

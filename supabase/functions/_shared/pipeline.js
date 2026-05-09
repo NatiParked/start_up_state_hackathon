@@ -14,7 +14,7 @@
 
 import { normalizeDomain, fetchLogo } from './logo-dev.js';
 import { geocodeAddress, extractCity } from './nominatim.js';
-import { callLLM } from './llm.js';
+import { callLLM, extractJsonFromText } from './llm.js';
 import { pollAts } from './ats.js';
 import { enrichFromCrunchbase } from './enrichers/crunchbase.js';
 import { enrichFromUtahDcc } from './enrichers/utah-dcc.js';
@@ -101,7 +101,7 @@ function isMissing(value) {
  *  4. Run all structured enrichers in parallel via Promise.allSettled.
  *  5. Build partial record from enricher results.
  *  6. Detect careers URL → poll ATS.
- *  7. Claude Haiku gap-fill for any still-null fields.
+ *  7. Gemini-with-Google-Search grounded extraction for the full field set; merge only into still-null fields.
  *  8. Geocode address → fill lat/lng/city/region.
  *  9. Return normalized 20-field record.
  *
@@ -257,73 +257,78 @@ export async function runEnrichmentPipeline({ url, email } = {}) {
     }
   }
 
-  // ── Step 7: Claude gap-fill ───────────────────────────────────────────────
-  const gapFields = ['name', 'description', 'sector', 'stage', 'founded_year', 'address'];
-  const missingFields = gapFields.filter((f) => isMissing(record[f]));
+  // ── Step 7: Gemini-with-grounding extraction ─────────────────────────────
+  // Always run once per submission — fills all still-null scalar and array fields.
+  const groundedFields = [
+    'name', 'description', 'sector', 'stage', 'founded_year',
+    'address', 'employee_range', 'total_raised', 'investors',
+  ];
 
-  if (missingFields.length > 0) {
-    try {
-      // Build a JSON Schema for only the missing fields
-      const schemaProperties = {};
-      for (const field of missingFields) {
-        if (field === 'founded_year') {
-          schemaProperties[field] = {
-            type: ['integer', 'null'],
-            description: 'Year the company was founded (4-digit integer), or null if unknown.',
-          };
-        } else {
-          schemaProperties[field] = {
-            type: ['string', 'null'],
-            description: _fieldDescription(field),
-          };
+  const partialSummary = JSON.stringify({
+    website: record.website,
+    dcc_entity_type: record.dcc_entity_type,
+    dcc_status: record.dcc_status,
+    investors: record.investors,
+    total_raised: record.total_raised,
+    is_hiring: record.is_hiring,
+    job_titles: record.job_titles,
+  });
+
+  const systemPrompt =
+    'You are a startup data enrichment assistant with access to Google Search. ' +
+    'Search the web for the company identified by the URL and domain below to find current, accurate information. ' +
+    'Return ONLY a strict JSON object with EXACTLY these keys and no extras: ' +
+    groundedFields.join(', ') + '. ' +
+    'Use null for any field you cannot determine with confidence. ' +
+    'Field constraints:\n' +
+    '- sector: one of fintech, healthtech, edtech, cleantech, enterprise-software, consumer, ecommerce, logistics, biotech, ai-ml, cybersecurity, other\n' +
+    '- stage: one of idea, pre-seed, seed, series-a, series-b, growth, public, other\n' +
+    '- founded_year: 4-digit integer or null\n' +
+    '- address: full street address like "123 Main St, Salt Lake City, UT 84101" or null\n' +
+    '- employee_range: one of "1-10", "11-50", "51-200", "201-500", "500+" or null\n' +
+    '- total_raised: formatted string like "$5M" or "$120M" or null\n' +
+    '- investors: array of investor name strings (may be empty array [])';
+
+  const userPrompt =
+    `Company URL: ${cleanUrl}\n` +
+    `Domain: ${domain}\n` +
+    (email ? `Submitter email: ${email}\n` : '') +
+    `Already known data: ${partialSummary}\n\n` +
+    `Homepage HTML (truncated, may be empty for SPAs — fall back to web search if so):\n${html}`;
+
+  console.log(`[pipeline] Gemini grounded call: requesting ${groundedFields.length} fields`);
+
+  try {
+    const rawText = await callLLM({ systemPrompt, userPrompt, useGrounding: true });
+    const parsed = extractJsonFromText(rawText);
+
+    if (parsed === null) {
+      console.error('[pipeline] Gemini parse error:', String(rawText).slice(0, 500));
+    } else {
+      const filled = Object.entries(parsed).filter(([_, v]) => !isMissing(v)).map(([k]) => k);
+      console.log('[pipeline] Gemini returned: ' + filled.join(', '));
+
+      // Merge scalars — only into still-null/empty fields
+      const scalarFields = ['name', 'description', 'sector', 'stage', 'founded_year', 'address', 'employee_range', 'total_raised'];
+      for (const field of scalarFields) {
+        if (isMissing(record[field]) && !isMissing(parsed[field])) {
+          record[field] = parsed[field];
         }
       }
 
-      const schema = {
-        type: 'object',
-        properties: schemaProperties,
-        required: missingFields,
-      };
-
-      const partialSummary = JSON.stringify({
-        website: record.website,
-        dcc_entity_type: record.dcc_entity_type,
-        dcc_status: record.dcc_status,
-        investors: record.investors,
-        total_raised: record.total_raised,
-        is_hiring: record.is_hiring,
-        job_titles: record.job_titles,
-      });
-
-      const systemPrompt =
-        'You are a startup data enrichment assistant. ' +
-        'Extract accurate company information from the provided website HTML and context. ' +
-        'Return ONLY the requested fields. Use null for any field you cannot determine with confidence. ' +
-        'For sector, use one of: fintech, healthtech, edtech, cleantech, enterprise-software, ' +
-        'consumer, ecommerce, logistics, biotech, ai-ml, cybersecurity, other. ' +
-        'For stage, use one of: idea, pre-seed, seed, series-a, series-b, growth, public, other.';
-
-      const userPrompt =
-        `Company URL: ${cleanUrl}\n` +
-        (email ? `Submitter email: ${email}\n` : '') +
-        `Domain: ${domain}\n` +
-        `Already known data: ${partialSummary}\n` +
-        `Fields needed: ${missingFields.join(', ')}\n\n` +
-        `Homepage HTML (truncated):\n${html}`;
-
-      const llmResult = await callLLM({ systemPrompt, userPrompt, schema });
-
-      // Merge only into fields that are still null — never overwrite existing values
-      if (llmResult && typeof llmResult === 'object') {
-        for (const field of missingFields) {
-          if (isMissing(record[field]) && !isMissing(llmResult[field])) {
-            record[field] = llmResult[field];
-          }
-        }
+      // Merge investors — treat empty array as "still missing"
+      const existingInvestors = record.investors;
+      const parsedInvestors = parsed.investors;
+      if (
+        (existingInvestors === null || (Array.isArray(existingInvestors) && existingInvestors.length === 0)) &&
+        Array.isArray(parsedInvestors) &&
+        parsedInvestors.length > 0
+      ) {
+        record.investors = parsedInvestors;
       }
-    } catch (err) {
-      console.error('[pipeline] Claude gap-fill failed:', err?.message ?? err);
     }
+  } catch (err) {
+    console.error('[pipeline] Gemini grounded call failed:', err?.message ?? err);
   }
 
   // ── Step 8: Geocode address ───────────────────────────────────────────────
@@ -357,28 +362,4 @@ export async function runEnrichmentPipeline({ url, email } = {}) {
   if (record.investors === null) record.investors = [];
 
   return record;
-}
-
-/**
- * Return a human-readable description for a gap-fill field, used in the JSON Schema.
- *
- * @param {string} field - Field name.
- * @returns {string} Description string for the LLM schema.
- */
-function _fieldDescription(field) {
-  const descriptions = {
-    name: 'The official company name.',
-    description:
-      'A concise 1–3 sentence description of what the company does.',
-    sector:
-      'Industry sector. One of: fintech, healthtech, edtech, cleantech, ' +
-      'enterprise-software, consumer, ecommerce, logistics, biotech, ai-ml, ' +
-      'cybersecurity, other.',
-    stage:
-      'Company stage. One of: idea, pre-seed, seed, series-a, series-b, ' +
-      'growth, public, other.',
-    address:
-      'Physical address of the company headquarters, e.g. "123 Main St, Salt Lake City, UT 84101".',
-  };
-  return descriptions[field] ?? `The ${field} field.`;
 }
