@@ -39,7 +39,11 @@ const hasTopSectors = computed(() => topSectorsDisplay.value.length > 0)
 </script>
 
 <template>
-  <div class="border-b border-[var(--hair)] px-6 py-3 shrink-0 flex flex-wrap items-center gap-x-8 gap-y-2" style="background: rgba(13,25,45,0.4); backdrop-filter: blur(6px);">
+  <div
+    class="inline-flex flex-nowrap items-center gap-x-6 px-4 py-3 rounded-xl border w-max max-w-[calc(100%-2rem)] overflow-x-auto whitespace-nowrap"
+    style="background: rgba(13,25,45,0.78); backdrop-filter: blur(12px); border-color: var(--hair-2); box-shadow: 0 20px 40px -16px rgba(0,0,0,0.6);"
+    @click.stop
+  >
     <div class="metric text-center">
       <div class="num">{{ totalCount }}</div>
       <div class="lbl">Companies</div>
@@ -52,7 +56,7 @@ const hasTopSectors = computed(() => topSectorsDisplay.value.length > 0)
       <div class="num">{{ withInvestorsCount }}</div>
       <div class="lbl">With Investors</div>
     </div>
-    <div v-if="hasTopSectors" class="flex flex-wrap gap-x-6 gap-y-2 items-end">
+    <div v-if="hasTopSectors" class="flex flex-nowrap gap-x-6 items-end">
       <div
         v-for="sector in topSectorsDisplay"
         :key="sector.name"
