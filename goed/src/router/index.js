@@ -68,8 +68,7 @@ const router = createRouter({
     {
       path: '/subscribe',
       name: 'Subscribe',
-      component: () => import('@/views/PlaceholderView.vue'),
-      props: { title: 'Subscribe' },
+      component: () => import('@/views/SubscribeView.vue'),
     },
   ],
 })
