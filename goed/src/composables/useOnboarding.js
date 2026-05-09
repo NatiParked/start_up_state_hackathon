@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { supabase } from '@/lib/supabase'
 
 /** Minimum ms to keep the progress view visible so the pipeline animation renders. */
-const MIN_RUNNING_MS = 1500
+const MIN_RUNNING_MS = 8000
 
 /**
  * Composable for submitting a startup URL to the onboard-company Edge Function.
