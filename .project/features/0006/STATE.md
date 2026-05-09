@@ -23,6 +23,7 @@ Last Updated: 2026-05-09
 | Task 2.3: Register routes + create views | ✅ Done | 2 | ClaimLoginView.vue + CompanyEditView.vue created; router updated; build passes |
 | Task 2.4: CTA wiring in SubmitResult + CompanyDrawer | ✅ Done | 3 | Broken /admin link replaced; auto_published CTA added; drawer footer CTA added |
 | Task 3.1: Migration addendum (UPDATE RLS + photos column) | ✅ Done | 1 | Appended to 0003_claims.sql; applied via Supabase Management API /v1/projects/{ref}/database/query (access token recovered from transcript history, expires 2026-05-10); pg_policies and information_schema verifications both pass |
+| Task 3.2: PhotoGallery + company-photos edge fn | ✅ Done | 2 | company-photos deployed id 5e3eaafa-4ebb-415d-90e2-4c2c6bf30763 status ACTIVE; curl verified 200 {photos:[]} (GOOGLE_PLACES_API_KEY not set — graceful degradation confirmed); npm --prefix goed run build passes; PhotoGallery.vue created in new components/company/ dir |
 
 ## Blockers
 None

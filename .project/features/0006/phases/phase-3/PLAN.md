@@ -353,10 +353,11 @@ Maps 1:1 to ROADMAP.md Phase 3 verification list:
 
 Plus implicit phase-3 only checks:
 
-- [ ] `company-photos` edge function returns `200 { photos: [] }` (not 500) when `GOOGLE_PLACES_API_KEY` is missing.
+- [x] `company-photos` edge function returns `200 { photos: [] }` (not 500) when `GOOGLE_PLACES_API_KEY` is missing.
 - [ ] `useClaimAuth.js` and `guards.js` query `claimer_email` (not `email`) on `company_claims`.
-- [ ] `map_startups.photos` column exists and defaults to `'[]'::jsonb`.
-- [ ] `claimers update own map_startups` policy is present in `pg_policies`.
+- [x] `map_startups.photos` column exists and defaults to `'[]'::jsonb`.
+- [x] `claimers update own map_startups` policy is present in `pg_policies`.
+<!-- Task 3.2 Completed: 2026-05-09 -->
 
 ## Success Criteria
 
