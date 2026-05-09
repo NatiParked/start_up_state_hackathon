@@ -33,3 +33,40 @@ as $$
 $$;
 
 grant execute on function get_company_view_stats(uuid) to anon, authenticated;
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- Phase 3 addendum: claimer UPDATE policy on map_startups
+-- ─────────────────────────────────────────────────────────────────────────────
+-- Allows an authenticated user to update the map_startups row for a startup
+-- they have claimed (matched via company_claims.claimer_email = JWT email).
+-- This sits alongside the admin UPDATE policy from 0007_admin_map_startups_rls.sql.
+
+drop policy if exists "claimers update own map_startups" on map_startups;
+create policy "claimers update own map_startups"
+  on map_startups
+  for update
+  to authenticated
+  using (
+    exists (
+      select 1 from company_claims
+      where company_claims.startup_id = map_startups.id
+        and company_claims.claimer_email = auth.jwt() ->> 'email'
+    )
+  )
+  with check (
+    exists (
+      select 1 from company_claims
+      where company_claims.startup_id = map_startups.id
+        and company_claims.claimer_email = auth.jwt() ->> 'email'
+    )
+  );
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- Phase 3 addendum: photos jsonb column on map_startups
+-- ─────────────────────────────────────────────────────────────────────────────
+-- Stores the curated, ordered list of photo objects { url, attribution } that
+-- the founder has selected/reordered in the PhotoGallery editor.
+-- Confirmed missing from 0001_init.sql — safe to add with IF NOT EXISTS.
+
+alter table map_startups
+  add column if not exists photos jsonb not null default '[]'::jsonb;
