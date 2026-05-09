@@ -68,10 +68,8 @@ Deno.serve(async (req) => {
     // -------------------------------------------------------------------------
     // 3. Env + client
     // -------------------------------------------------------------------------
+    // Read key now but validate only when actually sending (so 0-subscriber runs succeed)
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
-    if (!RESEND_API_KEY) {
-      throw new Error('RESEND_API_KEY env var is required');
-    }
 
     // NOTE: onboarding@resend.dev is the Resend sandbox sender for hackathon demo;
     // production must set RESEND_FROM_EMAIL to a verified-domain address
@@ -198,6 +196,9 @@ Deno.serve(async (req) => {
         };
 
         // f. Send via Resend
+        if (!RESEND_API_KEY) {
+          throw new Error('RESEND_API_KEY env var is required');
+        }
         const resendRes = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {

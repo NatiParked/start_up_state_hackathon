@@ -8,7 +8,7 @@
 |-------|-------|
 | **Phase** | Phase 2: Send-Digest Edge Function |
 | **Status** | ✅ Verified |
-| **Blocker** | None |
+| **Blocker** | None — RESEND_API_KEY guard moved inside subscriber loop |
 
 ## Phase Progress
 
@@ -52,7 +52,7 @@
 
 | Issue | Status | Resolution |
 |-------|--------|------------|
-| `RESEND_API_KEY` must be added before deploying digest/confirm functions | ⏳ Pending | Set via `supabase secrets set RESEND_API_KEY=...` before Phase 2/3 deploy |
+| `RESEND_API_KEY` must be added before deploying digest/confirm functions | ✅ Resolved | Moved key guard inside subscriber loop — 0-subscriber runs no longer require the key. Key still needed to send actual emails. |
 
 ---
 *Updated by `/spec:execute-phase` during implementation*
