@@ -1,14 +1,15 @@
 <script setup></script>
 
 <template>
-  <header class="bg-utah-blue text-white">
-    <nav class="flex gap-4 p-4">
-      <RouterLink to="/" class="hover:text-hiring-green">Map</RouterLink>
-      <RouterLink to="/navigator" class="hover:text-hiring-green">Navigator</RouterLink>
-      <RouterLink to="/submit" class="hover:text-hiring-green">Submit</RouterLink>
-      <RouterLink to="/admin" class="hover:text-hiring-green">Admin</RouterLink>
-      <RouterLink to="/roadmap" class="hover:text-hiring-green">Roadmap</RouterLink>
-      <RouterLink to="/subscribe" class="hover:text-hiring-green">Subscribe</RouterLink>
+  <header class="topnav">
+    <RouterLink to="/" class="brand-mark">Utah<span class="amp">&amp;</span>Startups</RouterLink>
+    <nav class="flex items-center gap-6">
+      <RouterLink to="/">Map</RouterLink>
+      <RouterLink to="/navigator">Navigator</RouterLink>
+      <RouterLink to="/submit">Submit</RouterLink>
+      <RouterLink to="/admin">Admin</RouterLink>
+      <RouterLink to="/roadmap">Roadmap</RouterLink>
+      <RouterLink to="/subscribe">Subscribe</RouterLink>
     </nav>
   </header>
   <main>
@@ -16,4 +17,9 @@
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.topnav :deep(a.router-link-exact-active) {
+  border-bottom-color: var(--accent);
+  color: var(--fg);
+}
+</style>

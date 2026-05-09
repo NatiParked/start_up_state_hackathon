@@ -23,7 +23,7 @@ const previewLogoUrls = computed(() =>
 
 const clusterClasses = computed(
   () =>
-    'w-11 h-11 rounded-full bg-utah-blue text-white font-bold text-sm ' +
+    'w-11 h-11 rounded-full bg-[var(--accent)] text-[#07140A] font-bold text-sm ' +
     'flex items-center justify-center ' +
     'ring-2 ring-white shadow-lg cursor-pointer ' +
     'hover:scale-105 transition-transform duration-150',
@@ -39,11 +39,11 @@ const previewWrapperClasses = computed(
 )
 
 const logoCircleClasses = computed(
-  () => 'w-7 h-7 rounded-full bg-white ring-1 ring-utah-blue/20 overflow-hidden flex items-center justify-center flex-shrink-0',
+  () => 'w-7 h-7 rounded-full bg-white ring-1 ring-[var(--accent)]/30 overflow-hidden flex items-center justify-center flex-shrink-0',
 )
 
 const monogramClasses = computed(
-  () => 'w-full h-full flex items-center justify-center bg-utah-blue text-white text-xs font-semibold',
+  () => 'w-full h-full flex items-center justify-center bg-[var(--accent)] text-[#07140A] text-xs font-semibold',
 )
 </script>
 

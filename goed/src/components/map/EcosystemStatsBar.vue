@@ -39,18 +39,18 @@ const hasTopSectors = computed(() => topSectorsDisplay.value.length > 0)
 </script>
 
 <template>
-  <div class="bg-white border-b border-gray-200 px-6 py-3 shrink-0 flex flex-wrap items-center gap-x-8 gap-y-2">
-    <div class="text-center">
-      <div class="text-3xl font-bold text-utah-blue-dark">{{ totalCount }}</div>
-      <div class="text-xs uppercase tracking-wide text-gray-500">Companies</div>
+  <div class="border-b border-[var(--hair)] px-6 py-3 shrink-0 flex flex-wrap items-center gap-x-8 gap-y-2" style="background: rgba(13,25,45,0.4); backdrop-filter: blur(6px);">
+    <div class="metric text-center">
+      <div class="num">{{ totalCount }}</div>
+      <div class="lbl">Companies</div>
     </div>
-    <div class="text-center">
-      <div class="text-3xl font-bold text-utah-blue-dark">{{ hiringCount }}</div>
-      <div class="text-xs uppercase tracking-wide text-gray-500">Hiring</div>
+    <div class="metric text-center">
+      <div class="num">{{ hiringCount }}</div>
+      <div class="lbl">Hiring</div>
     </div>
-    <div class="text-center">
-      <div class="text-3xl font-bold text-utah-blue-dark">{{ withInvestorsCount }}</div>
-      <div class="text-xs uppercase tracking-wide text-gray-500">With Investors</div>
+    <div class="metric text-center">
+      <div class="num">{{ withInvestorsCount }}</div>
+      <div class="lbl">With Investors</div>
     </div>
     <div v-if="hasTopSectors" class="flex flex-wrap gap-x-6 gap-y-2 items-end">
       <div
@@ -58,8 +58,8 @@ const hasTopSectors = computed(() => topSectorsDisplay.value.length > 0)
         :key="sector.name"
         class="text-center"
       >
-        <div class="text-sm font-semibold text-utah-blue">{{ sector.name }}</div>
-        <div class="text-xs uppercase tracking-wide text-gray-500">{{ sector.count }} co.</div>
+        <div class="text-sm font-semibold text-[var(--accent)]">{{ sector.name }}</div>
+        <div class="lbl">{{ sector.count }} co.</div>
       </div>
     </div>
   </div>

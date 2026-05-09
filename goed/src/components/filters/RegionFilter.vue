@@ -16,7 +16,7 @@ const regionOptions = computed(() =>
 
 <template>
   <div>
-    <p class="text-sm font-semibold text-gray-700 mb-2">Region</p>
+    <p class="text-sm font-semibold text-[var(--fg)] mb-2">Region</p>
     <div class="space-y-1">
       <label
         v-for="option in regionOptions"
@@ -27,9 +27,9 @@ const regionOptions = computed(() =>
           v-model="regions"
           type="checkbox"
           :value="option"
-          class="mr-2 rounded border-gray-300 text-utah-blue focus:ring-utah-blue"
+          class="mr-2 rounded accent-[var(--accent)]"
         />
-        <span class="text-sm text-gray-700">{{ option }}</span>
+        <span class="text-sm text-[var(--fg-2)]">{{ option }}</span>
       </label>
     </div>
   </div>

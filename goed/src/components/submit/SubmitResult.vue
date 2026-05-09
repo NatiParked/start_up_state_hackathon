@@ -51,49 +51,35 @@ onMounted(() => {
 <template>
   <div class="py-4">
     <section v-if="view === 'auto_published'" class="text-center space-y-4">
-      <h1 class="submit-result-heading text-2xl font-bold text-utah-blue">You're on the map!</h1>
-      <p class="text-gray-600">Your startup has been published to the Utah Startup Map.</p>
-      <a
-        :href="mapLink"
-        class="inline-block rounded-md bg-utah-blue px-6 py-2 text-white font-semibold hover:bg-utah-blue-dark transition-colors"
-      >
-        View on map
-      </a>
+      <h1 class="submit-result-heading display-sm text-[var(--accent)]">You're on the map!</h1>
+      <p class="text-[var(--fg-2)]">Your startup has been published to the Utah Startup Map.</p>
+      <a :href="mapLink" class="btn btn-primary">View on map</a>
       <div>
-        <button
-          class="text-sm text-utah-blue underline underline-offset-2"
-          @click="copyShareLink"
-        >
+        <button class="btn-text" @click="copyShareLink">
           Copy share link
         </button>
       </div>
     </section>
 
     <section v-if="view === 'pending'" class="space-y-4">
-      <h1 class="submit-result-heading text-2xl font-bold text-gray-800">
+      <h1 class="submit-result-heading display-sm text-[var(--fg)]">
         Your submission is under review
       </h1>
-      <p class="text-gray-600">GOED will review your submission within 48 hours.</p>
-      <p v-if="rejectionReason" class="text-sm text-gray-500 bg-gray-100 rounded p-3">
+      <p class="text-[var(--fg-2)]">GOED will review your submission within 48 hours.</p>
+      <p v-if="rejectionReason" class="text-sm text-[var(--fg-2)] rounded p-3" style="background: var(--surface); border: 1px solid var(--hair);">
         {{ rejectionReason }}
       </p>
-      <router-link
-        to="/admin"
-        class="inline-block rounded-md border border-utah-blue px-6 py-2 text-utah-blue font-semibold hover:bg-utah-blue hover:text-white transition-colors"
-      >
+      <router-link to="/admin" class="btn btn-ghost">
         Claim your listing
       </router-link>
     </section>
 
     <section v-if="view === 'error'" class="space-y-4">
-      <h1 class="submit-result-heading text-2xl font-bold text-error-red">
+      <h1 class="submit-result-heading display-sm text-[var(--warn)]">
         Something went wrong
       </h1>
-      <p class="text-gray-600">{{ errorMessage }}</p>
-      <button
-        class="inline-block rounded-md bg-utah-blue px-6 py-2 text-white font-semibold hover:bg-utah-blue-dark transition-colors"
-        @click="onRetry"
-      >
+      <p class="text-[var(--fg-2)]">{{ errorMessage }}</p>
+      <button class="btn btn-primary" @click="onRetry">
         Try again
       </button>
     </section>

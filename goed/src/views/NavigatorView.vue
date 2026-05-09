@@ -3,10 +3,10 @@
 </script>
 
 <template>
-  <main class="min-h-screen flex items-center justify-center bg-white">
+  <main class="min-h-screen flex items-center justify-center">
     <section class="max-w-xl text-center p-8">
-      <h1 class="text-3xl font-semibold text-utah-blue">Founder's Navigator</h1>
-      <p class="mt-3 text-utah-blue-dark">
+      <h1 class="display-md text-[var(--accent)]">Founder's Navigator</h1>
+      <p class="lede mt-3 mx-auto">
         Personalized resource discovery for Utah founders. Coming soon.
       </p>
     </section>

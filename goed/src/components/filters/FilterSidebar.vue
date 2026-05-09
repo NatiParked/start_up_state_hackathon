@@ -90,14 +90,15 @@ watch(
 
 <template>
   <aside
-    :class="['flex-shrink-0 bg-white border-r border-gray-200 flex flex-col transition-all duration-200 overflow-y-auto', sidebarClass]"
+    :class="['flex-shrink-0 border-r flex flex-col transition-all duration-200 overflow-y-auto', sidebarClass]"
+    style="background: var(--bg-2); border-color: var(--hair);"
   >
     <!-- Header -->
-    <div class="flex items-center justify-between p-3 border-b border-gray-200 sticky top-0 bg-white z-10">
-      <span v-if="bodyVisible" class="text-sm font-bold text-utah-blue">Filters</span>
+    <div class="flex items-center justify-between p-3 border-b sticky top-0 z-10" style="background: var(--bg-2); border-color: var(--hair);">
+      <span v-if="bodyVisible" class="kicker">Filters</span>
       <button
         @click="isCollapsed = !isCollapsed"
-        class="text-gray-500 hover:text-utah-blue text-xs px-1 py-1 rounded hover:bg-gray-100"
+        class="text-[var(--fg-2)] hover:text-[var(--accent)] text-xs px-1 py-1 rounded hover:bg-[var(--surface)]"
         :title="toggleLabel"
       >
         {{ isCollapsed ? '→' : '←' }}
@@ -105,21 +106,21 @@ watch(
     </div>
 
     <!-- Filter body -->
-    <div v-if="bodyVisible" class="flex flex-col divide-y divide-gray-100 p-3 space-y-0">
-      <div class="py-3"><SectorFilter /></div>
-      <div class="py-3"><StageFilter /></div>
-      <div class="py-3"><EmployeeRangeFilter /></div>
-      <div class="py-3"><HiringFilter /></div>
-      <div class="py-3"><RegionFilter /></div>
-      <div class="py-3"><InvestorFilter /></div>
+    <div v-if="bodyVisible" class="flex flex-col p-3 space-y-0" style="--divide-color: var(--hair);">
+      <div class="py-3 border-b" style="border-color: var(--hair);"><SectorFilter /></div>
+      <div class="py-3 border-b" style="border-color: var(--hair);"><StageFilter /></div>
+      <div class="py-3 border-b" style="border-color: var(--hair);"><EmployeeRangeFilter /></div>
+      <div class="py-3 border-b" style="border-color: var(--hair);"><HiringFilter /></div>
+      <div class="py-3 border-b" style="border-color: var(--hair);"><RegionFilter /></div>
+      <div class="py-3 border-b" style="border-color: var(--hair);"><InvestorFilter /></div>
       <div class="py-3"><FoundedYearFilter /></div>
     </div>
 
     <!-- Clear all -->
-    <div v-if="bodyVisible" class="p-3 border-t border-gray-200 sticky bottom-0 bg-white">
+    <div v-if="bodyVisible" class="p-3 border-t sticky bottom-0" style="background: var(--bg-2); border-color: var(--hair);">
       <button
         @click="handleClearAll"
-        class="w-full text-sm text-center text-utah-blue hover:text-utah-blue-dark border border-utah-blue rounded px-3 py-1 hover:bg-blue-50"
+        class="btn btn-ghost w-full justify-center"
       >
         Clear all
       </button>
