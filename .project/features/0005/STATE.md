@@ -6,8 +6,8 @@
 
 | Field | Value |
 |-------|-------|
-| **Phase** | Phase 2: Admin Shell & Dashboard |
-| **Status** | ✅ Complete |
+| **Phase** | Phase 3: Submission Queue & Company CRUD |
+| **Status** | 🔄 In Progress |
 | **Blocker** | None |
 
 ## Phase Progress
@@ -15,8 +15,8 @@
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | Phase 1: Auth Foundation & Route Guard | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 2: Admin Shell & Dashboard | ✅ Complete | 2026-05-09 | 2026-05-09 |
-| Phase 3: Submission Queue & Company CRUD | 🔲 Pending | — | — |
+| Phase 2: Admin Shell & Dashboard | ✅ Verified | 2026-05-09 | 2026-05-09 |
+| Phase 3: Submission Queue & Company CRUD | 🔄 In Progress | 2026-05-09 | — |
 | Phase 4: Refresh Control, Subscriber Shell & Roadmap Page | 🔲 Pending | — | — |
 
 ## Task Progress
@@ -29,6 +29,7 @@
 | Task 2.1: Create AdminLayout.vue sidebar shell | ✅ Done | 1 | — |
 | Task 2.2: Overwrite AdminDashboard.vue with six metric cards | ✅ Done | 1 | — |
 | Task 2.3: Restructure router/index.js with nested layout | ✅ Done | 2 | — |
+| Task 3.1: RLS migration + approve/reject-submission Edge Functions | ✅ Done | 1 | — |
 
 ## Decisions Log
 
