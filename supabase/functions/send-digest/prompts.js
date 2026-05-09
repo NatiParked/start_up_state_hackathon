@@ -104,12 +104,14 @@ Respond with valid JSON only, shaped exactly as:
  * Build an ecosystem-wide user prompt for a subscriber who had no matching updates.
  *
  * @param {object} subscriber - Subscription row from map_subscriptions (may be empty `{}`).
- * @param {{ hiringCount: number, newestCompany: object|null, totalCompanies: number }} highlights
+ * @param {{ hiringCount: number, newestCompany: object|null, totalCompanies: number, mostViewed?: Array<{ name: string, sector: string|null, stage: string|null, view_count: number }> }} highlights
  *   Ecosystem-wide stats to include in the email when no personalized matches exist.
+ *   `mostViewed` is optional — an array of the top-viewed companies on the map in the past 7 days,
+ *   each with `{ name, sector, stage, view_count }`. Omit or pass `[]` to suppress the section.
  * @returns {string} Non-empty user prompt string.
  */
 export function buildEcosystemPrompt(subscriber, highlights) {
-  const { hiringCount = 0, newestCompany = null, totalCompanies = 0 } = highlights ?? {};
+  const { hiringCount = 0, newestCompany = null, totalCompanies = 0, mostViewed = [] } = highlights ?? {};
 
   const fc = (subscriber && subscriber.filter_criteria) ? subscriber.filter_criteria : {};
 
@@ -124,6 +126,14 @@ export function buildEcosystemPrompt(subscriber, highlights) {
     ? `The most recently added company is "${newestCompany.name ?? 'Unknown'}" (${newestCompany.sector ?? 'N/A'} sector, ${newestCompany.region ?? 'N/A'} region).`
     : 'No new companies have been added recently.';
 
+  const mostViewedNote = Array.isArray(mostViewed) && mostViewed.length > 0
+    ? `Most-viewed companies on the map this past week (top ${mostViewed.length}):\n${
+        mostViewed.map((c, i) =>
+          `${i + 1}. ${c.name} — ${c.sector ?? 'N/A'} sector, ${c.stage ?? 'N/A'} stage (${c.view_count} views)`
+        ).join('\n')
+      }`
+    : '';
+
   return `You are writing the weekly Utah Startup Map digest for a subscriber who had no new startup activity matching their filters this week.
 
 Subscriber filter preferences: ${preferenceSummary || 'No specific filters set.'}
@@ -133,14 +143,14 @@ This week there were no new or updated companies matching this subscriber's filt
 - Total companies tracked on Utah Startup Map: ${totalCompanies}
 - Companies currently hiring across all of Utah: ${hiringCount}
 - ${newestCompanyNote}
-
+${mostViewedNote ? `\n${mostViewedNote}\n` : ''}
 Instructions:
 - Write a subject line that acknowledges the quieter week for their specific interests while highlighting broader Utah startup activity.
 - Write 2–3 paragraphs of HTML email body covering the broader Utah startup ecosystem activity.
 - Mention Silicon Slopes and Utah's tech community context.
 - Encourage the subscriber to check the full map for the latest listings.
 - The htmlBody should be valid HTML fragments (not a full HTML document) suitable for embedding in an email template.
-
+${mostViewedNote ? '- Reference the most-viewed companies above as a signal of what is catching the ecosystem\'s attention this week.' : ''}
 Respond with valid JSON only, shaped exactly as:
 { "subject": "<subject line>", "htmlBody": "<html body content>" }`;
 }

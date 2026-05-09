@@ -151,7 +151,52 @@ Deno.serve(async (req) => {
             .limit(1)
             .maybeSingle();
 
-          userPrompt = buildEcosystemPrompt(subscriber, { hiringCount, newestCompany, totalCompanies });
+          // Most-viewed companies in the past 7 days, top 5
+          const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+          let mostViewed = [];
+          try {
+            const { data: viewRows, error: viewsError } = await adminClient
+              .from('company_views')
+              .select('startup_id')
+              .gte('viewed_at', sevenDaysAgo);
+
+            if (viewsError) throw viewsError;
+
+            if (viewRows && viewRows.length > 0) {
+              // Aggregate counts in JS (PostgREST cannot GROUP BY without a view/RPC)
+              const counts = new Map();
+              for (const row of viewRows) {
+                counts.set(row.startup_id, (counts.get(row.startup_id) ?? 0) + 1);
+              }
+              const topIds = [...counts.entries()]
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5)
+                .map(([id]) => id);
+
+              if (topIds.length > 0) {
+                const { data: topCompanies } = await adminClient
+                  .from('map_startups')
+                  .select('id, name, sector, stage')
+                  .in('id', topIds);
+
+                // Reattach counts in the original sort order
+                mostViewed = topIds
+                  .map((id) => {
+                    const co = (topCompanies ?? []).find((c) => c.id === id);
+                    if (!co) return null;
+                    return { name: co.name, sector: co.sector, stage: co.stage, view_count: counts.get(id) };
+                  })
+                  .filter(Boolean);
+              }
+            }
+          } catch (mvErr) {
+            // Never let most-viewed enrichment break the digest — log and continue with empty array
+            console.error('most-viewed query failed', mvErr);
+            mostViewed = [];
+          }
+
+          userPrompt = buildEcosystemPrompt(subscriber, { hiringCount, newestCompany, totalCompanies, mostViewed });
         }
 
         // d. Call LLM for subject + htmlBody
