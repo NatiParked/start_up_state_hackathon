@@ -6,9 +6,9 @@
 
 | Field | Value |
 |-------|-------|
-| **Phase** | Phase 2: Send-Digest Edge Function |
-| **Status** | ✅ Verified |
-| **Blocker** | None — RESEND_API_KEY guard moved inside subscriber loop |
+| **Phase** | Phase 3: Subscribe View & Confirmation Flow |
+| **Status** | ✅ Complete |
+| **Blocker** | None |
 
 ## Phase Progress
 
@@ -16,7 +16,7 @@
 |-------|--------|---------|-----------|
 | Phase 1: Database Schema & Migration | ✅ Verified | 2026-05-09 | 2026-05-09 |
 | Phase 2: Send-Digest Edge Function | ✅ Verified | 2026-05-09 | 2026-05-09 |
-| Phase 3: Subscribe View & Confirmation Flow | ⏳ Pending | — | — |
+| Phase 3: Subscribe View & Confirmation Flow | ✅ Complete | 2026-05-09 | 2026-05-09 |
 | Phase 4: Map CTA & Admin Panel Population | ⏳ Pending | — | — |
 
 ## Task Progress
@@ -27,10 +27,10 @@
 | 1.2: Apply migration to Supabase and verify schema + RLS | ✅ Done | 2 | ~5 min |
 | 2.1: Create `send-digest/prompts.js` with prompt builders | ✅ Done | 1 | ~2 min |
 | 2.2: Create `send-digest/index.js` orchestrator | ✅ Done | 2 | ~2 min |
-| 3.1: Create `confirm-subscription/index.js` Edge Function | ⏳ Pending | 1 | — |
-| 3.2: Create `send-confirmation/index.js` Edge Function | ⏳ Pending | 1 | — |
-| 3.3: Create `SubscribeView.vue` with filter form + opt-in flow | ⏳ Pending | 2 | — |
-| 3.4: Update router to wire `/subscribe` to `SubscribeView` | ⏳ Pending | 3 | — |
+| 3.1: Create `confirm-subscription/index.js` Edge Function | ✅ Done | 1 | ~1 min |
+| 3.2: Create `send-confirmation/index.js` Edge Function | ✅ Done | 1 | ~1 min |
+| 3.3: Create `SubscribeView.vue` with filter form + opt-in flow | ✅ Done | 2 | ~1 min |
+| 3.4: Update router to wire `/subscribe` to `SubscribeView` | ✅ Done | 3 | ~1 min |
 | 4.1: Create `SubscribeCTA.vue` sticky footer component | ⏳ Pending | 1 | — |
 | 4.2: Mount `<SubscribeCTA />` in `MapView.vue` | ⏳ Pending | 2 | — |
 | 4.3: Populate `SubscriberPanel.vue` with live queries | ⏳ Pending | 1 | — |
