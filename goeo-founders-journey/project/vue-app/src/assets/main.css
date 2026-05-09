@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* See styles.css in repo root for full token system.
+ * In a real build this file would @import the design tokens. */
+@import './tokens.css';
