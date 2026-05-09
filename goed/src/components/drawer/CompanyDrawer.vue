@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import gsap from 'gsap'
 import { useStartupsStore } from '@/stores/startups'
 import { useLogoDev } from '@/composables/useLogoDev'
+import { useShareCard } from '@/composables/useShareCard'
 import { supabase } from '@/lib/supabase'
 
 const store = useStartupsStore()
@@ -16,6 +17,17 @@ const drawerEl = ref(null)
 
 const isOpen = computed(() => selectedCompany.value !== null)
 const company = computed(() => selectedCompany.value)
+
+const { copyLink } = useShareCard(company)
+const copiedAt = ref(0)
+const showCopied = computed(() => copiedAt.value > 0)
+
+async function handleShareClick() {
+  const ok = await copyLink()
+  if (!ok) return
+  copiedAt.value = Date.now()
+  setTimeout(() => { copiedAt.value = 0 }, 2000)
+}
 const logoUrl = computed(() => company.value?.website ? getLogoUrl(company.value.website) : null)
 const monogram = computed(() => company.value?.name ? company.value.name[0].toUpperCase() : '')
 const showMonogram = computed(() => !logoUrl.value && Boolean(company.value?.name))
@@ -116,6 +128,19 @@ onMounted(() => {
 <template>
   <aside ref="drawerEl" class="fixed top-0 right-0 h-full w-full max-w-md z-40 overflow-y-auto" style="background: var(--bg-2); border-left: 1px solid var(--hair); box-shadow: -30px 0 60px -20px rgba(0,0,0,0.6);">
     <div class="p-6">
+      <div v-if="company" class="absolute top-4 right-12 flex items-center gap-2">
+        <button
+          @click="handleShareClick"
+          type="button"
+          aria-label="Copy share link"
+          class="px-3 py-1 text-sm rounded bg-utah-blue text-white hover:opacity-90 transition-colors"
+        >Share</button>
+        <span
+          v-if="showCopied"
+          role="status"
+          class="px-2 py-1 text-xs rounded bg-utah-blue text-white"
+        >Copied!</span>
+      </div>
       <button
         @click="handleClose"
         aria-label="Close"
