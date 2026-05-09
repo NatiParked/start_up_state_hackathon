@@ -18,9 +18,8 @@
         />
       </RouterLink>
       <nav class="flex items-center gap-6">
-        <RouterLink to="/">Map</RouterLink>
-        <RouterLink to="/navigator">Navigator</RouterLink>
-        <RouterLink to="/submit">Submit</RouterLink>
+        <RouterLink to="/">Startup Map</RouterLink>
+        <RouterLink to="/navigator">Founder's Navigator</RouterLink>
         <RouterLink to="/admin">Admin</RouterLink>
         <RouterLink to="/roadmap">Roadmap</RouterLink>
         <RouterLink to="/subscribe">Subscribe</RouterLink>

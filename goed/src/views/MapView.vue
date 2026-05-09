@@ -33,22 +33,25 @@ onMounted(() => {
 <template>
   <div :class="layoutClasses">
     <header
-      class="border-b border-[var(--hair)] px-6 py-3 flex items-center gap-3 shrink-0"
+      class="border-b border-[var(--hair)] px-6 flex items-center gap-6 shrink-0 h-[72px]"
       style="background: rgba(13, 25, 45, 0.5); backdrop-filter: blur(8px)"
     >
-      <span class="kicker">— Map</span>
-      <span class="display-sm text-[var(--accent)]">Utah Startup Map</span>
+      <div class="flex items-center gap-3 shrink-0">
+        <span class="kicker">— Map</span>
+        <span class="display-sm text-[var(--accent)]">Utah Startup Map</span>
+      </div>
+      <span class="self-stretch w-px shrink-0 my-4" style="background: var(--hair-2);"></span>
+      <EcosystemStatsBar class="flex-1 min-w-0" />
+      <RouterLink to="/submit" class="btn btn-primary py-[0.535rem] shrink-0">
+        Add Your Startup
+        <span class="arrow" aria-hidden="true">→</span>
+      </RouterLink>
     </header>
     <main class="flex flex-1 min-h-0 overflow-hidden pb-6">
       <div :class="mapZoneClasses">
         <div class="relative flex-1 min-h-0" @click="handleMapBackgroundClick">
           <UtahMap class="w-full h-full" />
-          <div class="absolute top-4 left-4 right-4 bottom-0 z-20 flex items-stretch gap-3 pointer-events-none">
-            <FilterSidebar class="pointer-events-auto" />
-            <div class="flex-1 flex flex-col justify-end items-start min-w-0 pointer-events-none">
-              <EcosystemStatsBar class="pointer-events-auto" />
-            </div>
-          </div>
+          <FilterSidebar class="absolute top-4 left-4 bottom-0 z-20 pointer-events-auto" />
           <CompanyDrawer />
         </div>
       </div>
