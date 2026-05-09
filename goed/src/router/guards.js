@@ -48,9 +48,9 @@ export async function claimGuard(to, _from, next) {
 
   const { data } = await supabase
     .from('company_claims')
-    .select('email')
+    .select('claimer_email')
     .eq('startup_id', to.params.id)
-    .eq('email', session.user.email)
+    .eq('claimer_email', session.user.email)
     .maybeSingle()
 
   if (!data) {

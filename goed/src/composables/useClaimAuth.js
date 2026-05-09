@@ -33,9 +33,9 @@ export function useClaimAuth(startupId) {
     try {
       const { data } = await supabase
         .from('company_claims')
-        .select('email')
+        .select('claimer_email')
         .eq('startup_id', startupId)
-        .eq('email', email)
+        .eq('claimer_email', email)
         .maybeSingle()
       claimVerified.value = !!data
     } finally {
