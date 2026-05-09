@@ -4,9 +4,15 @@ import { storeToRefs } from 'pinia'
 import { useStartupsStore } from '@/stores/startups'
 import UtahMap from '@/components/map/UtahMap.vue'
 import EcosystemStatsBar from '@/components/map/EcosystemStatsBar.vue'
+import CompanyDrawer from '@/components/drawer/CompanyDrawer.vue'
 
 const store = useStartupsStore()
 const { companies } = storeToRefs(store)
+const { clearSelection } = store
+
+function handleMapBackgroundClick() {
+  clearSelection()
+}
 
 onMounted(() => {
   if (companies.value.length === 0) {
@@ -16,10 +22,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col h-screen w-screen">
+  <div class="relative flex flex-col h-screen w-screen">
     <EcosystemStatsBar />
-    <!-- TODO: FilterSidebar (Phase 3) and CompanyDrawer (Phase 2) -->
-    <UtahMap class="flex-1 min-h-0" />
+    <div @click="handleMapBackgroundClick" class="relative flex-1 min-h-0 z-10">
+      <UtahMap class="w-full h-full" />
+    </div>
+    <CompanyDrawer />
   </div>
 </template>
 
